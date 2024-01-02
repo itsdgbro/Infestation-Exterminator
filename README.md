@@ -1,2 +1,2 @@
 # Infestation Exterminator
- 3D Fps Zombbbbie Shooter Game.
+ 3D Fps Zombie Shooter Game.
