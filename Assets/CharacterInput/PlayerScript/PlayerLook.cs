@@ -8,7 +8,7 @@ public class PlayerLook : MonoBehaviour
     private PlayerControls playerControls;
 
     [SerializeField]
-    private float MouseSensitivity = 50f;
+    private float MouseSensitivity = 0f;
 
     Vector2 mousePosition;
     private float xRoation = 0f;
@@ -24,7 +24,27 @@ public class PlayerLook : MonoBehaviour
 
     private void Update()
     {
-        Look();
+        CursorLockAndUnlock();
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            Look();
+        }
+    }
+
+    private void CursorLockAndUnlock()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
     }
 
     private void Look()
