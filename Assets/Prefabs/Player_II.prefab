@@ -74,7 +74,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpHeight: 2
+  sprintSpeed: 10
+  gravity: -20
+  jumpHeight: 1.5
+  canMove: 1
+  canJump: 1
+  canUseHeadBob: 1
   groundCheck: {fileID: 5917458060615271398}
   groundLayer:
     serializedVersion: 2
@@ -88,6 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4972497729333261404}
+  - component: {fileID: 4404712019848692055}
   m_Layer: 0
   m_Name: Look Root
   m_TagString: Untagged
@@ -113,6 +119,26 @@ Transform:
   - {fileID: 2750889179831610735}
   m_Father: {fileID: 6682608676304730956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4404712019848692055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649279464417980196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1441c9c0df33d3740b3ccdad9cfcfae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 8939566576118953018}
+  MouseSensitivity: 10
+  walkBobSpeed: 14
+  walkBobAmount: 0.05
+  sprintBobSpeed: 18
+  sprintBobAmount: 0.11
+  crouchBobSpeed: 8
+  crouchBobAmount: 0.025
 --- !u!1 &3253802487451501093
 GameObject:
   m_ObjectHideFlags: 0

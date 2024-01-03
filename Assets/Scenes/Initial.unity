@@ -414,30 +414,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2086041773 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1649279464417980196, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-  m_PrefabInstance: {fileID: 5487881721613797026}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2086041775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2086041773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1441c9c0df33d3740b3ccdad9cfcfae7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MouseSensitivity: 10
-  walkBobSpeed: 14
-  walkBobAmount: 0.05
-  sprintBobSpeed: 18
-  sprintBobAmount: 1
-  crouchBobSpeed: 8
-  crouchBobAmount: 0.25
 --- !u!1001 &5487881721613797026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -449,14 +425,6 @@ PrefabInstance:
     - target: {fileID: 123834214367214253, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
       propertyPath: m_Name
       value: Player_II
-      objectReference: {fileID: 0}
-    - target: {fileID: 1519171906053176906, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: gravity
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1519171906053176906, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: jumpHeight
-      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
       propertyPath: m_LocalPosition.x
@@ -501,10 +469,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1649279464417980196, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2086041775}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

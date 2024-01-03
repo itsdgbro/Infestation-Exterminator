@@ -5,6 +5,9 @@ public class CharacterMovement : MonoBehaviour
 {   
 
     private PlayerControls playerControls;
+    private bool isGrounded = false;
+    private bool isSprinting = false;
+    private bool isCrouching = false;
 
     #region Player_Attributes
     [Header("Player Attributes")]
@@ -27,9 +30,16 @@ public class CharacterMovement : MonoBehaviour
     public void setCanJump(bool jumpAble) => canJump = jumpAble;
     public bool getCanUseHeadBob() => canUseHeadBob;
     public void setCanuseHeadBob(bool headBobUseAble) => canUseHeadBob = headBobUseAble; 
+    public bool getIsGrounded() => isGrounded;
+    public void setIsGrounded(bool isGrounded) => this.isGrounded = isGrounded;
+    public Vector3 getVelocity() => velocity;
+    public bool getIsSprinting() => isSprinting;
+    public bool setIsSprinting(bool isSprinting) => this.isSprinting = isSprinting;
+    public bool getIsCrouching() => isCrouching;
+    public bool setIsCrouching(bool isCrouching) => this.isCrouching = isCrouching;
     #endregion
 
-    private bool isGrounded = false;
+
 
     #region Player_Physics
     private Vector3 velocity;
@@ -87,11 +97,20 @@ public class CharacterMovement : MonoBehaviour
         if (playerControls.Movement.Sprint.ReadValue<float>() > 0.1f && characterMove.y > 0.1f)
         {
             maxSpeed = sprintSpeed; // Set the speed to sprintSpeed
+            isSprinting = true;
         }
+        else
+        {
+            isSprinting = false;
+        }
+
+        // Update velocity for horizontal movement
+        Vector3 horizontalVelocity = movement * maxSpeed;
+        velocity.x = horizontalVelocity.x;
+        velocity.z = horizontalVelocity.z;
 
         characterController.Move(movement * maxSpeed * Time.deltaTime);
 
-        Debug.Log(maxSpeed);
     }
 
 
@@ -99,7 +118,6 @@ public class CharacterMovement : MonoBehaviour
     {
         if(playerControls.Movement.Jump.triggered && isGrounded)
         {
-            Debug.Log("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }

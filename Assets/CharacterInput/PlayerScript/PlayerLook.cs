@@ -7,6 +7,7 @@ public class PlayerLook : MonoBehaviour
 {
     private PlayerControls playerControls;
     private CharacterMovement characterMovement;
+    [SerializeField] private Camera playerCamera;
 
     #region Player_look
     [Header("Mouse Controls")]
@@ -21,9 +22,9 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private float walkBobSpeed = 14f;
     [SerializeField] private float walkBobAmount = 0.05f;
     [SerializeField] private float sprintBobSpeed = 18f;
-    [SerializeField] private float sprintBobAmount = 1f;
+    [SerializeField] private float sprintBobAmount = 0.11f;
     [SerializeField] private float crouchBobSpeed=  8f;
-    [SerializeField] private float crouchBobAmount = 0.25f;
+    [SerializeField] private float crouchBobAmount = 0.025f;
     private float defaultYPos = 0;
     private float timer;
     #endregion
@@ -32,23 +33,20 @@ public class PlayerLook : MonoBehaviour
     private void Awake()
     {
         player = transform.parent;
-
         playerControls = new PlayerControls();
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
-
-    private void Start()
-    {
         characterMovement = GetComponentInParent<CharacterMovement>();
+        defaultYPos = playerCamera.transform.localPosition.y;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
-    {
+    {   
         CursorLockAndUnlock();
-        if (Cursor.lockState == CursorLockMode.Locked)
+        if (Cursor.lockState == CursorLockMode.Locked && characterMovement.getCanMove())
         {
             Look();
+            HeadBob();
         }
     }
 
@@ -95,7 +93,15 @@ public class PlayerLook : MonoBehaviour
     // subtle head(camera) movement
     private void HeadBob()
     {
-
+        if (!characterMovement.getIsGrounded()) return;
+        if (Mathf.Abs(characterMovement.getVelocity().x) > 0.1f || Mathf.Abs(characterMovement.getVelocity().z) > 0.1f)
+        {
+            timer += Time.deltaTime * (characterMovement.getIsCrouching() ? crouchBobSpeed : characterMovement.getIsSprinting() ? sprintBobSpeed : walkBobSpeed);
+            playerCamera.transform.localPosition = new Vector3(
+                playerCamera.transform.localPosition.x,
+                defaultYPos + Mathf.Sin(timer) * (characterMovement.getIsCrouching() ? crouchBobAmount : characterMovement.getIsSprinting() ? sprintBobAmount : walkBobAmount),
+                playerCamera.transform.localPosition.z);
+        }
     }
 
     private void OnEnable()

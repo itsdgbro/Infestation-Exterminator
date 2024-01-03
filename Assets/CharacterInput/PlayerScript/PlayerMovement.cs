@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
         Gravity();
         Move();
         Jump();
-        // Sprint();
        
     }
 
@@ -76,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move(movement * maxSpeed * Time.deltaTime);
 
-        Debug.Log(maxSpeed);
     }
 
 
