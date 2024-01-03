@@ -3,33 +3,41 @@ using UnityEngine.InputSystem;
 
 public class CharacterMovement : MonoBehaviour
 {   
+
     private PlayerControls playerControls;
 
-    [SerializeField]
-    private float moveSpeed = 5f;
+    #region Player_Attributes
+    [Header("Player Attributes")]
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float sprintSpeed = 10f;
+    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float jumpHeight = 2f;
+    #endregion
 
-    public float getSpeed()
-    {
-        return moveSpeed;
-    }
+    #region Player_Can
+    [SerializeField] private bool canMove = true;
+    [SerializeField] private bool canJump = true;
+    [SerializeField] private bool canUseHeadBob = true;
+    #endregion
 
-    private float sprintSpeed = 10f;
-
-    private Vector3 velocity;
-
-    private float gravity = -9.81f;
-
-    private Vector2 characterMove;
-
-    [SerializeField]
-    private float jumpHeight = 2f;
-
-    private CharacterController characterController;
+    #region Get_Set
+    public bool getCanMove() => canMove;    
+    public void setCanMove(bool moveAble) => canMove = moveAble;
+    public bool getCanJump() => canJump;
+    public void setCanJump(bool jumpAble) => canJump = jumpAble;
+    public bool getCanUseHeadBob() => canUseHeadBob;
+    public void setCanuseHeadBob(bool headBobUseAble) => canUseHeadBob = headBobUseAble; 
+    #endregion
 
     private bool isGrounded = false;
 
+    #region Player_Physics
+    private Vector3 velocity;
+    private Vector2 characterMove;
+    private CharacterController characterController;
     public Transform groundCheck;
     public LayerMask groundLayer;
+    #endregion
 
     void Awake()
     {
@@ -41,8 +49,14 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         Gravity();
-        Move();
-        Jump();
+        if (canMove)
+        {
+            Move();
+        }
+        if (canJump)
+        {
+            Jump();
+        }
     }
 
     private void Gravity()
