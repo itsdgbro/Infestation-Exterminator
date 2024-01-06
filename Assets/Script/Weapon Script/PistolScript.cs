@@ -26,21 +26,26 @@ public class PistolScript : MonoBehaviour
 
     private void CastRayMuzzle()
     {
-        // Create a ray starting from the object's position and facing forward
         Ray ray = new Ray(muzzle.transform.position, transform.forward);
+        bool hitTarget = Physics.Raycast(ray, out RaycastHit hitInfo, rayLength);
 
-        // Perform the raycast
-        RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo, rayLength))
+        Debug.DrawRay(ray.origin, ray.direction * (hitTarget ? hitInfo.distance : rayLength), hitTarget && hitInfo.collider.CompareTag("Target") ? Color.green : rayColor);
+
+        if (hitTarget)
         {
-            Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.green);
-            Debug.Log("Raycast hit: " + hitInfo.collider.gameObject.name);
-        }
-        else
-        {
-            Debug.DrawRay(ray.origin, ray.direction * rayLength, rayColor);
+            if (hitInfo.collider.CompareTag("Target"))
+            {
+                Debug.Log("Raycast hit a Target: " + hitInfo.collider.gameObject.name);
+                Target target = hitInfo.collider.gameObject.GetComponent<Target>();
+                target?.TakeDamage(damage);
+            }
+            else
+            {
+                Debug.Log("Raycast hit: " + hitInfo.collider.gameObject.name);
+            }
         }
     }
+
 
     private void OnFire()
     {
@@ -48,16 +53,14 @@ public class PistolScript : MonoBehaviour
         {
             if (ammo > 0)
             {
-                Debug.Log("Fired. Ammo left: " + ammo);
-                // Perform shooting logic here
 
-                // Decrease ammo after firing
+                CastRayMuzzle();
+                Debug.Log("Fired. Ammo left: " + ammo);
                 ammo--;
             }
             else
             {
                 Debug.Log("No Ammo Left");
-                // Handle out-of-ammo situation
             }
         }
     }
@@ -65,7 +68,6 @@ public class PistolScript : MonoBehaviour
 
     private void Update()
     {
-        CastRayMuzzle();
         OnFire();
     }
 
