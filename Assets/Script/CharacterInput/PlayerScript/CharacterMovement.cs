@@ -123,7 +123,8 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-    
+
+    #region Enable/Disable
     private void OnEnable()
     {
         playerControls.Enable();
@@ -133,4 +134,5 @@ public class CharacterMovement : MonoBehaviour
     {
         playerControls.Disable();
     }
+    #endregion
 }
