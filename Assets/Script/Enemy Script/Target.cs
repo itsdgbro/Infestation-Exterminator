@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Target : MonoBehaviour
+public class Target : MonoBehaviour, IsTarget
 {
-    #region Target Attributes
+    #region Target Health
     [SerializeField] private float health = 50f;
     #endregion
 
@@ -12,18 +12,6 @@ public class Target : MonoBehaviour
     {
         health -= amount;
         if(health <= 0)
-        {
-            Die();
-        }
-    }
-
-    void Die()
-    {
-        Destroy(gameObject);
-    }
-
-    private void Update()
-    {
-        Debug.Log("+ " +health);
+            Destroy(gameObject);
     }
 }

@@ -23,7 +23,7 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private float walkBobAmount = 0.05f;
     [SerializeField] private float sprintBobSpeed = 18f;
     [SerializeField] private float sprintBobAmount = 0.11f;
-    [SerializeField] private float crouchBobSpeed=  8f;
+    [SerializeField] private float crouchBobSpeed = 8f;
     [SerializeField] private float crouchBobAmount = 0.025f;
     private float defaultYPos = 0;
     private float timer;
@@ -41,7 +41,7 @@ public class PlayerLook : MonoBehaviour
     }
 
     private void Update()
-    {   
+    {
         CursorLockAndUnlock();
         if (Cursor.lockState == CursorLockMode.Locked && characterMovement.getCanMove())
         {
@@ -50,12 +50,12 @@ public class PlayerLook : MonoBehaviour
         }
     }
 
-
+    /*
     // mouse cursor hide and unhide
-   private void CursorLockAndUnlock()
-{
-    if (Input.GetKeyDown(KeyCode.Escape))
+    private void CursorLockAndUnlock()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
             if (Cursor.lockState == CursorLockMode.Locked)
             {
                 Cursor.lockState = CursorLockMode.None;
@@ -74,6 +74,32 @@ public class PlayerLook : MonoBehaviour
             }
         }
     }
+    */
+
+    private void CursorLockAndUnlock()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Transform child = transform.GetChild(2);
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                characterMovement.setCanMove(false);
+                characterMovement.setCanJump(false);
+                child.gameObject.SetActive(false); // Deactivate the parent object
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                characterMovement.setCanMove(true);
+                characterMovement.setCanJump(true);
+                child.gameObject.SetActive(true); // Deactivate the parent object
+            }
+        }
+    }
+
+
 
     // mouse look
     private void Look()

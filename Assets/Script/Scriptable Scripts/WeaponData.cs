@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "Gun", menuName = "Weapon")]
+public class WeaponData : ScriptableObject
+{
+    [Header("Weapon Info")]
+    public new string name;
+
+    [Header("Shooting")]
+    public float damage;
+    public float maxDistance;
+
+    [Header("Ammo Data")]
+    public int magazineSize;
+    public int currentAmmo;
+    public float fireRate;
+    public float reloadTime;
+
+    [HideInInspector] public bool isReloading;
+}
