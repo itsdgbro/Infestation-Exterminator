@@ -18,5 +18,5 @@ MonoBehaviour:
   magazineSize: 5
   currentAmmo: 5
   fireRate: 200
-  reloadTime: 1
+  reloadTime: 2.5
   isReloading: 0

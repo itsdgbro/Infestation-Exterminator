@@ -42,64 +42,12 @@ public class PlayerLook : MonoBehaviour
 
     private void Update()
     {
-        CursorLockAndUnlock();
-        if (Cursor.lockState == CursorLockMode.Locked && characterMovement.getCanMove())
+        if (Time.timeScale > 0)
         {
             Look();
             HeadBob();
         }
     }
-
-    /*
-    // mouse cursor hide and unhide
-    private void CursorLockAndUnlock()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                if (characterMovement != null)
-                {
-                    characterMovement.setCanMove(false);
-                    characterMovement.setCanJump(false);
-                }
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                characterMovement.setCanMove(true);
-                characterMovement.setCanJump(true);
-            }
-        }
-    }
-    */
-
-    private void CursorLockAndUnlock()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Transform child = transform.GetChild(2);
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                characterMovement.setCanMove(false);
-                characterMovement.setCanJump(false);
-                child.gameObject.SetActive(false); // Deactivate the parent object
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                characterMovement.setCanMove(true);
-                characterMovement.setCanJump(true);
-                child.gameObject.SetActive(true); // Deactivate the parent object
-            }
-        }
-    }
-
-
 
     // mouse look
     private void Look()

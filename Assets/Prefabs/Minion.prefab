@@ -104,8 +104,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5394238
-  m_Height: 2.1
+  m_Radius: 0.5
+  m_Height: 1.95
   m_Direction: 1
   m_Center: {x: 0.013617158, y: 0, z: 0.014917254}
 --- !u!1 &4470114468067359738
@@ -118,6 +118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7674979851524087860}
   - component: {fileID: 2623466952039254335}
+  - component: {fileID: 3673490621852237212}
   m_Layer: 0
   m_Name: Minion
   m_TagString: Target
@@ -154,6 +155,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+--- !u!136 &3673490621852237212
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4470114468067359738}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &8709925401053251557
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,5 +281,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.1163162, z: 1.0337929}
+  m_Size: {x: 0.76, y: 0.91, z: 0.85}
   m_Center: {x: 0, y: -0.008399785, z: 0.016896706}

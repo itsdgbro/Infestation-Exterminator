@@ -22,11 +22,13 @@ public class WeaponScript : MonoBehaviour
 
     AudioSource audioSource;
 
+    [SerializeField] private AudioClip pistolDraw;
     [SerializeField] private AudioClip shootSound;
     [SerializeField] private AudioClip emptyClipSound;
     [SerializeField] private AudioClip reloadSound;
 
     float timeSinceLastShot;
+    private bool isAiming;
 
     /*
     #region Bullet
@@ -44,13 +46,16 @@ public class WeaponScript : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void DrawRayFromMuzzle()
+    private void Start()
     {
-        rayFromMuzzle = new(muzzle.transform.position, Camera.main.ViewportPointToRay(muzzleTarget).direction);
+        audioSource.PlayOneShot(pistolDraw);
+        
     }
 
     void ShowRayCast()
     {
+        rayFromMuzzle = new(muzzle.transform.position, Camera.main.ViewportPointToRay(muzzleTarget).direction);
+
         bool hitTarget = Physics.Raycast(rayFromMuzzle, out RaycastHit hitInfo, weaponData.maxDistance);
         // Draw the ray using Debug.DrawRay
         Debug.DrawRay(rayFromMuzzle.origin, rayFromMuzzle.direction * (hitTarget ? hitInfo.distance : weaponData.maxDistance),
@@ -61,7 +66,7 @@ public class WeaponScript : MonoBehaviour
     private void ReloadWeapon()
     {
         if (playerControls.Movement.Reload.triggered)
-            if (!weaponData.isReloading && this.gameObject.activeSelf && weaponData.currentAmmo!=weaponData.magazineSize)
+            if (!weaponData.isReloading && this.gameObject.activeSelf && weaponData.currentAmmo != weaponData.magazineSize)
                 StartCoroutine(ReloadTime());
     }
 
@@ -81,90 +86,74 @@ public class WeaponScript : MonoBehaviour
 
     private bool CanShoot() => !weaponData.isReloading && timeSinceLastShot > 1f / (weaponData.fireRate / 60f);
 
-    private void OnFire()
+    private void AimShoot()
     {
-        if (playerControls.Movement.Fire.triggered)
+        if (CanShoot() && playerControls.Movement.Fire.triggered)
         {
-            if (CanShoot())
-            {
-                if (weaponData.currentAmmo > 0)
-                {
-                    animator.SetBool("isEmpty", false);
-                    audioSource.PlayOneShot(shootSound);
-                    animator.Play("fire");
-
-                    // muzzle flash particles
-                    muzzleFlash.Play();
-
-                    // Target Shoot 
-                    if (Physics.Raycast(rayFromMuzzle, out RaycastHit hitInfo, weaponData.maxDistance))
-                    {
-                        // Get the GameObject that was hit
-                        GameObject hitObject = hitInfo.collider.gameObject;
-
-                        // Try to get the IsTarget component from the hitObject or its ancestors
-                        IsTarget isTarget = hitObject.GetComponentInParent<IsTarget>();
-
-                        // If the hitObject or any of its ancestors has the IsTarget component, apply damage
-                        isTarget?.TakeDamage(weaponData.damage);
-
-                        // bullet prefab
-                        /*
-                        // If the ray hits something, calculate the direction based on the hit point
-                        Vector3 shootDirection = hitInfo.point - muzzle.position;
-                        shootDirection.Normalize();
-
-                        // Instantiate the bullet at the muzzle position
-                        GameObject bullet = Instantiate(bulletPrefab, muzzle.position, Quaternion.identity);
-
-                        // Rotate the bullet to face the direction it's moving
-                        bullet.transform.rotation = Quaternion.LookRotation(shootDirection);
-
-                        // Apply force to the bullet in the determined direction
-                        bullet.GetComponent<Rigidbody>().AddForce(shootDirection * bulletSpeed, ForceMode.Impulse);
-                        */
-
-                    }
-                    else
-                    {
-                        // bullet prefab
-                        /*
-                        // If the ray doesn't hit anything, shoot the bullet forward from the muzzle
-                        GameObject bullet = Instantiate(bulletPrefab, muzzle.position, Quaternion.identity);
-
-                        // Rotate the bullet to face the forward direction (transform.forward)
-                        bullet.transform.rotation = Quaternion.LookRotation(transform.forward);
-
-                        bullet.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
-                        */
-
-                    }
-
-                    Debug.Log("Fired. Ammo left: " + weaponData.currentAmmo);
-                    weaponData.currentAmmo--;
-                    timeSinceLastShot = 0;
-
-                }
-                else
-                {
-                    audioSource.PlayOneShot(emptyClipSound);
-                    animator.SetBool("isEmpty", true);
-                    Debug.Log("No Ammo Left");
-                }
-
-            }
+            CommonFireLogic("ironshot_fire");
         }
     }
 
+    private void OnAdsFire()
+    {
+        if (CanShoot() && playerControls.Movement.Fire.triggered)
+        {
+            CommonFireLogic("fire");
+        }
+    }
+
+    private void CommonFireLogic(string animation)
+    {
+        if (weaponData.currentAmmo > 0)
+        {
+            animator.Play(animation);
+            animator.SetBool("isEmpty", false);
+            audioSource.PlayOneShot(shootSound);
+
+            // muzzle flash particles
+            muzzleFlash.Play();
+
+            if (Physics.Raycast(rayFromMuzzle, out RaycastHit hitInfo, weaponData.maxDistance))
+            {
+                GameObject hitObject = hitInfo.collider.gameObject;
+                IsTarget isTarget = hitObject.GetComponentInParent<IsTarget>();
+                isTarget?.TakeDamage(weaponData.damage);
+            }
+
+            Debug.Log("Fired. Ammo left: " + ((int)weaponData.currentAmmo - 1));
+            weaponData.currentAmmo--;
+            timeSinceLastShot = 0;
+        }
+        else
+        {
+            animator.SetBool("isEmpty", true);
+            audioSource.PlayOneShot(emptyClipSound);
+            Debug.Log("Empty clip.");
+        }
+    }
 
     private void Update()
-    {
+    {   
         timeSinceLastShot += Time.deltaTime;
-        DrawRayFromMuzzle();
+        //DrawRayFromMuzzle();
         ShowRayCast();
-        OnFire();
-        ReloadWeapon();
+
+        isAiming = Input.GetMouseButton(1);
+        animator.SetBool("isAiming", isAiming);
+        if (Time.timeScale > 0)
+        {
+            if (isAiming)
+            {
+                AimShoot();
+            }
+            else
+            {
+                OnAdsFire();
+            }
+            ReloadWeapon();
+        }
     }
+
 
     #region Enable/Disable
     private void OnEnable()
