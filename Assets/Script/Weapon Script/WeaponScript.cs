@@ -18,8 +18,6 @@ public class WeaponScript : MonoBehaviour
     private Ray rayFromMuzzle;
     #endregion
 
-    public ParticleSystem muzzleFlash;
-
     AudioSource audioSource;
 
     [SerializeField] private AudioClip pistolDraw;
@@ -27,7 +25,7 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private AudioClip emptyClipSound;
     [SerializeField] private AudioClip reloadSound;
 
-    float timeSinceLastShot;
+    private float timeSinceLastShot;
     private bool isAiming;
 
     /*
@@ -49,7 +47,7 @@ public class WeaponScript : MonoBehaviour
     private void Start()
     {
         audioSource.PlayOneShot(pistolDraw);
-        
+
     }
 
     void ShowRayCast()
@@ -84,34 +82,47 @@ public class WeaponScript : MonoBehaviour
         weaponData.isReloading = false;
     }
 
-    private bool CanShoot() => !weaponData.isReloading && timeSinceLastShot > 1f / (weaponData.fireRate / 60f);
+    // private bool CanShoot() => !weaponData.isReloading && timeSinceLastShot > 1f / (weaponData.fireRate / 60f);
+    private bool CanShoot() => !weaponData.isReloading && weaponData.currentAmmo > 0 && timeSinceLastShot > 1f / (weaponData.fireRate / 60f);
 
     private void AimShoot()
     {
-        if (CanShoot() && playerControls.Movement.Fire.triggered)
+        if (CanShoot() && weaponData.isAutomatic && playerControls.Movement.Fire.ReadValue<float>() > 0.1f)
         {
             CommonFireLogic("ironshot_fire");
         }
+        else if (CanShoot() && !weaponData.isAutomatic && playerControls.Movement.Fire.triggered)
+        {
+            CommonFireLogic("ironshot_fire");
+        }
+
     }
 
     private void OnAdsFire()
     {
-        if (CanShoot() && playerControls.Movement.Fire.triggered)
+        if (CanShoot() && weaponData.isAutomatic && playerControls.Movement.Fire.ReadValue<float>() > 0.1f)
         {
             CommonFireLogic("fire");
         }
+        else if (CanShoot() && !weaponData.isAutomatic && playerControls.Movement.Fire.triggered)
+        {
+            CommonFireLogic("fire");
+        }
+        else if(!CanShoot() && playerControls.Movement.Fire.triggered)
+        {
+            animator.SetBool("isEmpty", true);
+            audioSource.PlayOneShot(emptyClipSound);
+            Debug.Log("Empty clip.");
+        }
     }
 
-    private void CommonFireLogic(string animation)
+    /*private void CommonFireLogic(string animation)
     {
         if (weaponData.currentAmmo > 0)
         {
             animator.Play(animation);
             animator.SetBool("isEmpty", false);
             audioSource.PlayOneShot(shootSound);
-
-            // muzzle flash particles
-            muzzleFlash.Play();
 
             if (Physics.Raycast(rayFromMuzzle, out RaycastHit hitInfo, weaponData.maxDistance))
             {
@@ -126,19 +137,38 @@ public class WeaponScript : MonoBehaviour
         }
         else
         {
+
             animator.SetBool("isEmpty", true);
             audioSource.PlayOneShot(emptyClipSound);
             Debug.Log("Empty clip.");
-        }
+
+    }
+        }*/
+    private void CommonFireLogic(string animation)
+    {
+            animator.Play(animation);
+            animator.SetBool("isEmpty", false);
+            audioSource.PlayOneShot(shootSound);
+
+            if (Physics.Raycast(rayFromMuzzle, out RaycastHit hitInfo, weaponData.maxDistance))
+            {
+                GameObject hitObject = hitInfo.collider.gameObject;
+                IsTarget isTarget = hitObject.GetComponentInParent<IsTarget>();
+                isTarget?.TakeDamage(weaponData.damage);
+            }
+
+            Debug.Log("Fired. Ammo left: " + ((int)weaponData.currentAmmo - 1));
+            weaponData.currentAmmo--;
+            timeSinceLastShot = 0;
     }
 
     private void Update()
-    {   
+    {
         timeSinceLastShot += Time.deltaTime;
         //DrawRayFromMuzzle();
         ShowRayCast();
 
-        isAiming = Input.GetMouseButton(1);
+        isAiming = playerControls.Movement.Aim.ReadValue<float>() > 0.1f;
         animator.SetBool("isAiming", isAiming);
         if (Time.timeScale > 0)
         {

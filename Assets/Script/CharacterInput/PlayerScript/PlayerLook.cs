@@ -67,13 +67,13 @@ public class PlayerLook : MonoBehaviour
     // subtle head(camera) movement
     private void HeadBob()
     {
-        if (!characterMovement.getIsGrounded()) return;
-        if (Mathf.Abs(characterMovement.getVelocity().x) > 0.1f || Mathf.Abs(characterMovement.getVelocity().z) > 0.1f)
+        if (!characterMovement.GetIsGrounded()) return;
+        if (Mathf.Abs(characterMovement.GetVelocity().x) > 0.1f || Mathf.Abs(characterMovement.GetVelocity().z) > 0.1f)
         {
-            timer += Time.deltaTime * (characterMovement.getIsCrouching() ? crouchBobSpeed : characterMovement.getIsSprinting() ? sprintBobSpeed : walkBobSpeed);
+            timer += Time.deltaTime * (characterMovement.GetIsCrouching() ? crouchBobSpeed : characterMovement.GetIsSprinting() ? sprintBobSpeed : walkBobSpeed);
             playerCamera.transform.localPosition = new Vector3(
                 playerCamera.transform.localPosition.x,
-                defaultYPos + Mathf.Sin(timer) * (characterMovement.getIsCrouching() ? crouchBobAmount : characterMovement.getIsSprinting() ? sprintBobAmount : walkBobAmount),
+                defaultYPos + Mathf.Sin(timer) * (characterMovement.GetIsCrouching() ? crouchBobAmount : characterMovement.GetIsSprinting() ? sprintBobAmount : walkBobAmount),
                 playerCamera.transform.localPosition.z);
         }
     }

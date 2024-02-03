@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CharacterMovement : MonoBehaviour
-{   
+{
 
     private PlayerControls playerControls;
     private bool isGrounded = false;
@@ -17,28 +17,15 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float jumpHeight = 2f;
     #endregion
 
-    #region Player_Can
-    [SerializeField] private bool canMove = true;
-    [SerializeField] private bool canJump = true;
-    [SerializeField] private bool canUseHeadBob = true;
+    #region get_set
+    public bool GetIsGrounded() => isGrounded;
+    public void SetIsGrounded(bool isGrounded) => this.isGrounded = isGrounded;
+    public Vector3 GetVelocity() => velocity;
+    public bool GetIsSprinting() => isSprinting;
+    public void SetIsSprinting(bool isSprinting) => this.isSprinting = isSprinting;
+    public bool GetIsCrouching() => isCrouching;
+    public void SetIsCrouching(bool isCrouching) => this.isCrouching = isCrouching;
     #endregion
-
-    #region Get_Set
-    public bool getCanMove() => canMove;    
-    public void setCanMove(bool moveAble) => canMove = moveAble;
-    public bool getCanJump() => canJump;
-    public void setCanJump(bool jumpAble) => canJump = jumpAble;
-    public bool getCanUseHeadBob() => canUseHeadBob;
-    public void setCanuseHeadBob(bool headBobUseAble) => canUseHeadBob = headBobUseAble; 
-    public bool getIsGrounded() => isGrounded;
-    public void setIsGrounded(bool isGrounded) => this.isGrounded = isGrounded;
-    public Vector3 getVelocity() => velocity;
-    public bool getIsSprinting() => isSprinting;
-    public bool setIsSprinting(bool isSprinting) => this.isSprinting = isSprinting;
-    public bool getIsCrouching() => isCrouching;
-    public bool setIsCrouching(bool isCrouching) => this.isCrouching = isCrouching;
-    #endregion
-
 
 
     #region Player_Physics
@@ -59,14 +46,9 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         Gravity();
-        if (canMove)
-        {
-            Move();
-        }
-        if (canJump)
-        {
-            Jump();
-        }
+        Move();
+        Jump();
+
     }
 
     private void Gravity()
@@ -116,7 +98,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void Jump()
     {
-        if(playerControls.Movement.Jump.triggered && isGrounded)
+        if (playerControls.Movement.Jump.triggered && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }

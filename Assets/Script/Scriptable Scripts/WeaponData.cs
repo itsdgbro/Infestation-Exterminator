@@ -17,7 +17,7 @@ public class WeaponData : ScriptableObject
     public int currentAmmo;
     public float fireRate;
     public float reloadTime;
-
+    public bool isAutomatic;
 
     [HideInInspector] public bool isReloading;
 }
