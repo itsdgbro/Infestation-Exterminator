@@ -51,7 +51,7 @@ ModelImporter:
       name: DrawAR
       takeName: CINEMA_4D_Main
       internalID: -1498010087492872569
-      firstFrame: 133
+      firstFrame: 143
       lastFrame: 180
       wrapMode: 0
       orientationOffsetY: 0
@@ -135,9 +135,38 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: carbine
+      name: AR_Hide
       takeName: CINEMA_4D_Main
       internalID: -1144997352311231146
+      firstFrame: 133
+      lastFrame: 143
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: carbine (1)
+      takeName: CINEMA_4D_Main
+      internalID: 8806299671297715476
       firstFrame: 0
       lastFrame: 222
       wrapMode: 0

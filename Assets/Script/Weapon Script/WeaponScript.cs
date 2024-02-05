@@ -20,7 +20,7 @@ public class WeaponScript : MonoBehaviour
 
     AudioSource audioSource;
 
-    [SerializeField] private AudioClip pistolDraw;
+    [SerializeField] private AudioClip weaponDraw;
     [SerializeField] private AudioClip shootSound;
     [SerializeField] private AudioClip emptyClipSound;
     [SerializeField] private AudioClip reloadSound;
@@ -46,7 +46,7 @@ public class WeaponScript : MonoBehaviour
 
     private void Start()
     {
-        audioSource.PlayOneShot(pistolDraw);
+        audioSource.PlayOneShot(weaponDraw);
 
     }
 
@@ -108,7 +108,7 @@ public class WeaponScript : MonoBehaviour
         {
             CommonFireLogic("fire");
         }
-        else if(!CanShoot() && playerControls.Movement.Fire.triggered)
+        else if(weaponData.currentAmmo == 0 && playerControls.Movement.Fire.triggered)
         {
             animator.SetBool("isEmpty", true);
             audioSource.PlayOneShot(emptyClipSound);
