@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
@@ -20,13 +18,15 @@ public class WeaponScript : MonoBehaviour
 
     AudioSource audioSource;
 
-    [SerializeField] private AudioClip weaponDraw;
+    [Header("Aduio Clips")]
     [SerializeField] private AudioClip shootSound;
     [SerializeField] private AudioClip emptyClipSound;
     [SerializeField] private AudioClip reloadSound;
 
     private float timeSinceLastShot;
     private bool isAiming;
+
+    public Camera fpsCam;
 
     /*
     #region Bullet
@@ -44,22 +44,40 @@ public class WeaponScript : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void Start()
-    {
-        audioSource.PlayOneShot(weaponDraw);
-
-    }
-
+    // show ray from muzzle
     void ShowRayCast()
     {
         rayFromMuzzle = new(muzzle.transform.position, Camera.main.ViewportPointToRay(muzzleTarget).direction);
 
         bool hitTarget = Physics.Raycast(rayFromMuzzle, out RaycastHit hitInfo, weaponData.maxDistance);
-        // Draw the ray using Debug.DrawRay
+
         Debug.DrawRay(rayFromMuzzle.origin, rayFromMuzzle.direction * (hitTarget ? hitInfo.distance : weaponData.maxDistance),
             hitTarget && hitInfo.collider.CompareTag("Target") ? Color.green : Color.red);
 
     }
+
+    /*    
+       private void OnDrawGizmos()
+        {
+            RaycastHit hit;
+            Vector3 rayOrigin = fpsCam.transform.position;
+            Vector3 rayDirection = fpsCam.transform.forward;
+            if (Physics.Raycast(rayOrigin, rayDirection, out hit, weaponData.maxDistance))
+            {
+                // Draw the ray using Gizmos
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(rayOrigin, hit.point);
+
+                Debug.Log("Hit Object Name: " + hit.collider.gameObject.name);
+
+            }
+            else
+            {
+                // Draw the ray if it doesn't hit anything
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(rayOrigin, rayOrigin + rayDirection * 100f); // Adjust the length as needed
+            }
+        }*/
 
     private void ReloadWeapon()
     {
@@ -82,7 +100,12 @@ public class WeaponScript : MonoBehaviour
         weaponData.isReloading = false;
     }
 
-    // private bool CanShoot() => !weaponData.isReloading && timeSinceLastShot > 1f / (weaponData.fireRate / 60f);
+    private void GunIsEmpty()
+    {
+        animator.SetBool("isEmpty", true);
+        audioSource.PlayOneShot(emptyClipSound);
+    }
+
     private bool CanShoot() => !weaponData.isReloading && weaponData.currentAmmo > 0 && timeSinceLastShot > 1f / (weaponData.fireRate / 60f);
 
     private void AimShoot()
@@ -95,8 +118,12 @@ public class WeaponScript : MonoBehaviour
         {
             CommonFireLogic("ironshot_fire");
         }
-
+        else if (weaponData.currentAmmo == 0 && playerControls.Movement.Fire.triggered)
+        {
+            GunIsEmpty();
+        }
     }
+
 
     private void OnAdsFire()
     {
@@ -108,58 +135,32 @@ public class WeaponScript : MonoBehaviour
         {
             CommonFireLogic("fire");
         }
-        else if(weaponData.currentAmmo == 0 && playerControls.Movement.Fire.triggered)
+        else if (weaponData.currentAmmo == 0 && playerControls.Movement.Fire.triggered)
         {
-            animator.SetBool("isEmpty", true);
-            audioSource.PlayOneShot(emptyClipSound);
-            Debug.Log("Empty clip.");
+            GunIsEmpty();
         }
     }
 
-    /*private void CommonFireLogic(string animation)
-    {
-        if (weaponData.currentAmmo > 0)
-        {
-            animator.Play(animation);
-            animator.SetBool("isEmpty", false);
-            audioSource.PlayOneShot(shootSound);
-
-            if (Physics.Raycast(rayFromMuzzle, out RaycastHit hitInfo, weaponData.maxDistance))
-            {
-                GameObject hitObject = hitInfo.collider.gameObject;
-                IsTarget isTarget = hitObject.GetComponentInParent<IsTarget>();
-                isTarget?.TakeDamage(weaponData.damage);
-            }
-
-            Debug.Log("Fired. Ammo left: " + ((int)weaponData.currentAmmo - 1));
-            weaponData.currentAmmo--;
-            timeSinceLastShot = 0;
-        }
-        else
-        {
-
-            animator.SetBool("isEmpty", true);
-            audioSource.PlayOneShot(emptyClipSound);
-            Debug.Log("Empty clip.");
-
-    }
-        }*/
     private void CommonFireLogic(string animation)
     {
-            animator.Play(animation);
-            animator.SetBool("isEmpty", false);
-            audioSource.PlayOneShot(shootSound);
+        animator.Play(animation);
+        animator.SetBool("isEmpty", false);
+        audioSource.PlayOneShot(shootSound);
 
-            if (Physics.Raycast(rayFromMuzzle, out RaycastHit hitInfo, weaponData.maxDistance))
-            {
-                GameObject hitObject = hitInfo.collider.gameObject;
-                IsTarget isTarget = hitObject.GetComponentInParent<IsTarget>();
-                isTarget?.TakeDamage(weaponData.damage);
-            }
+        // shooting from camera to crosshair for accuracy
+        Vector3 rayOrigin = fpsCam.transform.position;
+        Vector3 rayDirection = fpsCam.transform.forward;
 
-            Debug.Log("Fired. Ammo left: " + ((int)weaponData.currentAmmo - 1));
-            weaponData.currentAmmo--;
-            timeSinceLastShot = 0;
+        if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hitInfo, weaponData.maxDistance))
+        {
+            GameObject hitObject = hitInfo.collider.gameObject;
+            IsTarget isTarget = hitObject.GetComponentInParent<IsTarget>();
+            isTarget?.TakeDamage(weaponData.damage);
+        }
+
+        Debug.Log("Fired. Ammo left: " + ((int)weaponData.currentAmmo - 1));
+        weaponData.currentAmmo--;
+        timeSinceLastShot = 0;
     }
 
     private void Update()

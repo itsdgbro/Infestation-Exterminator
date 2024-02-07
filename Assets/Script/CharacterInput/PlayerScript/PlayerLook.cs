@@ -28,8 +28,7 @@ public class PlayerLook : MonoBehaviour
     private float defaultYPos = 0;
     private float timer;
     #endregion
-
-
+    
     private void Awake()
     {
         player = transform.parent;
@@ -45,7 +44,10 @@ public class PlayerLook : MonoBehaviour
         if (Time.timeScale > 0)
         {
             Look();
-            HeadBob();
+            if(!IsAiming())
+            {
+                HeadBob();
+            }
         }
     }
 
@@ -76,6 +78,11 @@ public class PlayerLook : MonoBehaviour
                 defaultYPos + Mathf.Sin(timer) * (characterMovement.GetIsCrouching() ? crouchBobAmount : characterMovement.GetIsSprinting() ? sprintBobAmount : walkBobAmount),
                 playerCamera.transform.localPosition.z);
         }
+    }
+
+    private bool IsAiming()
+    {
+        return playerControls.Movement.Aim.ReadValue<float>() > 0.1f;
     }
 
     private void OnEnable()

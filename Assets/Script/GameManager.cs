@@ -7,11 +7,11 @@ public class GameManager : MonoBehaviour
     private bool isGamePaused = false;
     [SerializeField] private GameObject pauseMenu;
 
-
     private void Awake()
     {
         SetCursorState();
         pauseMenu.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {   
+            Debug.Log(isGamePaused);
             TogglePauseState();
         }
     }
@@ -39,18 +40,19 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
+        Debug.Log("PAused");
         pauseMenu.SetActive(true);
-        isGamePaused = true;
         Time.timeScale = 0.0f;
-        SetCursorState();
+        isGamePaused = true;
         SetCursorState();
     }
 
     public void ResumeGame()
     {
+        Debug.Log("Resumee");
         pauseMenu.SetActive(false);
-        isGamePaused = false;
         Time.timeScale = 1.0f;
+        isGamePaused = false;
         SetCursorState();
     }
 
@@ -64,5 +66,10 @@ public class GameManager : MonoBehaviour
         {
             PauseGame();
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
