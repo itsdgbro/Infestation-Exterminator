@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cbd403eaefca8f3448689cd6964a9159
+guid: 5f1499072dc02254fb18ef3afa354c59
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Mat
-    second: {fileID: 2100000, guid: f37e547fa6ef511448aba56186d1359b, type: 2}
+      name: arms
+    second: {fileID: 2100000, guid: 4b933b8f545db664893b937b275680a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: crowbar
+    second: {fileID: 2100000, guid: a61e638083de09a4484dbc02051ce15a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -38,11 +43,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: ReloadA
+      name: crowbar
       takeName: CINEMA_4D_Main
       internalID: -1498010087492872569
-      firstFrame: 9
-      lastFrame: 64
+      firstFrame: 0
+      lastFrame: 137
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -67,11 +72,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ReloadB
+      name: crowbar_Draw
       takeName: CINEMA_4D_Main
-      internalID: 5391706343884137559
-      firstFrame: 65
-      lastFrame: 130
+      internalID: -119753138820086457
+      firstFrame: 125
+      lastFrame: 137
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -96,11 +101,98 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: shoot
+      name: crowbar_Idle
       takeName: CINEMA_4D_Main
-      internalID: 8761993077773505325
-      firstFrame: 224
-      lastFrame: 234
+      internalID: 8986321912354238138
+      firstFrame: 0
+      lastFrame: 35
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: crowbar_Attack
+      takeName: CINEMA_4D_Main
+      internalID: 4699052508549829097
+      firstFrame: 35
+      lastFrame: 55
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: crowbar_AttackR
+      takeName: CINEMA_4D_Main
+      internalID: -6878627296668381474
+      firstFrame: 55
+      lastFrame: 75
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: crowbar_AttackL
+      takeName: CINEMA_4D_Main
+      internalID: 7607129631169154343
+      firstFrame: 75
+      lastFrame: 95
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
