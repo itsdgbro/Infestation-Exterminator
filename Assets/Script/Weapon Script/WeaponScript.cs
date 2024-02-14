@@ -24,17 +24,8 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private AudioClip reloadSound;
 
     private float timeSinceLastShot;
-    private bool isAiming;
-
+    [HideInInspector]public bool isAiming;
     public Camera fpsCam;
-
-    /*
-    #region Bullet
-    [Header("Bullet Parameters")]
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private int bulletSpeed = 500;
-    #endregion
-    */
 
     private void Awake()
     {
@@ -184,7 +175,6 @@ public class WeaponScript : MonoBehaviour
             ReloadWeapon();
         }
     }
-
 
     #region Enable/Disable
     private void OnEnable()

@@ -4,16 +4,15 @@ namespace FSR
 {
     public class FSR_SimpleSurface : MonoBehaviour
     {
-        [SerializeField]private FSR_Data data;
-        [SerializeField]private string surfaceName;
-
-
+        [SerializeField] private FSR_Data data;
+        [SerializeField] private string surfaceName;
 
         public string GetSurface()
         {
             bool mismatch = true;
 
-            foreach (FSR_Data.SurfaceType surface in data.surfaces){
+            foreach (FSR_Data.SurfaceType surface in data.surfaces)
+            {
 
                 if (surface.name.Equals(surfaceName))
                 {

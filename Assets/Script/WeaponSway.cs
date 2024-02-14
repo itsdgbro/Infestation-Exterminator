@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponSway : MonoBehaviour
@@ -8,8 +9,11 @@ public class WeaponSway : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float sensitivityMultiplier;
 
+
     private void Update()
     {
+
+        
         // get mouse input
         float mouseX = Input.GetAxisRaw("Mouse X") * sensitivityMultiplier;
         float mouseY = Input.GetAxisRaw("Mouse Y") * sensitivityMultiplier;
@@ -21,4 +25,6 @@ public class WeaponSway : MonoBehaviour
 
         transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, speed * Time.deltaTime);
     }
+
+
 }

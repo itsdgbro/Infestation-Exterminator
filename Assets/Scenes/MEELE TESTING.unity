@@ -2856,7 +2856,7 @@ MonoBehaviour:
   weaponDraw:
   - {fileID: 8300000, guid: 4e64c13558a47e142913a5fea027c52a, type: 3}
   - {fileID: 8300000, guid: 65496539dcbb535449214bbb6a4ef286, type: 3}
-  - {fileID: 8300000, guid: 65496539dcbb535449214bbb6a4ef286, type: 3}
+  - {fileID: 8300000, guid: b85d789f08718934f984d0482e955120, type: 3}
 --- !u!1 &2346012526548887316
 GameObject:
   m_ObjectHideFlags: 0
@@ -3862,20 +3862,6 @@ Transform:
   - {fileID: 4529190341170823109}
   m_Father: {fileID: 7253867148221044871}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3219603699699632360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5529040534066046909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4bee6755f6faf74f969e8c4bf6f7dee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  sensitivityMultiplier: 1.5
 --- !u!4 &3229746635736064002
 Transform:
   m_ObjectHideFlags: 0
@@ -4793,8 +4779,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4bee6755f6faf74f969e8c4bf6f7dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  sensitivityMultiplier: 1.5
+  speed: 5
+  sensitivityMultiplier: 0.5
 --- !u!4 &4196217150133608645
 Transform:
   m_ObjectHideFlags: 0
@@ -5687,8 +5673,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4bee6755f6faf74f969e8c4bf6f7dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
-  sensitivityMultiplier: 1.5
+  speed: 10
+  sensitivityMultiplier: 0.3
 --- !u!1 &5311905092144894892
 GameObject:
   m_ObjectHideFlags: 0
@@ -5984,7 +5970,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4597690583824821404}
   - component: {fileID: 7965031493853761726}
-  - component: {fileID: 3219603699699632360}
   - component: {fileID: 2100111583748273549}
   - component: {fileID: 919132148589873240}
   m_Layer: 6
@@ -7543,6 +7528,7 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: 39e1c21d33332fe4da933d69e90a100d, type: 3}
   emptyClipSound: {fileID: 8300000, guid: 03fd1a61475f387428d43bb209022367, type: 3}
   reloadSound: {fileID: 8300000, guid: 83daa2d40746d424e8551c006b9f0a94, type: 3}
+  isAiming: 0
   fpsCam: {fileID: 4705930228818095707}
 --- !u!33 &6998828964951527731
 MeshFilter:
@@ -9056,6 +9042,7 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: 7a7e2f1cc81928344a58358f8569fd25, type: 3}
   emptyClipSound: {fileID: 8300000, guid: 03fd1a61475f387428d43bb209022367, type: 3}
   reloadSound: {fileID: 8300000, guid: 749e6417b50b3fb4b9cd51f4dfc982fa, type: 3}
+  isAiming: 0
   fpsCam: {fileID: 4705930228818095707}
 --- !u!4 &8473278740007346582
 Transform:

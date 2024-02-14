@@ -10,7 +10,7 @@ namespace FSR
         private IndexTerrain indexTerrain = new IndexTerrain();
         [SerializeField] private FSR_Data data;
 
-        [Obsolete]
+        
         public String GetSurface(Vector3 playerPosition)
         {
             
@@ -29,7 +29,6 @@ namespace FSR
                         }
                     }
 
-
                     if (!mismatch)
                     {
                         return surfaceName[1];
@@ -38,10 +37,6 @@ namespace FSR
                     {
                         throw new UnityException("looks like you have mismatching surfaces names, make sure all the surfaces components have the same name specified in the FSR data");
                     }
-
-
-            
-
         }
     }
 }

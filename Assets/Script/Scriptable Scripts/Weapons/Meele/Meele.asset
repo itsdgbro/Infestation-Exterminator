@@ -15,4 +15,4 @@ MonoBehaviour:
   name: CrowBar
   damage: 8
   maxDistance: 5
-  fireRate: 0.75
+  fireRate: 0.5
