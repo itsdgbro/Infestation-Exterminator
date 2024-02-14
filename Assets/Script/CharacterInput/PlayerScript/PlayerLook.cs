@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class PlayerLook : MonoBehaviour
 {
     private PlayerControls playerControls;
-    private CharacterMovement characterMovement;
     [SerializeField] private Camera playerCamera;
 
     #region Player_look
@@ -16,25 +15,11 @@ public class PlayerLook : MonoBehaviour
     private float xRoation = 0f;
     private Transform player;
     #endregion
-
-    #region Camera_Bob
-    [Header("HeadBob Parameters")]
-    [SerializeField] private float walkBobSpeed = 14f;
-    [SerializeField] private float walkBobAmount = 0.05f;
-    [SerializeField] private float sprintBobSpeed = 18f;
-    [SerializeField] private float sprintBobAmount = 0.11f;
-    [SerializeField] private float crouchBobSpeed = 8f;
-    [SerializeField] private float crouchBobAmount = 0.025f;
-    private float defaultYPos = 0;
-    private float timer;
-    #endregion
     
     private void Awake()
     {
         player = transform.parent;
         playerControls = new PlayerControls();
-        characterMovement = GetComponentInParent<CharacterMovement>();
-        defaultYPos = playerCamera.transform.localPosition.y;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -44,10 +29,7 @@ public class PlayerLook : MonoBehaviour
         if (Time.timeScale > 0)
         {
             Look();
-            if(!IsAiming())
-            {
-                HeadBob();
-            }
+            
         }
     }
 
@@ -66,25 +48,7 @@ public class PlayerLook : MonoBehaviour
         player.Rotate(Vector3.up * mouseX);
     }
 
-    // subtle head(camera) movement
-    private void HeadBob()
-    {
-        if (!characterMovement.GetIsGrounded()) return;
-        if (Mathf.Abs(characterMovement.GetVelocity().x) > 0.1f || Mathf.Abs(characterMovement.GetVelocity().z) > 0.1f)
-        {
-            timer += Time.deltaTime * (characterMovement.GetIsCrouching() ? crouchBobSpeed : characterMovement.GetIsSprinting() ? sprintBobSpeed : walkBobSpeed);
-            playerCamera.transform.localPosition = new Vector3(
-                playerCamera.transform.localPosition.x,
-                defaultYPos + Mathf.Sin(timer) * (characterMovement.GetIsCrouching() ? crouchBobAmount : characterMovement.GetIsSprinting() ? sprintBobAmount : walkBobAmount),
-                playerCamera.transform.localPosition.z);
-        }
-    }
-
-    private bool IsAiming()
-    {
-        return playerControls.Movement.Aim.ReadValue<float>() > 0.1f;
-    }
-
+    
     private void OnEnable()
     {
         playerControls.Enable();

@@ -11,10 +11,10 @@ public class CharacterMovement : MonoBehaviour
 
     #region Player_Attributes
     [Header("Player Attributes")]
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float sprintSpeed = 10f;
-    [SerializeField] private float gravity = -9.81f;
-    [SerializeField] private float jumpHeight = 2f;
+    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float sprintSpeed = 3.2f;
+    [SerializeField] private float gravity = -20f;
+    [SerializeField] private float jumpHeight = 1.5f;
     #endregion
 
     #region get_set
@@ -36,19 +36,36 @@ public class CharacterMovement : MonoBehaviour
     public LayerMask groundLayer;
     #endregion
 
+    #region Animator
+    private Animator animator;
+    #endregion
+
+    #region FootSpets
+    private Footsteps footsteps;
+    #endregion
+
     void Awake()
     {
         playerControls = new PlayerControls();
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        footsteps = GetComponentInChildren<Footsteps>();
     }
 
+    private void Start()
+    {
+        Gravity();
+    }
 
     void Update()
     {
         Gravity();
         Move();
-        Jump();
-
+        if (!isCrouching)
+        {
+            Jump();
+        }
+        Crouch();
     }
 
     private void Gravity()
@@ -75,16 +92,17 @@ public class CharacterMovement : MonoBehaviour
 
         float maxSpeed = moveSpeed; // Default to regular move speed
 
+        // bool check if spring key is pressed
+        isSprinting = playerControls.Movement.Sprint.ReadValue<float>() > 0.1f;
         // Check if sprint button is being held down and the player is moving forward
-        if (playerControls.Movement.Sprint.ReadValue<float>() > 0.1f && characterMove.y > 0.1f)
-        {
+        if (isSprinting && characterMove.y > 0.1f && isCrouching == false)
             maxSpeed = sprintSpeed; // Set the speed to sprintSpeed
-            isSprinting = true;
-        }
-        else
-        {
-            isSprinting = false;
-        }
+        // if crouching decrease speed by half
+        else if (characterMove.y > 0.1f && isCrouching)
+            maxSpeed = moveSpeed / 2;
+        // if aiming (ads)
+        else if (IsAiming())
+            maxSpeed = moveSpeed / 1.5f;
 
         // Update velocity for horizontal movement
         Vector3 horizontalVelocity = movement * maxSpeed;
@@ -104,6 +122,18 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    private void Crouch()
+    {
+        isCrouching = playerControls.Movement.Crouch.ReadValue<float>() > 0.1f;
+        animator.SetBool("isCrouching", isCrouching);
+        characterController.height = 1.5f;
+
+    }
+
+    public bool IsAiming()
+    {
+        return playerControls.Movement.Aim.ReadValue<float>() > 0.5f;
+    }
 
 
     #region Enable/Disable
