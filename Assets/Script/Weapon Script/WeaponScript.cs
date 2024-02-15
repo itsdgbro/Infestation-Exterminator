@@ -15,6 +15,7 @@ public class WeaponScript : MonoBehaviour
     private Vector3 muzzleTarget = new(0.5f, 0.5f, 0f);
     private Ray rayFromMuzzle;
     #endregion
+    [SerializeField] private new ParticleSystem particleSystem;
 
     AudioSource audioSource;
 
@@ -24,7 +25,7 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private AudioClip reloadSound;
 
     private float timeSinceLastShot;
-    [HideInInspector]public bool isAiming;
+    [HideInInspector] public bool isAiming;
     public Camera fpsCam;
 
     private void Awake()
@@ -34,6 +35,7 @@ public class WeaponScript : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
     }
+
 
     // show ray from muzzle
     void ShowRayCast()
@@ -104,10 +106,12 @@ public class WeaponScript : MonoBehaviour
         if (CanShoot() && weaponData.isAutomatic && playerControls.Movement.Fire.ReadValue<float>() > 0.1f)
         {
             CommonFireLogic("ironshot_fire");
+            PlayParticleEffect();
         }
         else if (CanShoot() && !weaponData.isAutomatic && playerControls.Movement.Fire.triggered)
         {
             CommonFireLogic("ironshot_fire");
+            PlayParticleEffect();
         }
         else if (weaponData.currentAmmo == 0 && playerControls.Movement.Fire.triggered)
         {
@@ -121,10 +125,12 @@ public class WeaponScript : MonoBehaviour
         if (CanShoot() && weaponData.isAutomatic && playerControls.Movement.Fire.ReadValue<float>() > 0.1f)
         {
             CommonFireLogic("fire");
+            PlayParticleEffect();
         }
         else if (CanShoot() && !weaponData.isAutomatic && playerControls.Movement.Fire.triggered)
         {
             CommonFireLogic("fire");
+            PlayParticleEffect();
         }
         else if (weaponData.currentAmmo == 0 && playerControls.Movement.Fire.triggered)
         {
@@ -154,11 +160,21 @@ public class WeaponScript : MonoBehaviour
         timeSinceLastShot = 0;
     }
 
+    // Method to be called from the animation event
+    public void PlayParticleEffect()
+    {
+        if (particleSystem != null)
+        {
+            particleSystem.Play();
+        }
+    }
+
     private void Update()
     {
         timeSinceLastShot += Time.deltaTime;
         //DrawRayFromMuzzle();
         ShowRayCast();
+
 
         isAiming = playerControls.Movement.Aim.ReadValue<float>() > 0.1f;
         animator.SetBool("isAiming", isAiming);
