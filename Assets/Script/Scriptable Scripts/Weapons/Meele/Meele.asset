@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: CrowBar
   damage: 8
-  maxDistance: 5
+  maxDistance: 1
   fireRate: 0.5
