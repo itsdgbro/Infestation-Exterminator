@@ -78,14 +78,25 @@ public class MeeleScript : MonoBehaviour
 
     public void AttackHoleEffect()
     {
-        if (hitInfo.collider.CompareTag("Environment"))
+        if (hitInfo.collider != null)
         {
-            GameObject impact = Instantiate(attackHolePrefab, hitInfo.point, Quaternion.identity);
-            impact.transform.rotation = Quaternion.FromToRotation(Vector3.forward, hitInfo.normal);
+            if (hitInfo.collider.CompareTag("Target"))
+            {
+                Debug.Log("HIT ENEMY");
+            }
+            else if (hitInfo.collider.CompareTag("Environment"))
+            {
+                GameObject impact = Instantiate(attackHolePrefab, hitInfo.point, Quaternion.identity);
+                impact.transform.rotation = Quaternion.FromToRotation(Vector3.forward, hitInfo.normal);
 
-            impact.transform.Translate(hitInfo.normal * 0.02f, Space.World);
+                impact.transform.Translate(hitInfo.normal * 0.02f, Space.World);
 
-            Destroy(impact, 2f);
+                Destroy(impact, 2f);
+            }
+            else
+            {
+                return;
+            }
         }
     }
 
