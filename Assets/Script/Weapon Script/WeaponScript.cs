@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
@@ -16,6 +17,7 @@ public class WeaponScript : MonoBehaviour
     private Ray rayFromMuzzle;
     #endregion
     [SerializeField] private new ParticleSystem particleSystem;
+    [SerializeField] private GameObject bulletHolePrefab;
 
     AudioSource audioSource;
 
@@ -153,6 +155,7 @@ public class WeaponScript : MonoBehaviour
             GameObject hitObject = hitInfo.collider.gameObject;
             IsTarget isTarget = hitObject.GetComponentInParent<IsTarget>();
             isTarget?.TakeDamage(weaponData.damage);
+            BulletHoleEffect(hitInfo);
         }
 
         Debug.Log("Fired. Ammo left: " + ((int)weaponData.currentAmmo - 1));
@@ -168,6 +171,21 @@ public class WeaponScript : MonoBehaviour
             particleSystem.Play();
         }
     }
+
+    private void BulletHoleEffect(RaycastHit hit)
+    {
+        if (hit.collider.CompareTag("Environment"))
+        {
+            GameObject impact = Instantiate(bulletHolePrefab, hit.point, Quaternion.identity);
+            impact.transform.rotation = Quaternion.FromToRotation(Vector3.forward, hit.normal);
+
+            impact.transform.Translate(hit.normal * 0.02f, Space.World);
+
+            Destroy(impact, 2f);
+        }
+
+    }
+
 
     private void Update()
     {

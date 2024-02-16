@@ -10106,67 +10106,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 432b5c047b4050d4899525f31088f74c, type: 2}
   surfaceName: METAL
---- !u!1001 &1941217881
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 123834214367214253, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_Name
-      value: PlayerPrefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 123834214367214253, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.00000011920929
-      objectReference: {fileID: 0}
-    - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6682608676304730956, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6eb42d006145d85499cb93a8de0e0329, type: 3}
 --- !u!1 &1958360577
 GameObject:
   m_ObjectHideFlags: 0
@@ -13251,6 +13190,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 78ed6642c3def8440b821f9ac674209f, type: 2}
   muzzle: {fileID: 7523954052961033276}
   particleSystem: {fileID: 1234637120}
+  bulletHolePrefab: {fileID: 1052032640996898258, guid: 27e0507b82029d84cb547ee50519b48a, type: 3}
   shootSound: {fileID: 8300000, guid: 39e1c21d33332fe4da933d69e90a100d, type: 3}
   emptyClipSound: {fileID: 8300000, guid: 03fd1a61475f387428d43bb209022367, type: 3}
   reloadSound: {fileID: 8300000, guid: 83daa2d40746d424e8551c006b9f0a94, type: 3}
@@ -19228,6 +19168,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: de6e75ca6a8f4b4498e25103a3998fa3, type: 2}
   muzzle: {fileID: 3479445764466832532}
   particleSystem: {fileID: 333232715}
+  bulletHolePrefab: {fileID: 1052032640996898258, guid: 27e0507b82029d84cb547ee50519b48a, type: 3}
   shootSound: {fileID: 8300000, guid: 7a7e2f1cc81928344a58358f8569fd25, type: 3}
   emptyClipSound: {fileID: 8300000, guid: 03fd1a61475f387428d43bb209022367, type: 3}
   reloadSound: {fileID: 8300000, guid: 749e6417b50b3fb4b9cd51f4dfc982fa, type: 3}
@@ -19389,4 +19330,3 @@ SceneRoots:
   - {fileID: 1512588286}
   - {fileID: 6914257160561797160}
   - {fileID: 1958360581}
-  - {fileID: 1941217881}
