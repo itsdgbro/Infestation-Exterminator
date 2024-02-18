@@ -6,23 +6,18 @@ using UnityEngine.AI;
 
 public class FieldOfView : MonoBehaviour
 {
-    [SerializeField] private float viewRadius;
-    [Range(0, 360)]
-    [SerializeField] private float viewAngle;
-
-
-    [SerializeField] private LayerMask targetMask;
-    [SerializeField] private LayerMask obstacleMask;
+    [SerializeField] private ZombieData zombieData;
     [SerializeField] private Transform eyes;
-    
+
     // Player transform
     private Transform target;
-
     private NavMeshAgent agent;
+    Animator animator;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>();
     }
 
 
@@ -42,7 +37,7 @@ public class FieldOfView : MonoBehaviour
 
     void FindVisibleTargets()
     {
-        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, zombieData.viewRadius, zombieData.targetMask);
 
         target = null; // Reset the target
 
@@ -50,19 +45,21 @@ public class FieldOfView : MonoBehaviour
         {
             Transform potentialTarget = targetsInViewRadius[i].transform;
             Vector3 dirToTarget = (potentialTarget.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+            if (Vector3.Angle(transform.forward, dirToTarget) <zombieData.viewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, potentialTarget.position);
 
-                if (!(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, obstacleMask)))
+                if (!(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask)))
                 {
                     // Set the target only if it's visible
                     target = potentialTarget;
 
                     // player detected
                     // look at player
+                    animator.Play("walk");
                     transform.rotation = Quaternion.LookRotation(dirToTarget);
                     agent.SetDestination(target.position);
+                    
                 }
             }
         }
@@ -71,11 +68,11 @@ public class FieldOfView : MonoBehaviour
     private void OnDrawGizmos()
     {
         Handles.color = Color.white;
-        Handles.DrawWireArc(eyes.transform.position, Vector3.up, Vector3.forward, 360, viewRadius);
-        Vector3 viewAngleA = DirFromAngle(-viewAngle / 2, false);
-        Vector3 viewAngleB = DirFromAngle(viewAngle / 2, false);
-        Handles.DrawLine(eyes.transform.position, eyes.transform.position + viewAngleA * viewRadius);
-        Handles.DrawLine(eyes.transform.position, eyes.transform.position + viewAngleB * viewRadius);
+        Handles.DrawWireArc(eyes.transform.position, Vector3.up, Vector3.forward, 360, zombieData.viewRadius);
+        Vector3 viewAngleA = DirFromAngle(-zombieData.viewAngle / 2, false);
+        Vector3 viewAngleB = DirFromAngle(zombieData.viewAngle / 2, false);
+        Handles.DrawLine(eyes.transform.position, eyes.transform.position + viewAngleA * zombieData.viewRadius);
+        Handles.DrawLine(eyes.transform.position, eyes.transform.position + viewAngleB * zombieData.viewRadius);
 
         Handles.color = Color.red;
         if (target != null)
