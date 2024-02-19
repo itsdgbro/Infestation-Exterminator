@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ZombieData
   m_EditorClassIdentifier: 
   viewRadius: 30
-  viewAngle: 90
+  viewAngle: 110
   targetMask:
     serializedVersion: 2
     m_Bits: 256
