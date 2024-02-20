@@ -95,7 +95,7 @@ public class CharacterMovement : MonoBehaviour
         // bool check if spring key is pressed
         isSprinting = playerControls.Movement.Sprint.ReadValue<float>() > 0.1f;
         // Check if sprint button is being held down and the player is moving forward
-        if (isSprinting && characterMove.y > 0.1f && isCrouching == false)
+        if (isSprinting && characterMove.y > 0.1f && isCrouching == false && !IsAiming())
             maxSpeed = sprintSpeed; // Set the speed to sprintSpeed
         // if crouching decrease speed by half
         else if (characterMove.y > 0.1f && isCrouching)

@@ -12,7 +12,8 @@ public class FieldOfView : MonoBehaviour
     // Player transform
     private Transform target;
     private NavMeshAgent agent;
-    Animator animator;
+    private Animator animator;
+    private readonly string isTargetVisible = "isTargetVisible";
 
     private void Awake()
     {
@@ -20,50 +21,55 @@ public class FieldOfView : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
-
-    void Start()
+    private void Update()
     {
-        StartCoroutine("FindTargetsWithDelay", .2f);
-    }
-
-    IEnumerator FindTargetsWithDelay(float delay)
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(delay);
-            FindVisibleTargets();
-        }
+        FindVisibleTargets();
     }
 
     void FindVisibleTargets()
     {
+        // Radius of the game object
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, zombieData.viewRadius, zombieData.targetMask);
 
         target = null; // Reset the target
+
+        // default target is not visible
+        animator.SetBool(isTargetVisible, false);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform potentialTarget = targetsInViewRadius[i].transform;
             Vector3 dirToTarget = (potentialTarget.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) <zombieData.viewAngle / 2)
+            if (Vector3.Angle(transform.forward, dirToTarget) < zombieData.viewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, potentialTarget.position);
 
+                // RayCast hits target and there is no obstacles
                 if (!(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask)))
                 {
                     // Set the target only if it's visible
                     target = potentialTarget;
 
-                    // player detected
-                    // look at player
-                    animator.Play("walk");
-                    transform.rotation = Quaternion.LookRotation(dirToTarget);
-                    agent.SetDestination(target.position);
+                    // move animation
+                    animator.SetBool(isTargetVisible, true);
                     
+                    // rotation towards the target
+                    float rotationSpeed = 5.0f; // Adjust the speed as needed
+                    Quaternion targetRotation = Quaternion.LookRotation(dirToTarget);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+                    // move towards the target
+                    agent.SetDestination(target.position);
+                }
+                else
+                {   
+                    // target is not visible
+                    animator.SetBool(isTargetVisible, false);
                 }
             }
         }
     }
+
 
     private void OnDrawGizmos()
     {
