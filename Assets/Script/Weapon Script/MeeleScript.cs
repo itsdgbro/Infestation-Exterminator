@@ -71,7 +71,7 @@ public class MeeleScript : MonoBehaviour
         if (Physics.Raycast(rayOrigin, rayDirection, out hitInfo, meleeData.maxDistance))
         {
             GameObject hitObject = hitInfo.collider.gameObject;
-            IsTarget isTarget = hitObject.GetComponentInParent<IsTarget>();
+            ISTarget isTarget = hitObject.GetComponentInParent<ISTarget>();
             isTarget?.TakeDamage(meleeData.damage);
         }
     }

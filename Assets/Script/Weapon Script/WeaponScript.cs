@@ -153,7 +153,7 @@ public class WeaponScript : MonoBehaviour
         if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hitInfo, weaponData.maxDistance))
         {
             GameObject hitObject = hitInfo.collider.gameObject;
-            IsTarget isTarget = hitObject.GetComponentInParent<IsTarget>();
+            ISTarget isTarget = hitObject.GetComponentInParent<ISTarget>();
             isTarget?.TakeDamage(weaponData.damage);
             BulletHoleEffect(hitInfo);
         }

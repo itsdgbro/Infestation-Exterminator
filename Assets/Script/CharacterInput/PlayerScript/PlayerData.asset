@@ -9,16 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c1d83c3d03d8dc4a96ef5ebf99391a8, type: 3}
-  m_Name: ZombieData
+  m_Script: {fileID: 11500000, guid: 29ee8a653af11214faf693a358d0602a, type: 3}
+  m_Name: PlayerData
   m_EditorClassIdentifier: 
-  attackDamage: 30
-  maxRange: 0.89
-  viewRadius: 30
-  viewAngle: 165
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 128
+  health: 100
+  stamina: 0

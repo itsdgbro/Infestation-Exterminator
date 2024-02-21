@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Target : MonoBehaviour, IsTarget
+public class Target : MonoBehaviour, ISTarget
 {
     #region Target Health
     [SerializeField] private float health = 50f;

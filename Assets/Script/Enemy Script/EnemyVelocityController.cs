@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyVelocityController : MonoBehaviour
 {
+
     private bool isAttacking;
 
     public bool GetIsAttacking() => isAttacking;
@@ -21,6 +22,7 @@ public class EnemyVelocityController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("State "+ isAttacking);
+        Debug.Log("State " + isAttacking);
     }
+
 }

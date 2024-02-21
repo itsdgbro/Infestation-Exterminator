@@ -51,7 +51,6 @@ public class FieldOfView : MonoBehaviour
 
                 if (isTargetVisibleRaycast && !velocityController.GetIsAttacking())
                 {
-                    Debug.Log("1");
                     // Set the target only if it's visible
                     target = potentialTarget;
 
@@ -64,21 +63,14 @@ public class FieldOfView : MonoBehaviour
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
                     agent.SetDestination(target.position);
-                    /*AttackTrigger(dstToTarget);*/
-                    if (dstToTarget <= 0.95)
-                    {
-                        PerfromAttack();
-                    }
-
+                    AttackTrigger(dstToTarget);
                 }
                 else if (velocityController.GetIsAttacking() && isTargetVisibleRaycast)
                 {
-                    Debug.Log("2");
                     animator.SetBool(isTargetVisible, true);
                 }
                 else
                 {
-                    Debug.Log("3");
                     // target is not visible
                     animator.SetBool(isTargetVisible, false);
                 }
@@ -89,7 +81,7 @@ public class FieldOfView : MonoBehaviour
     void AttackTrigger(float distance)
     {
 
-        if (distance <= 0.95)
+        if (distance <= zombieData.maxRange)
         {
             PerfromAttack();
         }
@@ -102,17 +94,13 @@ public class FieldOfView : MonoBehaviour
         
     }
 
-
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Collision");
-            /*animator.SetTrigger("attack");*/
         }
     }
-
 
     private void OnDrawGizmos()
     {
