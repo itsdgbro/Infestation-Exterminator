@@ -125,9 +125,9 @@ public class CharacterMovement : MonoBehaviour
     private void Crouch()
     {
         isCrouching = playerControls.Movement.Crouch.ReadValue<float>() > 0.1f;
-        animator.SetBool("isCrouching", isCrouching);
-        characterController.height = 1.5f;
 
+        // decrease the height of the character via animation
+        animator.SetBool("isCrouching", isCrouching);
     }
 
     public bool IsAiming()

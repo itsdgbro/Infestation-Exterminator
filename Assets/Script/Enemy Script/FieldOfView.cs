@@ -14,11 +14,13 @@ public class FieldOfView : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
     private readonly string isTargetVisible = "isTargetVisible";
+    EnemyVelocityController velocityController;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+        velocityController = GetComponentInChildren<EnemyVelocityController>();
     }
 
     private void Update()
@@ -36,9 +38,9 @@ public class FieldOfView : MonoBehaviour
         // default target is not visible
         animator.SetBool(isTargetVisible, false);
 
-        for (int i = 0; i < targetsInViewRadius.Length; i++)
+        foreach (var potentialTargetCollider in targetsInViewRadius)
         {
-            Transform potentialTarget = targetsInViewRadius[i].transform;
+            Transform potentialTarget = potentialTargetCollider.transform;
             Vector3 dirToTarget = (potentialTarget.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < zombieData.viewAngle / 2)
             {
@@ -52,21 +54,51 @@ public class FieldOfView : MonoBehaviour
 
                     // move animation
                     animator.SetBool(isTargetVisible, true);
-                    
+
                     // rotation towards the target
                     float rotationSpeed = 5.0f; // Adjust the speed as needed
                     Quaternion targetRotation = Quaternion.LookRotation(dirToTarget);
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
-                    // move towards the target
-                    agent.SetDestination(target.position);
+                    if (!velocityController.IsAttacking)
+                    {
+                        // move towards the target
+                        agent.SetDestination(target.position);
+                        AttackTrigger(dstToTarget);
+                    }
+
                 }
                 else
-                {   
+                {
                     // target is not visible
                     animator.SetBool(isTargetVisible, false);
                 }
             }
+        }
+    }
+
+    void AttackTrigger(float distance)
+    {
+        // range is valid then attack 0.95
+        if (distance <= 0.95)
+        {
+            PerfromAttack();
+        }
+    }
+
+    void PerfromAttack()
+    {
+        // perform attack
+        animator.SetTrigger("attack");
+    }
+
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Collision");
         }
     }
 
