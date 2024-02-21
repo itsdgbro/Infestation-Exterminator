@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.AI;
+using Unity.VisualScripting;
 
 public class FieldOfView : MonoBehaviour
 {
@@ -45,10 +46,12 @@ public class FieldOfView : MonoBehaviour
             if (Vector3.Angle(transform.forward, dirToTarget) < zombieData.viewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, potentialTarget.position);
-
                 // RayCast hits target and there is no obstacles
-                if (!(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask)))
+                bool isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask));
+
+                if (isTargetVisibleRaycast && !velocityController.GetIsAttacking())
                 {
+                    Debug.Log("1");
                     // Set the target only if it's visible
                     target = potentialTarget;
 
@@ -60,16 +63,22 @@ public class FieldOfView : MonoBehaviour
                     Quaternion targetRotation = Quaternion.LookRotation(dirToTarget);
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
-                    if (!velocityController.IsAttacking)
+                    agent.SetDestination(target.position);
+                    /*AttackTrigger(dstToTarget);*/
+                    if (dstToTarget <= 0.95)
                     {
-                        // move towards the target
-                        agent.SetDestination(target.position);
-                        AttackTrigger(dstToTarget);
+                        PerfromAttack();
                     }
 
                 }
+                else if (velocityController.GetIsAttacking() && isTargetVisibleRaycast)
+                {
+                    Debug.Log("2");
+                    animator.SetBool(isTargetVisible, true);
+                }
                 else
                 {
+                    Debug.Log("3");
                     // target is not visible
                     animator.SetBool(isTargetVisible, false);
                 }
@@ -79,17 +88,18 @@ public class FieldOfView : MonoBehaviour
 
     void AttackTrigger(float distance)
     {
-        // range is valid then attack 0.95
+
         if (distance <= 0.95)
         {
             PerfromAttack();
         }
     }
 
-    void PerfromAttack()
+    private void PerfromAttack()
     {
         // perform attack
         animator.SetTrigger("attack");
+        
     }
 
 
@@ -99,6 +109,7 @@ public class FieldOfView : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Collision");
+            /*animator.SetTrigger("attack");*/
         }
     }
 

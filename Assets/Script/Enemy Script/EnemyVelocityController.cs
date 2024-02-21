@@ -6,11 +6,8 @@ public class EnemyVelocityController : MonoBehaviour
 {
     private bool isAttacking;
 
-    public bool IsAttacking
-    {
-        get { return isAttacking; }
-        set { isAttacking = value; }
-    }
+    public bool GetIsAttacking() => isAttacking;
+    public void SetIsAttacking(bool value) => isAttacking = value;
 
     public void PerformingAttack()
     {
