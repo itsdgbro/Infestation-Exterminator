@@ -20,9 +20,14 @@ public class EnemyVelocityController : MonoBehaviour
         isAttacking = false;
     }
 
+    public void AttackPoint()
+    {
+
+    }
+
     private void Update()
     {
-        Debug.Log("State " + isAttacking);
+        /*Debug.Log("State " + isAttacking);*/
     }
 
 }

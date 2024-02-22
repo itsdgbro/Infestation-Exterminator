@@ -926,7 +926,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.75
+  m_Height: 1.73
   m_BaseOffset: -0.073
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -963,8 +963,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.8
+  m_Radius: 0.25
+  m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.91, z: 0}
 --- !u!54 &247933452
@@ -990,7 +990,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 1
@@ -1003,7 +1003,7 @@ Transform:
   m_GameObject: {fileID: 247933447}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.99997276, z: -0, w: 0.007384762}
-  m_LocalPosition: {x: 51.474, y: 0, z: 48.807}
+  m_LocalPosition: {x: 51.474, y: 0, z: 56.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1247,6 +1247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c239bc663a9a46c43860184bad237160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zombieData: {fileID: 0}
 --- !u!1 &567371184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1960,6 +1961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c239bc663a9a46c43860184bad237160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zombieData: {fileID: 11400000, guid: fcb44b3a585334949a4dc569150dd5d8, type: 2}
 --- !u!65 &1150847441
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11580,6 +11582,7 @@ GameObject:
   - component: {fileID: 7955810776284478403}
   - component: {fileID: 3717715009632977446}
   - component: {fileID: 7955810776284478404}
+  - component: {fileID: 7955810776284478405}
   m_Layer: 8
   m_Name: Survivor_
   m_TagString: Player
@@ -18935,7 +18938,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f8ddcf9be846e8459f9e8c3e9da1eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 0}
+  playerData: {fileID: 11400000, guid: ffa6f517d45137d45a1917783ac7566f, type: 2}
+--- !u!54 &7955810776284478405
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5606489151155217910}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7961103607131169488
 GameObject:
   m_ObjectHideFlags: 0

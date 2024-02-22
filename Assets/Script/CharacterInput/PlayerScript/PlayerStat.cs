@@ -4,25 +4,22 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
-    [SerializeField] private PlayerData playerData;
-
-    private float currentHealth = 0;
-
-    private void Awake()
-    {
-        currentHealth = playerData.health;
-    }
     
+    [SerializeField] private PlayerData playerData;
+    private float p_Health = 100;
+
     public void ReceiveDamage(float damage)
     {
-        currentHealth -= damage;
+        p_Health -= damage;
+        if (p_Health <= 0)
+        {
+            // player die
+            Destroy(this.gameObject);
+        }
     }
 
-    public void PlayerDie()
+    private void Update()
     {
-        if (currentHealth <= 0) {
-            // player die
-            Destroy(gameObject);
-        }
+        Debug.Log("Player Health " +  p_Health);
     }
 }
