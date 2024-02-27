@@ -1,17 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Main Menu To Load")]
+    [SerializeField] private string mainMenu;
     private bool isGamePaused = false;
     [SerializeField] private GameObject pauseMenu;
+
 
     private void Awake()
     {
         SetCursorState();
         pauseMenu.SetActive(false);
+    }
 
+    private void Start()
+    {
+        ResumeGame();
     }
 
     // Update is called once per frame
@@ -40,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        Debug.Log("PAused");
+        Debug.Log("Paused");
         pauseMenu.SetActive(true);
         Time.timeScale = 0.0f;
         isGamePaused = true;
@@ -67,6 +75,12 @@ public class GameManager : MonoBehaviour
             PauseGame();
         }
     }
+
+   public void GoTOMainMenu()
+    {
+        SceneManager.LoadScene(mainMenu);
+    }
+
 
     public void QuitGame()
     {

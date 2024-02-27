@@ -29,6 +29,16 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void StopTime()
+    {
+        Time.timeScale = 0.0f;
+    }
+
+    public void ResumeTime()
+    {
+        Time.timeScale = 1.0f;
+    }
+
     public void ExitButton()
     {
         Application.Quit();

@@ -5,6 +5,11 @@ using UnityEditor;
 using UnityEngine.AI;
 using Unity.VisualScripting;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+using UnityEngine;
+
 public class FieldOfView : MonoBehaviour
 {
     [SerializeField] private ZombieData zombieData;
@@ -102,6 +107,7 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = Color.white;
@@ -117,7 +123,7 @@ public class FieldOfView : MonoBehaviour
             Handles.DrawLine(eyes.transform.position, target.position);
         }
     }
-
+#endif
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)
