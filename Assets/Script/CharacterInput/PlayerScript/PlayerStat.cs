@@ -18,8 +18,6 @@ public class PlayerStat : MonoBehaviour
     public Image frontHealthBar;
     public Image backHealthBar;
 
-    [Header("Health TMP")]
-    public TextMeshProUGUI healthTextTMP;
 
     private void Start()
     {
@@ -76,7 +74,6 @@ public class PlayerStat : MonoBehaviour
 
     private void Update()
     {
-        healthTextTMP.text = health.ToString();
         Debug.Log("Player Health " +  health);
         HealthUIUpdate();
         if(Input.GetKeyDown(KeyCode.X) )
