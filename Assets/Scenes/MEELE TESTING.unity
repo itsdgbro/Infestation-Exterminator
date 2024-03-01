@@ -277,6 +277,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: arData
+      value: 
+      objectReference: {fileID: 11400000, guid: de6e75ca6a8f4b4498e25103a3998fa3, type: 2}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
       propertyPath: inGameUI
       value: 
       objectReference: {fileID: 820598668}
@@ -288,6 +292,58 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 2226681371648042150}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: pistolData
+      value: 
+      objectReference: {fileID: 11400000, guid: 78ed6642c3def8440b821f9ac674209f, type: 2}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: arTotalAmmoUI
+      value: 
+      objectReference: {fileID: 1375028986}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: arCurrentAmmoUI
+      value: 
+      objectReference: {fileID: 1276415358}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: arRemainingAmmoUI
+      value: 
+      objectReference: {fileID: 1375028986}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: pistolTotalAmmoUI
+      value: 
+      objectReference: {fileID: 1102279692}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: arAmmoUI.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: pistolCurrentAmmoUI
+      value: 
+      objectReference: {fileID: 1454050246}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: pistolRemainingAmmoUI
+      value: 
+      objectReference: {fileID: 1102279692}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: arAmmoUI.Array.data[0]
+      value: 
+      objectReference: {fileID: 1276415356}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: arAmmoUI.Array.data[1]
+      value: 
+      objectReference: {fileID: 1375028984}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: pistolAmmoUI.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: pistolAmmoUI.Array.data[0]
+      value: 
+      objectReference: {fileID: 1454050244}
+    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
+      propertyPath: pistolAmmoUI.Array.data[1]
+      value: 
+      objectReference: {fileID: 1102279690}
     - target: {fileID: 8498801462722594748, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1599,7 +1655,7 @@ GameObject:
   - component: {fileID: 1102279693}
   - component: {fileID: 1102279692}
   m_Layer: 5
-  m_Name: TotalAmmo
+  m_Name: RemainingAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2000,7 +2056,7 @@ GameObject:
   - component: {fileID: 1375028987}
   - component: {fileID: 1375028986}
   m_Layer: 5
-  m_Name: TotalAmmo
+  m_Name: RemainingAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3120,9 +3176,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3537110969966514605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 475, y: -569.92896}
   m_SizeDelta: {x: 480, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &914732123363204408
@@ -3139,9 +3195,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3537110969966514605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 475, y: -469.929}
   m_SizeDelta: {x: 480, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &998290549149089293
@@ -3867,7 +3923,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &2237766669593905572
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4044,9 +4100,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3537110969966514605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 475, y: -369.929}
   m_SizeDelta: {x: 480, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2686979560267413080
@@ -6045,9 +6101,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3537110969966514605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 475, y: -669.92896}
   m_SizeDelta: {x: 480, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &6613500833212054938
@@ -6064,9 +6120,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3537110969966514605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 475, y: -269.929}
   m_SizeDelta: {x: 480, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &6628430652958703670
@@ -6197,9 +6253,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3537110969966514605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 407.7565, y: -172.49998}
   m_SizeDelta: {x: 345.513, y: 94.858}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7023591088294536439

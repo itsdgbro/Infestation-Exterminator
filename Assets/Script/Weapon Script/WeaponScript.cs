@@ -75,13 +75,14 @@ public class WeaponScript : MonoBehaviour
 
     private void ReloadWeapon()
     {
-        if (playerControls.Movement.Reload.triggered)
+        if (playerControls.Movement.Reload.triggered && weaponData.ammoLeft > 0)
             if (!weaponData.isReloading && this.gameObject.activeSelf && weaponData.currentAmmo != weaponData.magazineSize)
                 StartCoroutine(ReloadTime());
     }
 
     private IEnumerator ReloadTime()
     {
+
         weaponData.isReloading = true;
         animator.Play("reload");
         animator.SetBool("isEmpty", false);
@@ -89,8 +90,16 @@ public class WeaponScript : MonoBehaviour
         Debug.Log("RELOADING");
 
         yield return new WaitForSeconds(weaponData.reloadTime);
+        // ammo system
 
-        weaponData.currentAmmo = weaponData.magazineSize;
+        int neededAmmo = weaponData.magazineSize - weaponData.currentAmmo;
+        weaponData.ammoLeft -= neededAmmo;
+        weaponData.currentAmmo += neededAmmo;
+
+       /* if (weaponData.ammoLeft + weaponData.currentAmmo >= weaponData.magazineSize)
+            weaponData.currentAmmo = weaponData.magazineSize;
+        else
+            weaponData.currentAmmo = weaponData.ammoLeft;*/
         weaponData.isReloading = false;
     }
 

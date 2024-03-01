@@ -15,6 +15,7 @@ public class WeaponData : ScriptableObject
     [Header("Ammo Data")]
     public int magazineSize;
     public int currentAmmo;
+    public int ammoLeft;
     public float fireRate;
     public float reloadTime;
     public bool isAutomatic;

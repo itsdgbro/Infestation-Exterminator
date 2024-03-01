@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,19 @@ public class GameManager : MonoBehaviour
     private bool isGamePaused = false;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject inGameUI;
+
+    [Header("Weapon Ammo Count")]
+    [Header("AI Ammo UI")]
+    [SerializeField] private TextMeshProUGUI arCurrentAmmoUI;
+    [SerializeField] private TextMeshProUGUI arRemainingAmmoUI;
+    [Header("Pistol Ammo UI")]
+    [SerializeField] private TextMeshProUGUI pistolCurrentAmmoUI;
+    [SerializeField] private TextMeshProUGUI pistolRemainingAmmoUI;
+
+    // reference to weapon data
+    [Header("Weapon Data")]
+    [SerializeField] private WeaponData arData;
+    [SerializeField] private WeaponData pistolData;
 
     private void Awake()
     {
@@ -25,8 +39,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        WeaponAmmoTextUI();
         if (Input.GetKeyDown(KeyCode.Escape))
-        {   
+        {
             Debug.Log(isGamePaused);
             TogglePauseState();
         }
@@ -76,11 +91,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
-   public void GoTOMainMenu()
+    public void GoTOMainMenu()
     {
         SceneManager.LoadScene(mainMenu);
     }
 
+    private void HandleWeapnAmmoSystem()
+    {
+        // Calculate total ammo for AR and pistol
+        int arTotalAmmo = arData.currentAmmo + arData.ammoLeft;
+        int pistolTotalAmmo = pistolData.currentAmmo + pistolData.ammoLeft;
+    }
+
+    // update weapon ammo in UI
+    private void WeaponAmmoTextUI()
+    {
+
+        // Update UI for AR
+        arCurrentAmmoUI.text = arData.currentAmmo.ToString();
+        arRemainingAmmoUI.text = arData.ammoLeft.ToString(); 
+
+        // Update UI for Pistol
+        pistolCurrentAmmoUI.text = pistolData.currentAmmo.ToString();
+        pistolRemainingAmmoUI.text = pistolData.ammoLeft.ToString(); 
+
+
+    }
 
     public void QuitGame()
     {
