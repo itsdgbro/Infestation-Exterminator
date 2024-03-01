@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string mainMenu;
     private bool isGamePaused = false;
     [SerializeField] private GameObject pauseMenu;
-
+    [SerializeField] private GameObject inGameUI;
 
     private void Awake()
     {

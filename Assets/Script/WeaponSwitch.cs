@@ -21,6 +21,9 @@ public class WeaponSwitch : MonoBehaviour
     private int selectedWeapon;
     private float timeSinceLastSwitch;
 
+    [Header("Weapon UI")]
+    [SerializeField] private GameObject[] weaponUI;
+
     private void Start()
     {   
         audioSource = GetComponent<AudioSource>();
@@ -37,7 +40,7 @@ public class WeaponSwitch : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
             weapons[i] = transform.GetChild(i);
 
-        if (keys == null) keys = new KeyCode[weapons.Length];
+        keys ??= new KeyCode[weapons.Length];
     }
 
     private void Update()
@@ -55,9 +58,10 @@ public class WeaponSwitch : MonoBehaviour
 
     private void Select(int weaponIndex)
     {
-        for (int i = 0; i < weapons.Length; i++)
+        for (int i = 0; i < weapons.Length; i++) { 
             weapons[i].gameObject.SetActive(i == weaponIndex);
-
+            weaponUI[i].SetActive(i == weaponIndex);
+        }
         timeSinceLastSwitch = 0f;
         // Play the draw sound when a new weapon is selected
         if (audioSource != null && weaponDraw != null)
