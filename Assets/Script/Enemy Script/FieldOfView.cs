@@ -14,8 +14,9 @@ public class FieldOfView : MonoBehaviour
     private Transform target;
     private NavMeshAgent agent;
     private Animator animator;
-    private readonly string isTargetVisible = "isTargetVisible";
+    private readonly string isTargetVisible = "isTargetVisible"; // animator parameter
     EnemyVelocityController velocityController;
+    private bool isTargetVisibleRaycast;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class FieldOfView : MonoBehaviour
     private void Update()
     {
         FindVisibleTargets();
+        ToggleFOV();
     }
 
     void FindVisibleTargets()
@@ -47,7 +49,7 @@ public class FieldOfView : MonoBehaviour
             {
                 float dstToTarget = Vector3.Distance(transform.position, potentialTarget.position);
                 // RayCast hits target and there is no obstacles
-                bool isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask));
+                isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask));
 
                 if (isTargetVisibleRaycast && !velocityController.GetIsAttacking())
                 {
@@ -58,7 +60,7 @@ public class FieldOfView : MonoBehaviour
                     animator.SetBool(isTargetVisible, true);
 
                     // rotation towards the target
-                    float rotationSpeed = 5.0f; // Adjust the speed as needed
+                    float rotationSpeed = agent.angularSpeed; // Adjust the speed as needed
                     Quaternion targetRotation = Quaternion.LookRotation(dirToTarget);
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
@@ -101,6 +103,17 @@ public class FieldOfView : MonoBehaviour
             Debug.Log("Collision");
         }
     }
+
+    private void ToggleFOV()
+    {
+        float defaultFOV = 165;
+        float allFOV = 360f;
+
+        float currentFOV = isTargetVisibleRaycast ? allFOV : defaultFOV;
+
+        zombieData.viewAngle = currentFOV;
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()

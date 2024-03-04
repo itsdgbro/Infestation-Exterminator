@@ -96,13 +96,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(mainMenu);
     }
 
-    private void HandleWeapnAmmoSystem()
-    {
-        // Calculate total ammo for AR and pistol
-        int arTotalAmmo = arData.currentAmmo + arData.ammoLeft;
-        int pistolTotalAmmo = pistolData.currentAmmo + pistolData.ammoLeft;
-    }
-
     // update weapon ammo in UI
     private void WeaponAmmoTextUI()
     {
