@@ -44,12 +44,18 @@ public class CharacterMovement : MonoBehaviour
     private Footsteps footsteps;
     #endregion
 
+    #region Stamina
+    private PlayerStat playerStat;
+    #endregion
+
     void Awake()
     {
         playerControls = new PlayerControls();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         footsteps = GetComponentInChildren<Footsteps>();
+        playerStat = GetComponent<PlayerStat>();
+
     }
 
     private void Start()
@@ -91,12 +97,21 @@ public class CharacterMovement : MonoBehaviour
         Vector3 movement = (characterMove.y * transform.forward) + (characterMove.x * transform.right);
 
         float maxSpeed = moveSpeed; // Default to regular move speed
-
+        
         // bool check if spring key is pressed
         isSprinting = playerControls.Movement.Sprint.ReadValue<float>() > 0.1f;
         // Check if sprint button is being held down and the player is moving forward
         if (isSprinting && characterMove.y > 0.1f && isCrouching == false && !IsAiming())
-            maxSpeed = sprintSpeed; // Set the speed to sprintSpeed
+        {
+            playerStat.DecreaseStamina(); // decrease stamina on sprint
+            if (playerStat.CanSprint())
+                maxSpeed = sprintSpeed; // Set the speed to sprintSpeed
+            else
+            {
+                maxSpeed = moveSpeed;
+                isSprinting = false;
+            }
+        }
         // if crouching decrease speed by half
         else if (characterMove.y > 0.1f && isCrouching)
             maxSpeed = moveSpeed / 2;
@@ -108,9 +123,7 @@ public class CharacterMovement : MonoBehaviour
         Vector3 horizontalVelocity = movement * maxSpeed;
         velocity.x = horizontalVelocity.x;
         velocity.z = horizontalVelocity.z;
-
         characterController.Move(movement * maxSpeed * Time.deltaTime);
-
     }
 
 
@@ -119,6 +132,7 @@ public class CharacterMovement : MonoBehaviour
         if (playerControls.Movement.Jump.triggered && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            playerStat.DecreaseStamina(10f);
         }
     }
 

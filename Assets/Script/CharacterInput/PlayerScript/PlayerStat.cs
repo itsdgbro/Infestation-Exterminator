@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class PlayerStat : MonoBehaviour
 {
-    
+    [Header("References")]
     [SerializeField] private PlayerData playerData;
-    private float maxHealth = 100f;
+    [SerializeField] private Image staminaBar;
+    [Range(0f, 100f)]
+    private readonly float maxHealth = 100f;
 
     private float health;
     private float lerpTimer;
@@ -19,9 +21,12 @@ public class PlayerStat : MonoBehaviour
     public Image backHealthBar;
 
 
+    public float GetHealth() => health;
+    public void SetHealth(float value) => health = value;
+
     private void Start()
     {
-        health = maxHealth;
+        health = 20;
     }
 
     public void ReceiveDamage(float damage)
@@ -72,13 +77,45 @@ public class PlayerStat : MonoBehaviour
         lerpTimer = 0f;
     }
 
+    // stamina system
+    public void DecreaseStamina()
+    {
+        if (playerData.stamina > 0)
+        {
+            staminaBar.fillAmount -= Time.deltaTime / (1.5f * playerData.staminaChangeRate);
+            // Ensure fillAmount doesn't go below 0
+            staminaBar.fillAmount = Mathf.Max(staminaBar.fillAmount, 0f);
+        }
+    }
+
+    public void DecreaseStamina(float value)
+    {
+        if (playerData.stamina > 0)
+        {
+            staminaBar.fillAmount -= Time.deltaTime * value;
+            // Ensure fillAmount doesn't go below 0
+            staminaBar.fillAmount = Mathf.Max(staminaBar.fillAmount, 0f);
+        }
+    }
+
+    private void IncreaseStamina()
+    {
+        if (staminaBar.fillAmount < 1)
+        {
+            staminaBar.fillAmount += Time.deltaTime / (4 * playerData.staminaChangeRate);
+        }
+    }
+
+    public bool CanSprint()
+    {
+        return playerData.stamina > 0.01;
+    }
+
     private void Update()
     {
-        Debug.Log("Player Health " +  health);
+        playerData.stamina = staminaBar.fillAmount;
+        Debug.Log("Player Health " + playerData.stamina);
         HealthUIUpdate();
-        if(Input.GetKeyDown(KeyCode.X) )
-        {
-            RestoreHealth(10);
-        }
+        IncreaseStamina();
     }
 }

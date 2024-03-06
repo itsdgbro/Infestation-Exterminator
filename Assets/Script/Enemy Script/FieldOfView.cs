@@ -15,6 +15,8 @@ public class FieldOfView : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
     private readonly string isTargetVisible = "isTargetVisible"; // animator parameter
+    private readonly string attackParameter = "attack";
+
     EnemyVelocityController velocityController;
     private bool isTargetVisibleRaycast;
 
@@ -51,31 +53,30 @@ public class FieldOfView : MonoBehaviour
                 // RayCast hits target and there is no obstacles
                 isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask));
 
-                if (isTargetVisibleRaycast && !velocityController.GetIsAttacking())
+                // target is visible
+                if (isTargetVisibleRaycast)
                 {
-                    // Set the target only if it's visible
-                    target = potentialTarget;
-
-                    // move animation
-                    animator.SetBool(isTargetVisible, true);
-
-                    // rotation towards the target
-                    float rotationSpeed = agent.angularSpeed; // Adjust the speed as needed
+                    // Rotation towards the target
+                    float rotationSpeed = agent.angularSpeed;
                     Quaternion targetRotation = Quaternion.LookRotation(dirToTarget);
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
+                    target = potentialTarget;
+
+                    // Move towards the target
                     agent.SetDestination(target.position);
-                    AttackTrigger(dstToTarget);
-                }
-                else if (velocityController.GetIsAttacking() && isTargetVisibleRaycast)
-                {
                     animator.SetBool(isTargetVisible, true);
+
+                    if (!velocityController.IsAttackAnimationPlaying())
+                    {
+                        AttackTrigger(dstToTarget);
+                    }
                 }
                 else
                 {
-                    // target is not visible
                     animator.SetBool(isTargetVisible, false);
                 }
+
             }
         }
     }
@@ -92,16 +93,8 @@ public class FieldOfView : MonoBehaviour
     private void PerfromAttack()
     {
         // perform attack
-        animator.SetTrigger("attack");
-        
-    }
+        animator.Play(attackParameter);
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Collision");
-        }
     }
 
     private void ToggleFOV()

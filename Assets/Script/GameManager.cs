@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        Debug.Log("Paused");
+        // Debug.Log("Paused");
         pauseMenu.SetActive(true);
         Time.timeScale = 0.0f;
         isGamePaused = true;
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame()
     {
-        Debug.Log("Resumee");
+        // Debug.Log("Resumee");
         pauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
         isGamePaused = false;
@@ -102,11 +102,11 @@ public class GameManager : MonoBehaviour
 
         // Update UI for AR
         arCurrentAmmoUI.text = arData.currentAmmo.ToString();
-        arRemainingAmmoUI.text = arData.ammoLeft.ToString(); 
+        arRemainingAmmoUI.text = arData.ammoLeft.ToString();
 
         // Update UI for Pistol
         pistolCurrentAmmoUI.text = pistolData.currentAmmo.ToString();
-        pistolRemainingAmmoUI.text = pistolData.ammoLeft.ToString(); 
+        pistolRemainingAmmoUI.text = pistolData.ammoLeft.ToString();
 
 
     }

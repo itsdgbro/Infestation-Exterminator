@@ -12,10 +12,8 @@ public class EnemyAttack : MonoBehaviour
     private GameObject player;
     private CapsuleCollider capsuleCollider;
 
-    private bool canDealDamage = true;
-    private float damageCooldown = 2.6167f;  // Adjust the cooldown duration as needed
-    private float lastDamageTime;
-    private bool hasCollided = false;
+    private readonly float damageCooldown = 1.6667f;  
+    private float lastDamageAttack;
     
 
     private void Awake()
@@ -55,18 +53,16 @@ public class EnemyAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying() && canDealDamage && !hasCollided)
+        if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying() && lastDamageAttack > damageCooldown)
         {
-            hasCollided = true;
+            Debug.Log("HELLOO");
             StartCoroutine(ApplyDamageWithDelay());
         }
     }
 
     IEnumerator ApplyDamageWithDelay()
     {
-        canDealDamage = false;
-
-        yield return new WaitForSeconds(damageCooldown / 3.5f);
+        yield return new WaitForSeconds(damageCooldown / 2f);
 
         if (Vector3.Distance(player.transform.position, capsuleCollider.transform.position) < 0.89f)
         {
@@ -74,16 +70,12 @@ public class EnemyAttack : MonoBehaviour
             stat.ReceiveDamage(zombieData.attackDamage);
         }
 
-        lastDamageTime = Time.time;
-        canDealDamage = true;
-        hasCollided = false;
+        // reset attack cooldown
+        lastDamageAttack = 0f;
     }
 
     private void Update()
     {
-        if (!canDealDamage && Time.time - lastDamageTime > damageCooldown)
-        {
-            canDealDamage = true;
-        }
+        lastDamageAttack += Time.deltaTime;
     }
 }

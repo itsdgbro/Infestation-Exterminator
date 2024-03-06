@@ -10129,6 +10129,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4e64c13558a47e142913a5fea027c52a, type: 3}
   - {fileID: 8300000, guid: 65496539dcbb535449214bbb6a4ef286, type: 3}
   - {fileID: 8300000, guid: b85d789f08718934f984d0482e955120, type: 3}
+  weaponUI:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!82 &786559956419937664
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10239,6 +10243,7 @@ GameObject:
   - component: {fileID: 4626618560572739377}
   - component: {fileID: 8307394559671185189}
   - component: {fileID: 145094815126679233}
+  - component: {fileID: 7472772733630706064}
   m_Layer: 8
   m_Name: Survivor_
   m_TagString: Player
@@ -10342,6 +10347,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: ffa6f517d45137d45a1917783ac7566f, type: 2}
+  frontHealthBar: {fileID: 0}
+  backHealthBar: {fileID: 0}
 --- !u!54 &145094815126679233
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10367,8 +10374,31 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
+--- !u!136 &7472772733630706064
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396282412003260023}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.45
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5463420822344067551
 GameObject:
   m_ObjectHideFlags: 0
