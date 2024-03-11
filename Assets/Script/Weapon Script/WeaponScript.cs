@@ -166,7 +166,6 @@ public class WeaponScript : MonoBehaviour
             BulletHoleEffect(hitInfo);
         }
 
-        Debug.Log("Fired. Ammo left: " + ((int)weaponData.currentAmmo - 1));
         weaponData.currentAmmo--;
         timeSinceLastShot = 0;
     }

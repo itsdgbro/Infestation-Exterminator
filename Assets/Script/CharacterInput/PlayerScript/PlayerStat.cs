@@ -26,7 +26,7 @@ public class PlayerStat : MonoBehaviour
 
     private void Start()
     {
-        health = 20;
+        health = 40;
     }
 
     public void ReceiveDamage(float damage)
@@ -114,7 +114,6 @@ public class PlayerStat : MonoBehaviour
     private void Update()
     {
         playerData.stamina = staminaBar.fillAmount;
-        Debug.Log("Player Health " + playerData.stamina);
         HealthUIUpdate();
         IncreaseStamina();
     }

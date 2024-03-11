@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c1d83c3d03d8dc4a96ef5ebf99391a8, type: 3}
   m_Name: ZombieData
   m_EditorClassIdentifier: 
-  attackDamage: 30
+  attackDamage: 13
   maxRange: 0.89
-  viewRadius: 30
+  viewRadius: 15
   viewAngle: 165
   targetMask:
     serializedVersion: 2

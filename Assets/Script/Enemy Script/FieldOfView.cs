@@ -20,15 +20,21 @@ public class FieldOfView : MonoBehaviour
     EnemyVelocityController velocityController;
     private bool isTargetVisibleRaycast;
 
+    private Target zombieHealth;
+
+    private bool isAlive() => zombieHealth.GetZombieHealth() > 0f;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         velocityController = GetComponentInChildren<EnemyVelocityController>();
+        zombieHealth = GetComponent<Target>();
     }
 
     private void Update()
     {
+        Debug.Log("Alive" + isAlive());
         FindVisibleTargets();
         ToggleFOV();
     }
@@ -54,7 +60,7 @@ public class FieldOfView : MonoBehaviour
                 isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask));
 
                 // target is visible
-                if (isTargetVisibleRaycast)
+                if (isTargetVisibleRaycast && isAlive())
                 {
                     // Rotation towards the target
                     float rotationSpeed = agent.angularSpeed;
