@@ -41,5 +41,9 @@ public class Target : MonoBehaviour, ISTarget
             GetComponent<CapsuleCollider>().enabled = false;
             animator.Play("Dead");
         }
+        else
+        {
+            animator.Play("Reaction");
+        }
     }
 }
