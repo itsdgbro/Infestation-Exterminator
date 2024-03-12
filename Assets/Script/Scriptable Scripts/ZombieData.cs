@@ -8,6 +8,8 @@ public class ZombieData : ScriptableObject
     [Header("Primary Attributes")]
     public float attackDamage;
     public float maxRange;
+    public float attackCooldown;
+    public bool canAttack;
 
     [Header("FOV Attributes")]
     public float viewRadius;

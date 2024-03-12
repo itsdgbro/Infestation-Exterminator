@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -20,24 +21,62 @@ public class PlayerStat : MonoBehaviour
     public Image frontHealthBar;
     public Image backHealthBar;
 
+    [Header("Blood Overlay")]
+    [SerializeField] private GameObject bloodOverlay;
+    [SerializeField] private float fadeDuration = 3f;
 
     public float GetHealth() => health;
     public void SetHealth(float value) => health = value;
 
     private void Start()
     {
-        health = 40;
+        health = 100;
     }
 
     public void ReceiveDamage(float damage)
     {
         health -= damage;
+        //Debug.Log(health);
         if (health <= 0)
         {
-            // player die
-            Destroy(this.gameObject);
+            // player dead
+            health = 0;
+
+        }
+        else
+        {
+            // receive hit
+            StartCoroutine(BloodOverlayEffect());
         }
         lerpTimer = 0;
+    }
+
+    private IEnumerator BloodOverlayEffect()
+    {
+        if(bloodOverlay.activeInHierarchy == false)
+        {
+            bloodOverlay.SetActive(true);
+        }
+
+        // Get the Image component for fading.
+        var fadeImage = bloodOverlay.GetComponentInChildren<Image>();
+
+        // Set up initial values.
+        float timer = 0f;
+        Color startColor = new(0.6f, 0f, 0f, 0.6f);
+        Color endColor = new(1f, 1f, 1f, 0); // Final color (black with alpha 0)
+        // Loop to interpolate color over time.
+        while (timer < fadeDuration)
+        {
+            fadeImage.color = Color.Lerp(startColor, endColor, timer / fadeDuration);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        if (bloodOverlay.activeInHierarchy)
+        {
+            bloodOverlay.SetActive(false);
+        }
     }
 
     public void HealthUIUpdate()

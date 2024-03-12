@@ -9,12 +9,17 @@ public class EnemyAttack : MonoBehaviour
     // references
     private EnemyVelocityController velocityController;
     private FieldOfView fov;
+
+    #region Player Reference
     private GameObject player;
     private CapsuleCollider capsuleCollider;
+    #endregion
 
-    private readonly float damageCooldown = 1.6667f;  
+    #region Zombie Reference
+    #endregion
     private float lastDamageAttack;
-    
+
+
 
     private void Awake()
     {
@@ -40,7 +45,7 @@ public class EnemyAttack : MonoBehaviour
             Debug.LogWarning("Velocity script not found");
         }
 
-        if(fov == null)
+        if (fov == null)
         {
             Debug.LogWarning("FOV not found");
         }
@@ -48,30 +53,26 @@ public class EnemyAttack : MonoBehaviour
         if (capsuleCollider == null)
         {
             Debug.LogWarning("Capsule not found");
+            Debug.Log(capsuleCollider.gameObject.name);
         }
     }
 
+    // perform attack
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying() && lastDamageAttack > damageCooldown)
+        if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying() && !zombieData.canAttack)
         {
-            Debug.Log("HELLOO");
-            StartCoroutine(ApplyDamageWithDelay());
+            ApplyDamange();
         }
     }
 
-    IEnumerator ApplyDamageWithDelay()
+    // damage to player
+    void ApplyDamange()
     {
-        yield return new WaitForSeconds(damageCooldown / 2f);
-
         if (Vector3.Distance(player.transform.position, capsuleCollider.transform.position) < 0.89f)
         {
-            Debug.Log("DIstance");
             stat.ReceiveDamage(zombieData.attackDamage);
         }
-
-        // reset attack cooldown
-        lastDamageAttack = 0f;
     }
 
     private void Update()

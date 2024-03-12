@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
         WeaponAmmoTextUI();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log(isGamePaused);
             TogglePauseState();
         }
     }

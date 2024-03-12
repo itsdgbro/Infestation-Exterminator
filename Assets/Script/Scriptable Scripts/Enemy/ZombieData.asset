@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 13
   maxRange: 0.89
+  attackCooldown: 1.67
+  canAttack: 1
   viewRadius: 15
-  viewAngle: 165
+  viewAngle: 360
   targetMask:
     serializedVersion: 2
     m_Bits: 256

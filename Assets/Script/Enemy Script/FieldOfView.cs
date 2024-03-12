@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using System.Collections;
 using UnityEngine.AI;
 
 #if UNITY_EDITOR
@@ -32,11 +33,13 @@ public class FieldOfView : MonoBehaviour
         zombieHealth = GetComponent<Target>();
     }
 
+
     private void Update()
     {
-        Debug.Log("Alive" + isAlive());
+
         FindVisibleTargets();
         ToggleFOV();
+        zombieData.canAttack =  !velocityController.IsAttackAnimationPlaying();
     }
 
     void FindVisibleTargets()
@@ -72,8 +75,7 @@ public class FieldOfView : MonoBehaviour
                     // Move towards the target
                     agent.SetDestination(target.position);
                     animator.SetBool(isTargetVisible, true);
-
-                    if (!velocityController.IsAttackAnimationPlaying())
+                    if (!velocityController.IsAttackAnimationPlaying() && zombieData.canAttack)
                     {
                         AttackTrigger(dstToTarget);
                     }
@@ -92,15 +94,15 @@ public class FieldOfView : MonoBehaviour
 
         if (distance <= zombieData.maxRange)
         {
-            PerfromAttack();
+            // attack animation
+            animator.Play(attackParameter);
+            StartCoroutine(ResetCooldown());
         }
     }
 
-    private void PerfromAttack()
+    private IEnumerator ResetCooldown()
     {
-        // perform attack
-        animator.Play(attackParameter);
-
+        yield return new WaitForSeconds(zombieData.attackCooldown);
     }
 
     private void ToggleFOV()
