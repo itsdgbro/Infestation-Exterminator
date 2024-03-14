@@ -5148,6 +5148,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombieData: {fileID: 11400000, guid: fcb44b3a585334949a4dc569150dd5d8, type: 2}
+--- !u!1 &1914276949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1914276950}
+  m_Layer: 0
+  m_Name: Amature
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1914276950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914276949}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3586437359372950913}
+  - {fileID: 543450652688253075}
+  m_Father: {fileID: 8045288901358313617}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1918294167
 GameObject:
   m_ObjectHideFlags: 0
@@ -6958,13 +6991,13 @@ Transform:
   m_GameObject: {fileID: 919132148965857833}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02999878, y: -1.647, z: 0.24399948}
+  m_LocalPosition: {x: 0.02999878, y: -1.647, z: 0.2440033}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8879528567467921421}
   - {fileID: 7137541940987987252}
-  m_Father: {fileID: 8045288901358313617}
+  m_Father: {fileID: 1914276950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &557888563281760244
 Transform:
@@ -13390,7 +13423,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8043843436917434186}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -13398,7 +13431,7 @@ Transform:
   - {fileID: 8365029877884144190}
   - {fileID: 8614476956199912648}
   - {fileID: 267567967189993034}
-  m_Father: {fileID: 8045288901358313617}
+  m_Father: {fileID: 1914276950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &3590556792973745103
 Transform:
@@ -32276,8 +32309,7 @@ Transform:
   m_Children:
   - {fileID: 947036189315393494}
   - {fileID: 7981352786586869487}
-  - {fileID: 3586437359372950913}
-  - {fileID: 543450652688253075}
+  - {fileID: 1914276950}
   m_Father: {fileID: 8744612159831039792}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &8066350956186699885

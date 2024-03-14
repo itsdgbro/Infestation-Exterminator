@@ -30,18 +30,22 @@ public class PlayerStat : MonoBehaviour
 
     private void Start()
     {
-        health = 100;
+        health = 10;
+    }
+
+    public bool IsDead()
+    {
+        return health == 0;
     }
 
     public void ReceiveDamage(float damage)
     {
         health -= damage;
         //Debug.Log(health);
-        if (health <= 0)
+        if (health < 0)
         {
             // player dead
             health = 0;
-
         }
         else
         {
@@ -53,7 +57,7 @@ public class PlayerStat : MonoBehaviour
 
     private IEnumerator BloodOverlayEffect()
     {
-        if(bloodOverlay.activeInHierarchy == false)
+        if (bloodOverlay.activeInHierarchy == false)
         {
             bloodOverlay.SetActive(true);
         }
@@ -87,7 +91,7 @@ public class PlayerStat : MonoBehaviour
         // keeping health fraction between 0 and 1
         float hFraction = health / maxHealth;
 
-        if(fillB > hFraction)
+        if (fillB > hFraction)
         {
             frontHealthBar.fillAmount = hFraction;
             backHealthBar.color = Color.red;
@@ -96,12 +100,12 @@ public class PlayerStat : MonoBehaviour
             percentComplete = percentComplete * percentComplete;
             backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
         }
-        if(fillF < hFraction)
+        if (fillF < hFraction)
         {
             backHealthBar.color = Color.green;
             backHealthBar.fillAmount = hFraction;
             lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer/ chipSpeed;
+            float percentComplete = lerpTimer / chipSpeed;
             percentComplete = percentComplete * percentComplete;
             frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
         }
@@ -109,7 +113,7 @@ public class PlayerStat : MonoBehaviour
 
     public void RestoreHealth(float healAmount)
     {
-        if(health < maxHealth)
+        if (health < maxHealth)
         {
             health += healAmount;
         }

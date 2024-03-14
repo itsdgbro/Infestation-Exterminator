@@ -72,6 +72,10 @@ public class CharacterMovement : MonoBehaviour
             Jump();
         }
         Crouch();
+
+        // dead
+        if(playerStat.IsDead())
+            animator.SetTrigger("dead");
     }
 
     private void Gravity()
@@ -148,7 +152,6 @@ public class CharacterMovement : MonoBehaviour
     {
         return playerControls.Movement.Aim.ReadValue<float>() > 0.5f;
     }
-
 
     #region Enable/Disable
     private void OnEnable()
