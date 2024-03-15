@@ -15,7 +15,7 @@ public class PlayerStat : MonoBehaviour
 
     private float health;
     private float lerpTimer;
-    private float chipSpeed = 2f;
+    private readonly float chipSpeed = 2f;
 
     [Header("Image Reference")]
     public Image frontHealthBar;
@@ -25,24 +25,27 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] private GameObject bloodOverlay;
     [SerializeField] private float fadeDuration = 3f;
 
+    [Header("Game Manager")]
+    [SerializeField] private GameManager gameManager;
+
     public float GetHealth() => health;
     public void SetHealth(float value) => health = value;
 
     private void Start()
     {
-        health = 10;
+        health = 20;
     }
 
     public bool IsDead()
     {
-        return health == 0;
+        return GetHealth() <= 0;
     }
 
     public void ReceiveDamage(float damage)
     {
         health -= damage;
         //Debug.Log(health);
-        if (health < 0)
+        if (health <= 0)
         {
             // player dead
             health = 0;
@@ -153,6 +156,16 @@ public class PlayerStat : MonoBehaviour
     {
         return playerData.stamina > 0.01;
     }
+
+    public void DeadUIDisplay()
+    {
+        if (gameManager != null && IsDead())
+        {
+            Debug.Log("health " + IsDead());
+            gameManager.ShowDeadUI();
+        }
+    }
+
 
     private void Update()
     {

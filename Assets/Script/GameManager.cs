@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private bool isGamePaused = false;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject inGameUI;
+    [SerializeField] private GameObject gameOverUI;
 
     [Header("Weapon Ammo Count")]
     [Header("AI Ammo UI")]
@@ -29,7 +30,9 @@ public class GameManager : MonoBehaviour
     {
         SetCursorState();
         pauseMenu.SetActive(false);
+        gameOverUI.SetActive(false);
     }
+
 
     private void Start()
     {
@@ -108,6 +111,13 @@ public class GameManager : MonoBehaviour
         pistolRemainingAmmoUI.text = pistolData.ammoLeft.ToString();
 
 
+    }
+
+    public void ShowDeadUI()
+    {
+        gameOverUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void QuitGame()
