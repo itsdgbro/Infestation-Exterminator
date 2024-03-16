@@ -39,7 +39,7 @@ public class Target : MonoBehaviour, ISTarget
         {
             navMeshAgent.enabled = false;
             GetComponent<CapsuleCollider>().enabled = false;
-            animator.Play("Dead");
+            animator.SetTrigger("dead");
         }
         else
         {

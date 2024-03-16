@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
+using TMPro;
 using UnityEngine;
 
 public class HealingScript : MonoBehaviour
@@ -9,12 +9,23 @@ public class HealingScript : MonoBehaviour
     [Header("Reference to Healing Data")]
     [SerializeField] private HealData data;
 
+    [Header("Parent references")]
     private PlayerStat playerStat;
     [SerializeField] private GameObject fpsWeapons;
+    private PlayerControls playerControls;
+
+    [Header("Healing UI")]
+    [SerializeField] private TextMeshProUGUI healingUI;
 
 
     private void Awake()
     {
+        data.availablePills = 5;
+        playerControls = new PlayerControls();
+        if(playerControls == null)
+        {
+            Debug.LogWarning("PLayer controls");
+        }
         animator = GetComponent<Animator>();
         playerStat = GetComponentInParent<PlayerStat>();
         if (playerStat == null)
@@ -29,12 +40,14 @@ public class HealingScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        PillCountUI();
+        if (playerControls.Movement.Heal.triggered && data.availablePills > 0)
         {   
             if (playerStat.GetHealth() < 100)
             {
                 fpsWeapons.SetActive(false);
                 animator.Play("Heal");
+                data.availablePills--;
             }
         }
     }
@@ -43,4 +56,21 @@ public class HealingScript : MonoBehaviour
     {
         fpsWeapons.SetActive(true);
     }
+
+    private void PillCountUI()
+    {
+        healingUI.text = data.availablePills.ToString()+"x";
+    }
+
+    #region Enable/Disable
+    private void OnEnable()
+    {
+        playerControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
+    }
+    #endregion
 }
