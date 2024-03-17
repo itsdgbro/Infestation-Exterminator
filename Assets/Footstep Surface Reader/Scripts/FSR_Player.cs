@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 
 namespace FSR
@@ -10,6 +11,17 @@ namespace FSR
         public Transform foot;
         public float raycastSize = 10;
         [SerializeField] private FSR_Data data;
+
+        private CharacterMovement character;
+
+        private void Awake()
+        {
+            character = foot.GetComponentInParent<CharacterMovement>();
+            if(character == null)
+            {
+                Debug.LogWarning("Not found");
+            }
+        }
 
 
         public void Start()
@@ -24,7 +36,8 @@ namespace FSR
         public void step()
         {
             RaycastHit hit;
-            if (Physics.Raycast(foot.position, -foot.up, out hit, raycastSize))
+
+            if (Physics.Raycast(foot.position, Vector3.down, out hit, raycastSize) && character.GetIsGrounded())
             {
                 try {
 
@@ -79,11 +92,25 @@ namespace FSR
 
 
                 }
-
             }
         }
 
 
+        private void OnDrawGizmos()
+        {
+            RaycastHit hit;
+            //Vector3 raycastDirection = transform.position - foot.position;
+            if (Physics.Raycast(foot.position, Vector3.down, out hit, raycastSize))
+            {
+                if(hit.transform.gameObject.CompareTag("Ground"))
+                    Gizmos.color = Color.green;
+            }
+            else
+            {
+                Gizmos.color = Color.red;
+            }
+            Gizmos.DrawRay(foot.position, Vector3.down * raycastSize);
+        }
 
         // pick & play a random footstep sound from the array,
         // excluding sound at index 0
@@ -91,15 +118,13 @@ namespace FSR
         {
             AudioClip[] soundEffects= surfaceType.soundEffects;
 
-            int n = Random.Range(0, soundEffects.Length);
+            int n = UnityEngine.Random.Range(0, soundEffects.Length);
             m_AudioSource.clip = soundEffects[n];
             m_AudioSource.PlayOneShot(m_AudioSource.clip);
             // move picked sound to index 0 so it's not picked next time
             soundEffects[n] = soundEffects[0];
             soundEffects[0] = m_AudioSource.clip;
         }
-
-
 
     }
 }

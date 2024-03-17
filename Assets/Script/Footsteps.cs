@@ -21,7 +21,8 @@ public class Footsteps : MonoBehaviour
     {
         float inputValue = playerControls.Movement.Move.ReadValue<Vector2>().magnitude;
         if (inputValue > 0)
-        {   
+        {
+            Debug.Log("123");
             StartFootsteps();
         }
     }
@@ -31,6 +32,7 @@ public class Footsteps : MonoBehaviour
         Sin = Mathf.Sin(Time.time * frequency);
         if (Sin > 0.97f && isTriggered == false)
         {
+            Debug.Log("Foot");
             isTriggered = true;
             onFootStep.Invoke();
         }

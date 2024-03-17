@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -36,26 +35,28 @@ public class CharacterMovement : MonoBehaviour
     public LayerMask groundLayer;
     #endregion
 
+    [Header("Sounds")]
+    private new AudioSource audio;
+    [SerializeField] private AudioClip jumpSound;
+
     #region Animator
     private Animator animator;
     #endregion
 
-    #region FootSpets
-    private Footsteps footsteps;
-    #endregion
 
     #region Stamina
     private PlayerStat playerStat;
     #endregion
+
+    private bool wasGrounded = true;
 
     void Awake()
     {
         playerControls = new PlayerControls();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        footsteps = GetComponentInChildren<Footsteps>();
         playerStat = GetComponent<PlayerStat>();
-
+        audio = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -66,16 +67,23 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         Gravity();
-        Move();
         if (!isCrouching)
         {
             Jump();
         }
         Crouch();
 
+        Move();
         // dead
-        if(playerStat.IsDead())
+        if (playerStat.IsDead())
             animator.SetTrigger("dead");
+
+        if(wasGrounded && !isGrounded)
+        {
+            audio.PlayOneShot(jumpSound);
+        }
+
+        wasGrounded = isGrounded;
     }
 
     private void Gravity()
@@ -101,7 +109,7 @@ public class CharacterMovement : MonoBehaviour
         Vector3 movement = (characterMove.y * transform.forward) + (characterMove.x * transform.right);
 
         float maxSpeed = moveSpeed; // Default to regular move speed
-        
+
         // bool check if spring key is pressed
         isSprinting = playerControls.Movement.Sprint.ReadValue<float>() > 0.1f;
         // Check if sprint button is being held down and the player is moving forward
