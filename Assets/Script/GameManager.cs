@@ -72,7 +72,6 @@ public class GameManager : MonoBehaviour
     {
         zombieAlive = zombieList.Count;
         WeaponAmmoTextUI();
-        Debug.Log(isGamePaused);
         if (isGamePaused)
         {
             inputActions.Disable();
