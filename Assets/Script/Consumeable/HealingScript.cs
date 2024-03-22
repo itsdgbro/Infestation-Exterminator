@@ -15,8 +15,11 @@ public class HealingScript : MonoBehaviour
     private PlayerControls playerControls;
 
     [Header("Healing UI")]
-    [SerializeField] private TextMeshProUGUI healingUI;
+    [SerializeField] private TextMeshProUGUI pillCountUI;
 
+    [Header("Healing Audio")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip healingAudio;
 
     private void Awake()
     {
@@ -30,6 +33,7 @@ public class HealingScript : MonoBehaviour
         playerStat = GetComponentInParent<PlayerStat>();
         if (playerStat == null)
             Debug.LogWarning("PlayerStat not found");
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Trigger from animation event
@@ -45,6 +49,7 @@ public class HealingScript : MonoBehaviour
         {   
             if (playerStat.GetHealth() < 100)
             {
+                audioSource.PlayOneShot(healingAudio);
                 fpsWeapons.SetActive(false);
                 animator.Play("Heal");
                 data.availablePills--;
@@ -59,7 +64,7 @@ public class HealingScript : MonoBehaviour
 
     private void PillCountUI()
     {
-        healingUI.text = data.availablePills.ToString()+"x";
+        pillCountUI.text = data.availablePills.ToString()+"x";
     }
 
     #region Enable/Disable

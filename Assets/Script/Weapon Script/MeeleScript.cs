@@ -21,6 +21,8 @@ public class MeeleScript : MonoBehaviour
     [SerializeField] private GameObject attackHolePrefab;
     private RaycastHit hitInfo;
 
+    [Header("Game Manager Reference")]
+    [SerializeField] private GameManager gameManager;
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -37,7 +39,7 @@ public class MeeleScript : MonoBehaviour
 
     private void HandleAttackInput()
     {
-        if (playerControls.Movement.Fire.ReadValue<float>() > 0.1f && canAttack)
+        if (playerControls.Movement.Fire.ReadValue<float>() > 0.1f && canAttack && !gameManager.GetIsGamePaused())
         {
             PerformAttack();
         }

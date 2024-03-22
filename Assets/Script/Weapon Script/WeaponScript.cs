@@ -25,6 +25,10 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private AudioClip emptyClipSound;
     [SerializeField] private AudioClip reloadSound;
 
+    [Header("Game Manager Reference")]
+    [SerializeField] private GameManager gameManager;
+
+
     private float timeSinceLastShot;
     [HideInInspector] public bool isAiming;
     public Camera fpsCam;
@@ -109,7 +113,7 @@ public class WeaponScript : MonoBehaviour
         audioSource.PlayOneShot(emptyClipSound);
     }
 
-    private bool CanShoot() => !weaponData.isReloading && weaponData.currentAmmo > 0 && timeSinceLastShot > 1f / (weaponData.fireRate / 60f);
+    private bool CanShoot() => !weaponData.isReloading && weaponData.currentAmmo > 0 && timeSinceLastShot > 1f / (weaponData.fireRate / 60f) && !gameManager.GetIsGamePaused();
 
     private void AimShoot()
     {

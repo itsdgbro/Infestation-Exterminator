@@ -7,12 +7,16 @@ public class Target : MonoBehaviour, ISTarget
 {
     #region Target Health
     [SerializeField] private float health = 50f;
+    public float GetZombieHealth() => health;
     #endregion
 
-    public float GetZombieHealth() => health;
     private Animator animator;
     private NavMeshAgent navMeshAgent;
+
+    // GameManager
+    [SerializeField]private GameManager gameManager;
     
+
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
@@ -21,6 +25,7 @@ public class Target : MonoBehaviour, ISTarget
             Debug.LogWarning("animator not found");
         }
         navMeshAgent = GetComponent<NavMeshAgent>();
+
     }
 
     IEnumerator WaitForAnimationAndDestroy(float len)
@@ -36,10 +41,12 @@ public class Target : MonoBehaviour, ISTarget
     {
         health -= amount;
         if (health <= 0)
-        {
+        {   
+            // death
             navMeshAgent.enabled = false;
             GetComponent<CapsuleCollider>().enabled = false;
             animator.SetTrigger("dead");
+            gameManager.SetZombieAlive(this.gameObject);
         }
         else
         {

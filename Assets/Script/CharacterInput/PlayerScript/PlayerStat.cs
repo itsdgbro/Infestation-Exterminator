@@ -25,6 +25,11 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] private GameObject bloodOverlay;
     [SerializeField] private float fadeDuration = 3f;
 
+    [Header("Main Camera")]
+    [SerializeField] private Camera mainCamera;
+    public Vector3 deathCameraPosition = new(-0.39f, -1.35f, 0f); // Ending position of the camera
+    public float transitionDuration = 0.75f;
+
     [Header("Game Manager")]
     [SerializeField] private GameManager gameManager;
 
@@ -166,6 +171,35 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
+    public void DeathCam()
+    {
+        StartCoroutine(TransitionCamera());
+    }
+
+    private IEnumerator TransitionCamera()
+    {
+        Vector3 initialCameraOffset = mainCamera.transform.localPosition; // Store the initial camera local position
+        Vector3 targetOffset = deathCameraPosition; // Target offset relative to the parent
+
+        float elapsedTime = 0f; // Elapsed time since the start of the transition
+
+        while (elapsedTime < transitionDuration)
+        {
+            // Increment the elapsed time
+            elapsedTime += Time.deltaTime;
+
+            // Calculate the interpolation factor based on the elapsed time
+            float t = Mathf.Clamp01(elapsedTime / transitionDuration);
+
+            // Interpolate the camera local position from initial to target position
+            mainCamera.transform.localPosition = Vector3.Lerp(initialCameraOffset, targetOffset, t);
+
+            yield return null; // Wait for the next frame
+        }
+
+        // Ensure the camera reaches the exact target position at the end of the transition
+        mainCamera.transform.localPosition = targetOffset;
+    }
 
     private void Update()
     {

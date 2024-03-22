@@ -39,9 +39,10 @@ namespace FSR
 
             if (Physics.Raycast(foot.position, Vector3.down, out hit, raycastSize) && character.GetIsGrounded())
             {
-                try {
+                try
+                {
 
-                   FSR_SimpleSurface surface =  hit.transform.GetComponent<FSR_SimpleSurface>();
+                    FSR_SimpleSurface surface = hit.transform.GetComponent<FSR_SimpleSurface>() ?? hit.transform.parent.GetComponent<FSR_SimpleSurface>();
                     foreach (FSR_Data.SurfaceType surfaceData in data.surfaces)
                     {
                         if (surfaceData.name.Equals(surface.GetSurface()))
@@ -77,7 +78,8 @@ namespace FSR
                             }
 
                         }
-                        catch {
+                        catch
+                        {
 
                             foreach (FSR_Data.SurfaceType surfaceData in data.surfaces)
                             {
@@ -102,6 +104,7 @@ namespace FSR
             //Vector3 raycastDirection = transform.position - foot.position;
             if (Physics.Raycast(foot.position, Vector3.down, out hit, raycastSize))
             {
+                Debug.Log(hit.transform.gameObject.name);
                 if(hit.transform.gameObject.CompareTag("Ground"))
                     Gizmos.color = Color.green;
             }

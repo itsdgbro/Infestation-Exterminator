@@ -17,7 +17,7 @@ MonoBehaviour:
   attackCooldown: 1.67
   canAttack: 1
   viewRadius: 15
-  viewAngle: 360
+  viewAngle: 104
   targetMask:
     serializedVersion: 2
     m_Bits: 256

@@ -48,7 +48,6 @@ public class CharacterMovement : MonoBehaviour
     private PlayerStat playerStat;
     #endregion
 
-    private bool wasGrounded = true;
 
     void Awake()
     {
@@ -56,7 +55,7 @@ public class CharacterMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         playerStat = GetComponent<PlayerStat>();
-        audio = GetComponent<AudioSource>();
+        audio = gameObject.AddComponent<AudioSource>();
     }
 
     private void Start()
@@ -78,21 +77,22 @@ public class CharacterMovement : MonoBehaviour
         if (playerStat.IsDead())
             animator.SetTrigger("dead");
 
-        if(wasGrounded && !isGrounded)
-        {
-            audio.PlayOneShot(jumpSound);
-        }
-
-        wasGrounded = isGrounded;
     }
 
     private void Gravity()
     {
+        bool wasGrounded = isGrounded;
+
         // ground check with feet touching Ground Layer
         isGrounded = Physics.CheckSphere(groundCheck.position, characterController.radius * 0.9f, groundLayer);
 
         if (isGrounded && velocity.y < 0)
         {
+            if (!wasGrounded)
+            {
+                // Play landing sound
+                audio.PlayOneShot(jumpSound);
+            }
             // constant pulling value
             velocity.y = -5f;
         }

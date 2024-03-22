@@ -44,4 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a703db161182e5240b2cb0c21bbe2a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenu: Scene Menu
   pauseMenu: {fileID: 0}
+  inGameUI: {fileID: 0}
+  gameOverUI: {fileID: 0}
+  arCurrentAmmoUI: {fileID: 0}
+  arRemainingAmmoUI: {fileID: 0}
+  pistolCurrentAmmoUI: {fileID: 0}
+  pistolRemainingAmmoUI: {fileID: 0}
+  arData: {fileID: 11400000, guid: de6e75ca6a8f4b4498e25103a3998fa3, type: 2}
+  pistolData: {fileID: 11400000, guid: 78ed6642c3def8440b821f9ac674209f, type: 2}
+  zombieCountUI: {fileID: 0}
+  zombieCollection: {fileID: 0}
