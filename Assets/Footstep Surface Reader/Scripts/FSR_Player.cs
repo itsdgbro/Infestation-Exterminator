@@ -42,7 +42,7 @@ namespace FSR
                 try
                 {
 
-                    FSR_SimpleSurface surface = hit.transform.GetComponent<FSR_SimpleSurface>() ?? hit.transform.parent.GetComponent<FSR_SimpleSurface>();
+                    FSR_SimpleSurface surface = hit.transform.GetComponent<FSR_SimpleSurface>() ?? hit.transform.parent.GetComponent<FSR_SimpleSurface>() ?? hit.transform.parent.parent.GetComponent<FSR_SimpleSurface>();
                     foreach (FSR_Data.SurfaceType surfaceData in data.surfaces)
                     {
                         if (surfaceData.name.Equals(surface.GetSurface()))
