@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
@@ -24,6 +25,7 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private AudioClip shootSound;
     [SerializeField] private AudioClip emptyClipSound;
     [SerializeField] private AudioClip reloadSound;
+    [SerializeField] private AudioClip drawSound;
 
     [Header("Game Manager Reference")]
     [SerializeField] private GameManager gameManager;
@@ -197,9 +199,14 @@ public class WeaponScript : MonoBehaviour
 
     }
 
+    public void PlayDrawSound()
+    {
+        audioSource.PlayOneShot(drawSound);
+    }
 
     private void Update()
     {
+
         timeSinceLastShot += Time.deltaTime;
         //DrawRayFromMuzzle();
         ShowRayCast();

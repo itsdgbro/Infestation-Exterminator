@@ -18,7 +18,9 @@ public class MeeleScript : MonoBehaviour
     [Header("AduioClips")]
     private AudioSource audioSource;
     [SerializeField] private AudioClip attackAudio;
+    [SerializeField] private AudioClip drawAudio;
     [SerializeField] private GameObject attackHolePrefab;
+
     private RaycastHit hitInfo;
 
     [Header("Game Manager Reference")]
@@ -62,6 +64,11 @@ public class MeeleScript : MonoBehaviour
         attackReverse = !attackReverse;
         canAttack = false;
         Invoke(nameof(ResetAttack), meleeData.fireRate);
+    }
+
+    public void PlayDrawSound()
+    {
+        audioSource.PlayOneShot(drawAudio);
     }
 
     private void Attack()
