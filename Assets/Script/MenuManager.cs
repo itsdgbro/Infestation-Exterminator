@@ -29,6 +29,11 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void OnLevelSelectButtonClick()
+    {
+        Debug.Log("Level");
+    }
+
     public void StopTime()
     {
         Time.timeScale = 0.0f;
