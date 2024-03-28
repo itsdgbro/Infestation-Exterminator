@@ -6,22 +6,40 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     [Header("Levels To Load")]
-    [SerializeField] private string newLevel;
-    private string loadLevel;
+    [SerializeField] private string[] levels;
+
+    private string loadSavedLevel;
 
 
     [SerializeField] private GameObject noSavedDataDialouge = null;
-    public void NewGameDialouge()
+
+    public void LoadLevel(int index)
     {
-        SceneManager.LoadScene(newLevel);
+        // check if index value exceeds the number of scenes 
+        if (index >= SceneManager.sceneCountInBuildSettings - 1)
+        {
+            Debug.LogError("Invalid index: " + index);
+            return;
+        }
+
+        // returns -1 if scene not found
+        int buildIndex = SceneUtility.GetBuildIndexByScenePath(levels[index]);
+
+        if (buildIndex < 0)
+        {
+            Debug.LogError("Scene not found.");
+            return;
+        }
+
+        SceneManager.LoadScene(levels[index]);
     }
 
     public void LoadGameDialouge()
     {
         if (PlayerPrefs.HasKey("SavedData"))
         {
-            loadLevel = PlayerPrefs.GetString("SavedData");
-            SceneManager.LoadScene(loadLevel);
+            loadSavedLevel = PlayerPrefs.GetString("SavedData");
+            SceneManager.LoadScene(loadSavedLevel);
         }
         else
         {
