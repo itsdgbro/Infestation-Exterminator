@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Target : MonoBehaviour, ISTarget
+public class Target : MonoBehaviour, ISTarget, IDataPersistence
 {
+    [SerializeField] private string id;
+    [ContextMenu("Generate guid for id")]
+    private void GenerateGUID()
+    {
+        id = System.Guid.NewGuid().ToString();
+    }
+
     #region Target Health
     [SerializeField] private float health = 50f;
     public float GetZombieHealth() => health;
     #endregion
 
+    private bool isDead = false;
+
+    public bool GetIsDead() {  return isDead; }
+
     private Animator animator;
     private NavMeshAgent navMeshAgent;
 
-    // GameManager
-    [SerializeField]private GameManager gameManager;
+    private ZombieCountManager ZombieCountManager;
     
 
     private void Awake()
@@ -26,6 +36,12 @@ public class Target : MonoBehaviour, ISTarget
         }
         navMeshAgent = GetComponent<NavMeshAgent>();
 
+        // search count manager in parent
+        ZombieCountManager = GetComponentInParent<ZombieCountManager>();
+        if(ZombieCountManager == null)
+        {
+            Debug.LogWarning("Zombie Count Manager not found.");
+        }
     }
 
     IEnumerator WaitForAnimationAndDestroy(float len)
@@ -45,12 +61,32 @@ public class Target : MonoBehaviour, ISTarget
             // death
             navMeshAgent.enabled = false;
             GetComponent<CapsuleCollider>().enabled = false;
+            isDead = true;
             animator.SetTrigger("dead");
-            gameManager.SetZombieAlive(this.gameObject);
+            ZombieCountManager.SetZombieAlive(this.gameObject);
         }
         else
         {
             animator.Play("Reaction");
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        data.isZombieDead.TryGetValue(id, out isDead);
+        if(isDead)
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+        if (data.isZombieDead.ContainsKey(id))
+        {
+            data.isZombieDead.Remove(id);
+        }
+
+        data.isZombieDead.Add(id, isDead);
     }
 }

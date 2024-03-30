@@ -47,7 +47,6 @@ public class WeaponSwitch : MonoBehaviour
 
 
         previousSelectedWeapon = selectedWeapon;
-        Debug.Log(previousSelectedWeapon);
         for (int i = 0; i < keys.Length; i++)
             if (Input.GetKeyDown(keys[i]) && timeSinceLastSwitch >= switchTime)
                 selectedWeapon = i;

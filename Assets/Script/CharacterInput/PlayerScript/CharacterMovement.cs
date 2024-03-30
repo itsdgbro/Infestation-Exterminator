@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovement : MonoBehaviour, IDataPersistence
 {
 
     private PlayerControls playerControls;
@@ -159,6 +159,30 @@ public class CharacterMovement : MonoBehaviour
     public bool IsAiming()
     {
         return playerControls.Movement.Aim.ReadValue<float>() > 0.5f;
+    }
+
+    public void LoadData(GameData data)
+    {
+        // Load player position
+        transform.position = data.playerPosition;
+
+        // Load player rotation
+        transform.rotation = data.playerRotation;
+
+        // Update player forward direction
+        transform.forward = data.playerForward;
+    }
+
+    public void SaveData(GameData data)
+    {
+        // Save player position
+        data.playerPosition = transform.position;
+
+        // Save player rotation
+        data.playerRotation = transform.rotation;
+
+        // Save player forward direction
+        data.playerForward = transform.forward;
     }
 
     #region Enable/Disable

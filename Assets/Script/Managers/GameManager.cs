@@ -30,25 +30,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WeaponData arData;
     [SerializeField] private WeaponData pistolData;
 
-    [Header("Zombie CountUI")]
-    [SerializeField] private TextMeshProUGUI zombieCountUI;
-    [SerializeField] private GameObject zombieCollection;
 
     #region Player Controls
     private PlayerControls inputActions;
     #endregion
 
-    #region Zombie count 
-    private List<GameObject> zombieList = new();
-    private int totalZombies;
-    private int zombieAlive;
-
-    public int GetZombieAlive() => zombieAlive;
-    public void SetZombieAlive(GameObject gameObject)
-    {
-        zombieList.Remove(gameObject);
-    }
-    #endregion
 
 
     private void Awake()
@@ -62,15 +48,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        AppendZombieList();
-        totalZombies = zombieList.Count;
         ResumeGame();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        zombieAlive = zombieList.Count;
         WeaponAmmoTextUI();
         if (isGamePaused)
         {
@@ -85,7 +68,7 @@ public class GameManager : MonoBehaviour
         {
             TogglePauseState();
         }
-        ZombieCountUI();
+        // ZombieCountUI();
     }
 
     private void SetCursorState()
@@ -154,28 +137,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // zombie/score count
-    private void AppendZombieList()
-    {
-        for (int i = 0; i < zombieCollection.transform.childCount; i++)
-        {
-            Transform child = zombieCollection.transform.GetChild(i);
-            if (child.CompareTag("Target") && child.gameObject.activeSelf)
-            {
-                zombieList.Add(zombieCollection.transform.GetChild(i).gameObject);
-            }
-        }
-    }
-
-    private void ZombieCountUI()
-    {
-        zombieCountUI.text = zombieAlive.ToString()+"/"+totalZombies.ToString();
-    }
-
-    public void ZombieDestroyed(GameObject destroyedZombie)
-    {
-        zombieList.Remove(destroyedZombie);
-    }
 
     public void ShowDeadUI()
     {
