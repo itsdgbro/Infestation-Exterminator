@@ -60,8 +60,15 @@ public class EnemyAttack : MonoBehaviour
     // perform attack
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying())
+        {
+            Debug.Log("HITT");
+            
+        }
+
         if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying() && !zombieData.canAttack)
         {
+
             ApplyDamange();
         }
     }

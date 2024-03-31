@@ -23,6 +23,10 @@ public class FieldOfView : MonoBehaviour
 
     private Target zombieHealth;
 
+    // zombie FOV range
+    [Range(0, 360)]
+    private float viewAngle;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -54,19 +58,20 @@ public class FieldOfView : MonoBehaviour
         {
             Transform potentialTarget = potentialTargetCollider.transform;
             Vector3 dirToTarget = (potentialTarget.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < zombieData.viewAngle / 2)
+            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, potentialTarget.position);
                 // RayCast hits target and there is no obstacles
                 isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask));
-
+                Debug.Log(isTargetVisibleRaycast + " asd");
                 // target is visible
-                if (isTargetVisibleRaycast && zombieHealth.GetIsDead())
+                if (isTargetVisibleRaycast && !zombieHealth.GetIsDead())
                 {
                     // Rotation towards the target
                     float rotationSpeed = agent.angularSpeed;
                     Quaternion targetRotation = Quaternion.LookRotation(dirToTarget);
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                    Debug.Log("Visible");
 
                     target = potentialTarget;
 
@@ -105,12 +110,11 @@ public class FieldOfView : MonoBehaviour
 
     private void ToggleFOV()
     {
-        float defaultFOV = 165;
+        float defaultFOV = 165f;
         float allFOV = 360f;
 
-        float currentFOV = isTargetVisibleRaycast ? allFOV : defaultFOV;
+        viewAngle = isTargetVisibleRaycast ? allFOV : defaultFOV;
 
-        zombieData.viewAngle = currentFOV;
     }
 
 
@@ -119,8 +123,8 @@ public class FieldOfView : MonoBehaviour
     {
         Handles.color = Color.white;
         Handles.DrawWireArc(eyes.transform.position, Vector3.up, Vector3.forward, 360, zombieData.viewRadius);
-        Vector3 viewAngleA = DirFromAngle(-zombieData.viewAngle / 2, false);
-        Vector3 viewAngleB = DirFromAngle(zombieData.viewAngle / 2, false);
+        Vector3 viewAngleA = DirFromAngle(-viewAngle / 2, false);
+        Vector3 viewAngleB = DirFromAngle(viewAngle / 2, false);
         Handles.DrawLine(eyes.transform.position, eyes.transform.position + viewAngleA * zombieData.viewRadius);
         Handles.DrawLine(eyes.transform.position, eyes.transform.position + viewAngleB * zombieData.viewRadius);
 

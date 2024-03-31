@@ -9,4 +9,4 @@ public class HealData : ScriptableObject
     public string healItemName;
     public float healAmount;
     public int availablePills;
-}
+}   

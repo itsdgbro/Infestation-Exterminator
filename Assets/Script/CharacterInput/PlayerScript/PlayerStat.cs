@@ -5,24 +5,23 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerStat : MonoBehaviour
+public class PlayerStat : MonoBehaviour, IDataPersistence
 {
     [Header("References")]
-    [SerializeField] private PlayerData playerData;
-    [SerializeField] private Image staminaBar;
+    [SerializeField] private PlayerData playerData;     // playerData 
+    [SerializeField] private Image staminaBar;      // stamina UI
     [Range(0f, 100f)]
     private readonly float maxHealth = 100f;
 
-    private float health;
     private float lerpTimer;
     private readonly float chipSpeed = 2f;
 
-    [Header("Image Reference")]
+    [Header("Image Reference")]     // health UI
     public Image frontHealthBar;
     public Image backHealthBar;
 
     [Header("Blood Overlay")]
-    [SerializeField] private GameObject bloodOverlay;
+    [SerializeField] private GameObject bloodOverlay;   // bloodUI
     [SerializeField] private float fadeDuration = 3f;
 
     [Header("Main Camera")]
@@ -33,27 +32,31 @@ public class PlayerStat : MonoBehaviour
     [Header("Game Manager")]
     [SerializeField] private GameManager gameManager;
 
-    public float GetHealth() => health;
-    public void SetHealth(float value) => health = value;
+    public float GetHealth() => playerData.playerHealth;
+    public void SetHealth(float value) => playerData.playerHealth = value;
 
     private void Start()
     {
-        health = 20;
+
+        // check state player is dead or alive
+        playerData.isDead = playerData.playerHealth <= 0;
+
+        Debug.Log(playerData.isDead + " Dead");
     }
 
     public bool IsDead()
     {
-        return GetHealth() <= 0;
+        return playerData.isDead;
     }
 
     public void ReceiveDamage(float damage)
     {
-        health -= damage;
-        //Debug.Log(health);
-        if (health <= 0)
+        playerData.playerHealth -= damage;
+        //Debug.Log(playerData.playerHealth);
+        if (playerData.playerHealth <= 0)
         {
             // player dead
-            health = 0;
+            playerData.playerHealth = 0;
         }
         else
         {
@@ -96,8 +99,8 @@ public class PlayerStat : MonoBehaviour
         float fillF = frontHealthBar.fillAmount;
         float fillB = backHealthBar.fillAmount;
 
-        // keeping health fraction between 0 and 1
-        float hFraction = health / maxHealth;
+        // keeping playerData.playerHealth fraction between 0 and 1
+        float hFraction = playerData.playerHealth / maxHealth;
 
         if (fillB > hFraction)
         {
@@ -121,9 +124,9 @@ public class PlayerStat : MonoBehaviour
 
     public void RestoreHealth(float healAmount)
     {
-        if (health < maxHealth)
+        if (playerData.playerHealth < maxHealth)
         {
-            health += healAmount;
+            playerData.playerHealth += healAmount;
         }
         lerpTimer = 0f;
     }
@@ -166,7 +169,7 @@ public class PlayerStat : MonoBehaviour
     {
         if (gameManager != null && IsDead())
         {
-            Debug.Log("health " + IsDead());
+            Debug.Log("playerData.playerHealth " + IsDead());
             gameManager.ShowDeadUI();
         }
     }
@@ -206,5 +209,17 @@ public class PlayerStat : MonoBehaviour
         playerData.stamina = staminaBar.fillAmount;
         HealthUIUpdate();
         IncreaseStamina();
+    }
+
+    
+
+    public void SaveData(GameData data)
+    {
+        data.player.health = playerData.playerHealth;
+    }
+
+    public void LoadData(GameData data)
+    {
+        playerData.playerHealth = data.player.health;
     }
 }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class HealingScript : MonoBehaviour
+public class HealingScript : MonoBehaviour, IDataPersistence
 {
     private Animator animator;
     [Header("Reference to Healing Data")]
-    [SerializeField] private HealData data;
+    [SerializeField] private HealData healingData;
 
     [Header("Parent references")]
     private PlayerStat playerStat;
@@ -23,9 +23,8 @@ public class HealingScript : MonoBehaviour
 
     private void Awake()
     {
-        data.availablePills = 5;
         playerControls = new PlayerControls();
-        if(playerControls == null)
+        if (playerControls == null)
         {
             Debug.LogWarning("PLayer controls");
         }
@@ -39,20 +38,20 @@ public class HealingScript : MonoBehaviour
     // Trigger from animation event
     public void Heal()
     {
-        playerStat.RestoreHealth(data.healAmount);
+        playerStat.RestoreHealth(healingData.healAmount);
     }
 
     private void Update()
     {
         PillCountUI();
-        if (playerControls.Movement.Heal.triggered && data.availablePills > 0)
-        {   
+        if (playerControls.Movement.Heal.triggered && healingData.availablePills > 0)
+        {
             if (playerStat.GetHealth() < 100)
             {
                 audioSource.PlayOneShot(healingAudio);
                 fpsWeapons.SetActive(false);
                 animator.Play("Heal");
-                data.availablePills--;
+                healingData.availablePills--;
             }
         }
     }
@@ -64,7 +63,17 @@ public class HealingScript : MonoBehaviour
 
     private void PillCountUI()
     {
-        pillCountUI.text = data.availablePills.ToString()+"x";
+        pillCountUI.text = healingData.availablePills.ToString() + "x";
+    }
+
+    public void LoadData(GameData data)
+    {
+        healingData.availablePills = data.player.healingPillsLeft;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.player.healingPillsLeft = healingData.availablePills;
     }
 
     #region Enable/Disable
@@ -77,5 +86,6 @@ public class HealingScript : MonoBehaviour
     {
         playerControls.Disable();
     }
+
     #endregion
 }

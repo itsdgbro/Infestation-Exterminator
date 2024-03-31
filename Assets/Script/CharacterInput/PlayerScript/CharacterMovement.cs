@@ -164,25 +164,25 @@ public class CharacterMovement : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         // Load player position
-        transform.position = data.playerPosition;
+        transform.position = data.player.positioln;
 
         // Load player rotation
-        transform.rotation = data.playerRotation;
+        transform.rotation = data.player.rotation;
 
         // Update player forward direction
-        transform.forward = data.playerForward;
+        transform.forward = data.player.direction;
     }
 
     public void SaveData(GameData data)
     {
         // Save player position
-        data.playerPosition = transform.position;
+        data.player.positioln = transform.position;
 
         // Save player rotation
-        data.playerRotation = transform.rotation;
+        data.player.rotation = transform.rotation;
 
         // Save player forward direction
-        data.playerForward = transform.forward;
+        data.player.direction = transform.forward;
     }
 
     #region Enable/Disable

@@ -55,11 +55,11 @@ public class ZombieCountManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        this.zombieAlive = data.zombieCount;
+        this.zombieAlive = data.enemy.zombieCount;
     }
 
     public void SaveData(GameData data)
     {
-        data.zombieCount = this.zombieAlive;
+        data.enemy.zombieCount = this.zombieAlive;
     }
 }
