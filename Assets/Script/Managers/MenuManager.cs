@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,13 +8,18 @@ public class MenuManager : MonoBehaviour
 {
     [Header("Levels To Load")]
     [SerializeField] private string[] levels;
+    [SerializeField] private GameObject savedDataNotFoundUI;
 
-    private string loadSavedLevel;
+    private DataPersistenceManager dataPersistenceManager;
 
+    private void Start()
+    {
+        dataPersistenceManager = DataPersistenceManager.instance;
+        savedDataNotFoundUI.SetActive(false);
+    }
 
-    [SerializeField] private GameObject noSavedDataDialouge = null;
-
-    public void LoadLevel(int index)
+    // load the selected level from UI 
+    public void LoadNewLevel(int index)
     {
         // check if index value exceeds the number of scenes 
         if (index >= SceneManager.sceneCountInBuildSettings - 1)
@@ -31,20 +37,10 @@ public class MenuManager : MonoBehaviour
             return;
         }
 
-        SceneManager.LoadScene(levels[index]);
-    }
+        DataPersistenceManager.instance.NewGame();
 
-    public void LoadGameDialouge()
-    {
-        if (PlayerPrefs.HasKey("SavedData"))
-        {
-            loadSavedLevel = PlayerPrefs.GetString("SavedData");
-            SceneManager.LoadScene(loadSavedLevel);
-        }
-        else
-        {
-            noSavedDataDialouge.SetActive(true);
-        }
+        Debug.Log("CReated");
+        SceneManager.LoadSceneAsync(levels[index]);
     }
 
     public void OnLevelSelectButtonClick()
@@ -65,5 +61,38 @@ public class MenuManager : MonoBehaviour
     public void ExitButton()
     {
         Application.Quit();
+    }
+
+    //// Load game from saved data
+    //public void LoadGame()
+    //{
+    //    // load any saved data from file
+    //    GameData loadedGameData = DataPersistenceManager.instance.GetFileDataHandler().Load();
+
+    //    // check if saved data exist
+    //    if (loadedGameData == null || string.IsNullOrEmpty(loadedGameData.sceneName))
+    //    {
+    //        Debug.Log("No data was found.");
+
+    //        savedDataNotFoundUI.SetActive(true);
+    //        return;
+    //    }
+
+    //    // push the loaded data to all script that need it 
+    //    foreach (IDataPersistence dataPersistence in DataPersistenceManager.instance.GetDataPersistenceObjects())
+    //    {
+    //        dataPersistence.LoadData(loadedGameData);
+    //    }
+    //    SceneManager.LoadSceneAsync(loadedGameData.sceneName);
+    //}
+
+    public  void LoadSavedGame()
+    {
+        if (DataPersistenceManager.instance.gameData == null)
+        {
+            savedDataNotFoundUI.SetActive(true);
+            return;
+        }
+        SceneManager.LoadSceneAsync(DataPersistenceManager.instance.gameData.sceneName);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerStat : MonoBehaviour, IDataPersistence
@@ -32,31 +33,30 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     [Header("Game Manager")]
     [SerializeField] private GameManager gameManager;
 
-    public float GetHealth() => playerData.playerHealth;
-    public void SetHealth(float value) => playerData.playerHealth = value;
+    public float GetHealth() => this.playerData.playerHealth;
+    public void SetHealth(float value) => this.playerData.playerHealth = value;
 
     private void Start()
     {
 
         // check state player is dead or alive
-        playerData.isDead = playerData.playerHealth <= 0;
+        this.playerData.isDead = playerData.playerHealth <= 0;
 
-        Debug.Log(playerData.isDead + " Dead");
     }
 
     public bool IsDead()
     {
-        return playerData.isDead;
+        return this.playerData.isDead;
     }
 
     public void ReceiveDamage(float damage)
     {
-        playerData.playerHealth -= damage;
+        this.playerData.playerHealth -= damage;
         //Debug.Log(playerData.playerHealth);
-        if (playerData.playerHealth <= 0)
+        if (this.playerData.playerHealth <= 0)
         {
             // player dead
-            playerData.playerHealth = 0;
+            this.playerData.playerHealth = 0;
         }
         else
         {
@@ -209,17 +209,41 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
         playerData.stamina = staminaBar.fillAmount;
         HealthUIUpdate();
         IncreaseStamina();
+        Debug.Log("Player POsition == " + transform.position);
     }
 
     
 
     public void SaveData(GameData data)
     {
-        data.player.health = playerData.playerHealth;
+        data.player.health = this.playerData.playerHealth;
+        data.sceneName = SceneManager.GetActiveScene().name;
+        
+        // Save player position
+        data.player.position = this.transform.position;
+
+        // Save player rotation
+        data.player.rotation = this.transform.rotation;
+
+        // Save player forward direction
+        data.player.direction = this.transform.forward;
     }
 
     public void LoadData(GameData data)
     {
-        playerData.playerHealth = data.player.health;
+        Debug.Log("Loaded player position: " + data.player.position);
+        this.playerData.playerHealth = data.player.health;
+
+        // Load player position and rotation
+        //Debug.Log("Bef " +this.transform.position);
+        //this.transform.position = data.player.position;
+        //Debug.Log("Aft " + this.transform.position);
+        //this.transform.rotation = data.player.rotation;
+
+        // Update player forward direction
+        this.transform.forward = data.player.direction;
+
     }
+
+
 }

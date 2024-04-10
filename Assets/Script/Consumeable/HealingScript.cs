@@ -68,6 +68,7 @@ public class HealingScript : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        Debug.Log("Hea");
         healingData.availablePills = data.player.healingPillsLeft;
     }
 

@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-
     private void Awake()
     {
         SetCursorState();
@@ -137,6 +136,10 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void SaveGame()
+    {
+        DataPersistenceManager.instance.SaveGame();
+    }
 
     public void ShowDeadUI()
     {

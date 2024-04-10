@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 [System.Serializable]
 public class GameData
 {
+    public string sceneName;
+
     [System.Serializable]
     public class PlayerData
     {
 
         public float health;
 
-        public Vector3 positioln; // player's position
+        public Vector3 position; // player's position
         public Quaternion rotation; // Store player's rotation
         public Vector3 direction; // Store player's forward direction
 
@@ -31,10 +34,10 @@ public class GameData
     public EnemyData enemy;
     public GameData()
     {
+        this.sceneName = null;
         this.player = new PlayerData
         {
             health = 100f,
-            positioln = Vector3.zero,
             rotation = Quaternion.identity,
             direction = Vector3.forward,
             healingPillsLeft = 5

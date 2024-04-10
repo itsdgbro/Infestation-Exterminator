@@ -1925,7 +1925,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6010735721331578724}
-  - component: {fileID: 6997790576248480636}
   m_Layer: 0
   m_Name: Amature
   m_TagString: Untagged
@@ -1950,27 +1949,6 @@ Transform:
   - {fileID: 1406927372533008739}
   m_Father: {fileID: 4121622564785564478}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &6997790576248480636
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1117261219471844744}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e877c47a6db392643bfca8dc0af51100, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1124167787564999010
 GameObject:
   m_ObjectHideFlags: 0
@@ -2196,11 +2174,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3826678521047862406}
   - component: {fileID: 1639540453976851435}
-  - component: {fileID: 6909735509461200976}
-  - component: {fileID: 3858520179301353961}
   - component: {fileID: 1731757739136927708}
+  - component: {fileID: 3858520179301353961}
   - component: {fileID: 6534442453122087479}
   - component: {fileID: 2072466309335622083}
+  - component: {fileID: 6909735509461200976}
   m_Layer: 8
   m_Name: Survivor_
   m_TagString: Player
@@ -2250,48 +2228,6 @@ CharacterController:
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &6909735509461200976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1234963423529126048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db21492092691c846a2fbdbf14498a34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
-  sprintSpeed: 3.2
-  gravity: -20
-  jumpHeight: 1.5
-  groundCheck: {fileID: 3826678521047862406}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  jumpSound: {fileID: 8300000, guid: 618bfc556bf36ef4a8bb02b3420b2df9, type: 3}
---- !u!95 &3858520179301353961
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1234963423529126048}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e877c47a6db392643bfca8dc0af51100, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1731757739136927708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2314,6 +2250,27 @@ MonoBehaviour:
   deathCameraPosition: {x: -0.39, y: -1.35, z: 0}
   transitionDuration: 0.75
   gameManager: {fileID: 0}
+--- !u!95 &3858520179301353961
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234963423529126048}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e877c47a6db392643bfca8dc0af51100, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!54 &6534442453122087479
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2364,6 +2321,27 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &6909735509461200976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234963423529126048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db21492092691c846a2fbdbf14498a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  sprintSpeed: 3.2
+  gravity: -20
+  jumpHeight: 1.5
+  groundCheck: {fileID: 3826678521047862406}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  jumpSound: {fileID: 8300000, guid: 618bfc556bf36ef4a8bb02b3420b2df9, type: 3}
 --- !u!1 &1263600078029288609
 GameObject:
   m_ObjectHideFlags: 0
@@ -9258,7 +9236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ce5eec16ac76146843c1fa8d7d376d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: bcf07e1aac0fa75489aadd5ef9a43cae, type: 2}
+  healingData: {fileID: 11400000, guid: bcf07e1aac0fa75489aadd5ef9a43cae, type: 2}
   fpsWeapons: {fileID: 5856292312472181073}
   pillCountUI: {fileID: 0}
   healingAudio: {fileID: 8300000, guid: 99ce695cdc185034da71addadc9c8d5d, type: 3}

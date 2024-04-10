@@ -58,6 +58,18 @@ public class CharacterMovement : MonoBehaviour, IDataPersistence
         audio = gameObject.AddComponent<AudioSource>();
     }
 
+    public void LoadData(GameData data)
+    {
+        characterController.enabled = false;
+        this.transform.SetPositionAndRotation(data.player.position, data.player.rotation);
+        characterController.enabled = true;
+    }
+
+    public void SaveData(GameData data)
+    {
+       
+    }
+
     private void Start()
     {
         Gravity();
@@ -161,29 +173,6 @@ public class CharacterMovement : MonoBehaviour, IDataPersistence
         return playerControls.Movement.Aim.ReadValue<float>() > 0.5f;
     }
 
-    public void LoadData(GameData data)
-    {
-        // Load player position
-        transform.position = data.player.positioln;
-
-        // Load player rotation
-        transform.rotation = data.player.rotation;
-
-        // Update player forward direction
-        transform.forward = data.player.direction;
-    }
-
-    public void SaveData(GameData data)
-    {
-        // Save player position
-        data.player.positioln = transform.position;
-
-        // Save player rotation
-        data.player.rotation = transform.rotation;
-
-        // Save player forward direction
-        data.player.direction = transform.forward;
-    }
 
     #region Enable/Disable
     private void OnEnable()
