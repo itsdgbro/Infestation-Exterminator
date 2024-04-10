@@ -10,11 +10,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private string[] levels;
     [SerializeField] private GameObject savedDataNotFoundUI;
 
-    private DataPersistenceManager dataPersistenceManager;
 
     private void Start()
     {
-        dataPersistenceManager = DataPersistenceManager.instance;
         savedDataNotFoundUI.SetActive(false);
     }
 

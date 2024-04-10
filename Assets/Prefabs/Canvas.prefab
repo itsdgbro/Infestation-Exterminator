@@ -627,6 +627,7 @@ GameObject:
   - component: {fileID: 7693623250710307209}
   - component: {fileID: 6052516544454285106}
   - component: {fileID: 483560374704066735}
+  - component: {fileID: 1366393325375507554}
   m_Layer: 5
   m_Name: The Flooded
   m_TagString: Untagged
@@ -796,7 +797,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: LoadLevel
+        m_MethodName: LoadNewLevel
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -806,6 +807,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &1366393325375507554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925352833021478482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b63e0f3b5417ba479705569f033ed07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1012921894575351901
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +831,7 @@ GameObject:
   - component: {fileID: 6268392663162565800}
   - component: {fileID: 5691055879141796286}
   - component: {fileID: 5876964339422038016}
+  - component: {fileID: 374997175663130405}
   m_Layer: 5
   m_Name: The Flooded
   m_TagString: Untagged
@@ -987,7 +1001,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: LoadLevel
+        m_MethodName: LoadNewLevel
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -997,6 +1011,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &374997175663130405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012921894575351901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b63e0f3b5417ba479705569f033ed07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1292485108589335846
 GameObject:
   m_ObjectHideFlags: 0
@@ -7402,6 +7428,7 @@ GameObject:
   - component: {fileID: 7392813869229848119}
   - component: {fileID: 1232940331495325544}
   - component: {fileID: 6545355020970321877}
+  - component: {fileID: 890867733116128398}
   m_Layer: 5
   m_Name: The Flooded
   m_TagString: Untagged
@@ -7552,7 +7579,7 @@ MonoBehaviour:
     m_SelectedColor: {r: 0.9716981, g: 0.5186482, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -7571,7 +7598,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: LoadLevel
+        m_MethodName: LoadNewLevel
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7581,6 +7608,18 @@ MonoBehaviour:
           m_StringArgument: Level 1
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &890867733116128398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4264105659498756390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b63e0f3b5417ba479705569f033ed07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4887853777485343398
 GameObject:
   m_ObjectHideFlags: 0
@@ -9662,9 +9701,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: Coffee.UIEffects.UIEffect, UIEffect
-          m_MethodName: set_effectFactor
-          m_Mode: 4
+          m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_MethodName: 
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9778,7 +9817,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bbc4008105c8c84db28e24614751e7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b89b1da2385b14140a8fd5bb15203282, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10486,7 +10525,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: LoadGameDialouge
+        m_MethodName: LoadSavedGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
