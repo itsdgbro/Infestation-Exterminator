@@ -36,6 +36,13 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     public float GetHealth() => this.playerData.playerHealth;
     public void SetHealth(float value) => this.playerData.playerHealth = value;
 
+    private CharacterController characterController;
+
+    private void Awake()
+    {
+        characterController = GetComponent<CharacterController>();
+    }
+
     private void Start()
     {
 
@@ -219,30 +226,22 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
         data.player.health = this.playerData.playerHealth;
         data.sceneName = SceneManager.GetActiveScene().name;
         
-        // Save player position
         data.player.position = this.transform.position;
 
-        // Save player rotation
         data.player.rotation = this.transform.rotation;
 
-        // Save player forward direction
         data.player.direction = this.transform.forward;
     }
 
     public void LoadData(GameData data)
     {
-        Debug.Log("Loaded player position: " + data.player.position);
         this.playerData.playerHealth = data.player.health;
 
-        // Load player position and rotation
-        //Debug.Log("Bef " +this.transform.position);
-        //this.transform.position = data.player.position;
-        //Debug.Log("Aft " + this.transform.position);
-        //this.transform.rotation = data.player.rotation;
+        characterController.enabled = false;
+        this.transform.SetPositionAndRotation(data.player.position, data.player.rotation);
+        characterController.enabled = true;
 
-        // Update player forward direction
         this.transform.forward = data.player.direction;
-
     }
 
 

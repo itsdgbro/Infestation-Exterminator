@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour, IDataPersistence
+public class CharacterMovement : MonoBehaviour
 {
 
     private PlayerControls playerControls;
@@ -56,18 +56,6 @@ public class CharacterMovement : MonoBehaviour, IDataPersistence
         animator = GetComponent<Animator>();
         playerStat = GetComponent<PlayerStat>();
         audio = gameObject.AddComponent<AudioSource>();
-    }
-
-    public void LoadData(GameData data)
-    {
-        characterController.enabled = false;
-        this.transform.SetPositionAndRotation(data.player.position, data.player.rotation);
-        characterController.enabled = true;
-    }
-
-    public void SaveData(GameData data)
-    {
-       
     }
 
     private void Start()
