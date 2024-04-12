@@ -37,7 +37,6 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     public void SetHealth(float value) => this.playerData.playerHealth = value;
 
     private CharacterController characterController;
-
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -176,7 +175,6 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     {
         if (gameManager != null && IsDead())
         {
-            Debug.Log("playerData.playerHealth " + IsDead());
             gameManager.ShowDeadUI();
         }
     }
@@ -216,7 +214,6 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
         playerData.stamina = staminaBar.fillAmount;
         HealthUIUpdate();
         IncreaseStamina();
-        Debug.Log("Player POsition == " + transform.position);
     }
 
     
@@ -243,6 +240,4 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
 
         this.transform.forward = data.player.direction;
     }
-
-
 }

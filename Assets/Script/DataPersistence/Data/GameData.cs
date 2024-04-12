@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameData
 {
     public string sceneName;
+    public Vector3 cubePos;
 
     [System.Serializable]
     public class PlayerData
@@ -34,18 +35,21 @@ public class GameData
     public EnemyData enemy;
     public GameData()
     {
-        this.sceneName = null;
+        this.sceneName = "Level 1";
+        //this.cubePos = new(469.27f, 25.52f, 167.4f);
+        this.cubePos = Vector3.zero;
         this.player = new PlayerData
         {
             health = 100f,
-            rotation = Quaternion.identity,
-            direction = Vector3.forward,
+            position = new(467.55f, 25.52f, 162.92f),
+            rotation = new Quaternion(0, 0.451710999f, 0, 0.89216429f),
+            direction = new(0.9085726141929627f, 0f, 0.41772717237472536f),
             healingPillsLeft = 5
         };
 
         this.enemy = new EnemyData
         {
-            zombieCount = 0,
+            zombieCount = 3,
             isZombieDead = new SerializableDictionary<string, bool>()
         };
     }
