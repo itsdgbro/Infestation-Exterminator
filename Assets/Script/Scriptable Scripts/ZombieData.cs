@@ -9,11 +9,9 @@ public class ZombieData : ScriptableObject
     public float attackDamage;
     public float maxRange;
     public float attackCooldown;
-    public bool canAttack;
 
     [Header("FOV Attributes")]
     public float viewRadius;
-
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;

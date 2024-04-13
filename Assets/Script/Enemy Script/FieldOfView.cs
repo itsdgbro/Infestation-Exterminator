@@ -38,6 +38,26 @@ public class FieldOfView : MonoBehaviour
         velocityController = GetComponentInChildren<EnemyVelocityController>();
         zombieHealth = GetComponent<Target>();
         enemyAttack = referenceForEnemyAttack.GetComponent<EnemyAttack>();
+
+        GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
+        Debug.Log(targets.Length);  
+        foreach (GameObject target in targets)
+        {
+            // Get the colliders of the target GameObject
+            CapsuleCollider[] targetColliders = target.GetComponents<CapsuleCollider>();
+
+            // Get the collider of the zombie GameObject
+            CapsuleCollider zombieCollider = GetComponent<CapsuleCollider>();
+
+            // Ignore collisions between each collider of the target and the zombie collider
+            foreach (CapsuleCollider targetCollider in targetColliders)
+            {
+                if (targetCollider != null && zombieCollider != null)
+                {
+                    Physics.IgnoreCollision(targetCollider, zombieCollider, true);
+                }
+            }
+        }
     }
 
 
@@ -69,6 +89,8 @@ public class FieldOfView : MonoBehaviour
                 // RayCast hits target and there is no obstacles
                 isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask));
                 // Debug.Log(isTargetVisibleRaycast + " visile");
+
+                Debug.Log(gameObject.name + " " + dstToTarget);
                 // target is visible
                 if (isTargetVisibleRaycast && !zombieHealth.GetIsDead())
                 {
