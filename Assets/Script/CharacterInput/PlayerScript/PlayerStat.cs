@@ -63,6 +63,7 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
         {
             // player dead
             this.playerData.playerHealth = 0;
+            DeathCam();
         }
         else
         {

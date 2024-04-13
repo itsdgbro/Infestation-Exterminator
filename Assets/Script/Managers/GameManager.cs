@@ -153,6 +153,11 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void LoadCurrentScene()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+    }
+
     #region Enable/Disable
     private void OnEnable()
     {

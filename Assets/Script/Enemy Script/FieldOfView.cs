@@ -10,6 +10,7 @@ public class FieldOfView : MonoBehaviour
 {
     [SerializeField] private ZombieData zombieData;
     [SerializeField] private Transform eyes;
+    [SerializeField]private GameObject referenceForEnemyAttack;
 
     // Player transform
     private Transform target;
@@ -23,6 +24,9 @@ public class FieldOfView : MonoBehaviour
 
     private Target zombieHealth;
 
+    // Attack script ref
+    private EnemyAttack enemyAttack;
+
     // zombie FOV range
     [Range(0, 360)]
     private float viewAngle;
@@ -33,6 +37,7 @@ public class FieldOfView : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         velocityController = GetComponentInChildren<EnemyVelocityController>();
         zombieHealth = GetComponent<Target>();
+        enemyAttack = referenceForEnemyAttack.GetComponent<EnemyAttack>();
     }
 
 
@@ -41,7 +46,7 @@ public class FieldOfView : MonoBehaviour
 
         FindVisibleTargets();
         ToggleFOV();
-        zombieData.canAttack =  !velocityController.IsAttackAnimationPlaying();
+        enemyAttack.canAttack =  !velocityController.IsAttackAnimationPlaying();
     }
 
     void FindVisibleTargets()
@@ -63,7 +68,7 @@ public class FieldOfView : MonoBehaviour
                 float dstToTarget = Vector3.Distance(transform.position, potentialTarget.position);
                 // RayCast hits target and there is no obstacles
                 isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask));
-                Debug.Log(isTargetVisibleRaycast + " asd");
+                // Debug.Log(isTargetVisibleRaycast + " visile");
                 // target is visible
                 if (isTargetVisibleRaycast && !zombieHealth.GetIsDead())
                 {
@@ -71,14 +76,13 @@ public class FieldOfView : MonoBehaviour
                     float rotationSpeed = agent.angularSpeed;
                     Quaternion targetRotation = Quaternion.LookRotation(dirToTarget);
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-                    Debug.Log("Visible");
 
                     target = potentialTarget;
 
                     // Move towards the target
                     agent.SetDestination(target.position);
                     animator.SetBool(isTargetVisible, true);
-                    if (!velocityController.IsAttackAnimationPlaying() && zombieData.canAttack)
+                    if (!velocityController.IsAttackAnimationPlaying() && enemyAttack.canAttack)
                     {
                         AttackTrigger(dstToTarget);
                     }

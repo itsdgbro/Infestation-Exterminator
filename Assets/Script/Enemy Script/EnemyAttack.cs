@@ -17,9 +17,7 @@ public class EnemyAttack : MonoBehaviour
 
     #region Zombie Reference
     #endregion
-    private float lastDamageAttack;
-
-
+    public bool canAttack { get; set; }
 
     private void Awake()
     {
@@ -60,15 +58,8 @@ public class EnemyAttack : MonoBehaviour
     // perform attack
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying())
+        if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying() && !canAttack)
         {
-            Debug.Log("HITT");
-            
-        }
-
-        if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying() && !zombieData.canAttack)
-        {
-
             ApplyDamange();
         }
     }
@@ -80,10 +71,5 @@ public class EnemyAttack : MonoBehaviour
         {
             stat.ReceiveDamage(zombieData.attackDamage);
         }
-    }
-
-    private void Update()
-    {
-        lastDamageAttack += Time.deltaTime;
     }
 }

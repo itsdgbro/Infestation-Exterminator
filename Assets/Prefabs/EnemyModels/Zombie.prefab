@@ -124,7 +124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553827992725711315}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99997276, z: -0, w: 0.007384762}
+  m_LocalRotation: {x: 0, y: 0.99997276, z: 0, w: 0.007382683}
   m_LocalPosition: {x: 94.97, y: 0, z: 123.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -196,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zombieData: {fileID: 11400000, guid: fcb44b3a585334949a4dc569150dd5d8, type: 2}
   eyes: {fileID: 3074772358785879043}
+  referenceForEnemyAttack: {fileID: 961860632116672511}
 --- !u!195 &1930289505636851948
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -230,8 +231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c255f79e861a42b448aa0d2cfa910a3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 500
-  gameManager: {fileID: 0}
+  id: fe0d0bc5-3346-40e6-bc85-4a8b7e592239
+  health: 50
 --- !u!1 &666152993716461736
 GameObject:
   m_ObjectHideFlags: 0
