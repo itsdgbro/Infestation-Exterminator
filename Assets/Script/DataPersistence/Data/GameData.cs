@@ -7,7 +7,6 @@ using UnityEngine;
 public class GameData
 {
     public string sceneName;
-    public Vector3 cubePos;
 
     [System.Serializable]
     public class PlayerData
@@ -36,8 +35,6 @@ public class GameData
     public GameData()
     {
         this.sceneName = "Level 1";
-        //this.cubePos = new(469.27f, 25.52f, 167.4f);
-        this.cubePos = Vector3.zero;
         this.player = new PlayerData
         {
             health = 100f,
@@ -49,7 +46,7 @@ public class GameData
 
         this.enemy = new EnemyData
         {
-            zombieCount = 3,
+            zombieCount = 0,
             isZombieDead = new SerializableDictionary<string, bool>()
         };
     }

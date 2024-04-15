@@ -84,10 +84,7 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        if(data == null)
-        {
-            Debug.Log("cc");
-        }
+        
         if (data.enemy.isZombieDead.ContainsKey(id))
         {
             data.enemy.isZombieDead.Remove(id);

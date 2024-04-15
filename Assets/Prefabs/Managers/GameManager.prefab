@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8498801462722594748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 179004700889343804}
+  - component: {fileID: 4818578994010684560}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &179004700889343804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8498801462722594748}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4818578994010684560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8498801462722594748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a703db161182e5240b2cb0c21bbe2a4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenu: Scene Menu
+  pauseMenu: {fileID: 0}
+  inGameUI: {fileID: 0}
+  gameOverUI: {fileID: 0}
+  arCurrentAmmoUI: {fileID: 0}
+  arRemainingAmmoUI: {fileID: 0}
+  pistolCurrentAmmoUI: {fileID: 0}
+  pistolRemainingAmmoUI: {fileID: 0}
+  arData: {fileID: 11400000, guid: de6e75ca6a8f4b4498e25103a3998fa3, type: 2}
+  pistolData: {fileID: 11400000, guid: 78ed6642c3def8440b821f9ac674209f, type: 2}
