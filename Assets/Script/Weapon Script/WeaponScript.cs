@@ -93,7 +93,6 @@ public class WeaponScript : MonoBehaviour
         animator.Play("reload");
         animator.SetBool("isEmpty", false);
         audioSource.PlayOneShot(reloadSound);
-        Debug.Log("RELOADING");
 
         yield return new WaitForSeconds(weaponData.reloadTime);
         // ammo system

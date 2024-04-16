@@ -9,11 +9,12 @@ public class LevelData : ScriptableObject
     [Header("Scene Name")]
     public string sceneName;
 
-    [Header("Player Data")]
-    public int playerHealth;
-    public Vector3 playerPosition;
-    public Quaternion playerRotation;
-    public Vector3 playerDirection;
+    public float health;
+
+    public Vector3 position; // player's position
+    public Quaternion rotation; // Store player's rotation
+    public Vector3 direction; // Store player's forward direction
+
     public int healingPillsLeft;
 
 }

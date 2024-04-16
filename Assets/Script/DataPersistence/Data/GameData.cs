@@ -32,16 +32,17 @@ public class GameData
 
     public PlayerData player;
     public EnemyData enemy;
-    public GameData()
+    public GameData(LevelData levelData)
     {
-        this.sceneName = "Level 1";
+        this.sceneName = levelData.sceneName;
+
         this.player = new PlayerData
         {
-            health = 100f,
-            position = new(467.55f, 25.52f, 162.92f),
-            rotation = new Quaternion(0, 0.451710999f, 0, 0.89216429f),
-            direction = new(0.9085726141929627f, 0f, 0.41772717237472536f),
-            healingPillsLeft = 5
+            health = levelData.health,
+            position = levelData.position,
+            rotation = levelData.rotation,
+            direction = levelData.direction,
+            healingPillsLeft = levelData.healingPillsLeft
         };
 
         this.enemy = new EnemyData

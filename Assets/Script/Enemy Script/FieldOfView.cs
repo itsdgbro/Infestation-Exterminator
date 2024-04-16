@@ -40,7 +40,6 @@ public class FieldOfView : MonoBehaviour
         enemyAttack = referenceForEnemyAttack.GetComponent<EnemyAttack>();
 
         GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
-        Debug.Log(targets.Length);  
         foreach (GameObject target in targets)
         {
             // Get the colliders of the target GameObject
@@ -90,7 +89,7 @@ public class FieldOfView : MonoBehaviour
                 isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask));
                 // Debug.Log(isTargetVisibleRaycast + " visile");
 
-                Debug.Log(gameObject.name + " " + dstToTarget);
+                // Debug.Log(gameObject.name + " " + dstToTarget);
                 // target is visible
                 if (isTargetVisibleRaycast && !zombieHealth.GetIsDead())
                 {

@@ -24,6 +24,7 @@ public class ZombieCountManager : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
+        totalZombies = transform.childCount;
         AppendZombieList();
         ZombieCountUI();
     }
@@ -32,7 +33,6 @@ public class ZombieCountManager : MonoBehaviour, IDataPersistence
     private void AppendZombieList()
     {
         zombieList.Clear();
-        totalZombies = transform.childCount;
         foreach (Transform child in transform)
         {
             if (child.CompareTag("Target") && child.gameObject.activeSelf)

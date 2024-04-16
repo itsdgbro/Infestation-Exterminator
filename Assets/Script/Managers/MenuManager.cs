@@ -12,13 +12,14 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private string[] levels;
     [SerializeField] private GameObject savedDataNotFoundUI;
     [SerializeField] private Button loadGameButton;
+    [SerializeField] private HideTipsSO hideTips;
 
     string path;
     string fileName;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
         path = Application.persistentDataPath;
         fileName = DataPersistenceManager.instance.GetFileName();
     }
@@ -54,15 +55,10 @@ public class MenuManager : MonoBehaviour
             Debug.LogError("Scene not found.");
             return;
         }
-
+        
+        // unhide Tips hub
+        hideTips.hideTips = false;
         SceneManager.LoadSceneAsync(levels[index]);
-    }
-
-    public void Level1()
-    {
-        DataPersistenceManager.instance.NewGame();
-
-        SceneManager.LoadSceneAsync("Level 1");
     }
 
     public void OnLevelSelectButtonClick()
@@ -85,9 +81,10 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    public  void LoadSavedGame()
+    public void LoadSavedGame()
     {
-
+        // hide Tips hub
+        hideTips.hideTips = true;
         if (!DataPersistenceManager.instance.HasGameData())
         {
             savedDataNotFoundUI.SetActive(true);
@@ -101,21 +98,16 @@ public class MenuManager : MonoBehaviour
         return Path.Combine(path, fileName);
     }
 
-    public async void DeleteSavedDataConfirmation()
-    {
-        // C# class
-        Task deleting = Task.Run(() => File.Delete(DoFileExist()));
-        
-        await deleting;
-
-        // Load Level after deletion
-        Level1();
-    }
-    
     // trigger change to either load or set to default
     public void TriggerLoadGame(bool value)
     {
         DataPersistenceManager.instance.SetIsLoad(value);
+        hideTips.hideTips = value;
+    }
+
+    public void SetLevelSelectIndex(int index)
+    {
+        DataPersistenceManager.instance.SelectedLevelIndex = index; 
     }
 
 }

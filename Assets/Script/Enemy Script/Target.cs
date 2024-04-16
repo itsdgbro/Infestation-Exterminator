@@ -44,15 +44,6 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
         }
     }
 
-    IEnumerator WaitAndHideObject(float len)
-    {
-        // Wait for the duration of the animation
-        yield return new WaitForSeconds(len);
-       
-        // hide the GameObject
-        this.gameObject.SetActive(false);
-    }
-
     public void TakeDamage(float amount)
     {
         health -= amount;
@@ -64,7 +55,7 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
             isDead = true;
             animator.SetTrigger("dead");
             ZombieCountManager.SetZombieAlive(this.gameObject);
-            StartCoroutine(WaitAndHideObject(3.0f));
+            Destroy(this.gameObject, 15.0f);
         }
         else
         {
@@ -75,10 +66,23 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        data.enemy.isZombieDead.TryGetValue(id, out isDead);
-        if(isDead)
+        //data.enemy.isZombieDead.TryGetValue(id, out isDead);
+        //if(isDead)
+        //{
+        //    this.gameObject.SetActive(false);
+
+        if (data.enemy.isZombieDead.ContainsKey(id))
         {
+           isDead = data.enemy.isZombieDead[id];
+        }
+        else
+        {
+            isDead = true && DataPersistenceManager.instance.GetIsLoad();
+        }
+        if(isDead)
+        {   
             this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
 

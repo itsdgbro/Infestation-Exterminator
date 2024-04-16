@@ -11,7 +11,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public string GetFileName() => fileName;
 
-    private GameData gameData;
+    public GameData gameData { get; set; }
 
     private List<IDataPersistence> dataPersistenceObjects;
 
@@ -22,10 +22,17 @@ public class DataPersistenceManager : MonoBehaviour
 
     [SerializeField] private bool isLoad = false;
 
+    public bool GetIsLoad() => isLoad;
+
+    public int SelectedLevelIndex { get; set; }
+
+    [SerializeField] private List<LevelData> levelDatas;
+
     public void SetIsLoad(bool value)
     {
         isLoad = value;
     }
+
 
     private void Awake()
     {
@@ -66,7 +73,7 @@ public class DataPersistenceManager : MonoBehaviour
     public void NewGame()
     {
         Debug.Log("New game started. Resetting game data...");
-        this.gameData = new GameData();
+        this.gameData = new GameData(levelDatas[SelectedLevelIndex]);
     }
 
 
@@ -108,9 +115,14 @@ public class DataPersistenceManager : MonoBehaviour
             }
         }
         else
-        {
+        {   
+            // Load Data from Scriptable Data
+
             NewGame();
+
+
         }
+
 
         // push the loaded data to all other scripts that need it
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
@@ -150,4 +162,5 @@ public class DataPersistenceManager : MonoBehaviour
     {
         return gameData.sceneName;
     }
+
 }
