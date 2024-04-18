@@ -232,6 +232,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Interactive",
+            "id": "24a8f4ff-55e0-46c2-92fe-eb453f481218",
+            "actions": [
+                {
+                    "name": "ToggleTips",
+                    "type": "Button",
+                    "id": "1a5633b6-fe23-435d-8633-836c688ab443",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1fa836bc-7ebb-4d0d-9f64-3bc8d887ab7e",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleTips",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

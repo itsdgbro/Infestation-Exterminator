@@ -12,7 +12,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private string[] levels;
     [SerializeField] private GameObject savedDataNotFoundUI;
     [SerializeField] private Button loadGameButton;
-    [SerializeField] private HideTipsSO hideTips;
+    [SerializeField] private HideTipsSO hideTipsSO;
 
     string path;
     string fileName;
@@ -57,7 +57,7 @@ public class MenuManager : MonoBehaviour
         }
         
         // unhide Tips hub
-        hideTips.hideTips = false;
+        hideTipsSO.hideTips = false;
         SceneManager.LoadSceneAsync(levels[index]);
     }
 
@@ -84,7 +84,7 @@ public class MenuManager : MonoBehaviour
     public void LoadSavedGame()
     {
         // hide Tips hub
-        hideTips.hideTips = true;
+        hideTipsSO.hideTips = true;
         if (!DataPersistenceManager.instance.HasGameData())
         {
             savedDataNotFoundUI.SetActive(true);
@@ -102,7 +102,7 @@ public class MenuManager : MonoBehaviour
     public void TriggerLoadGame(bool value)
     {
         DataPersistenceManager.instance.SetIsLoad(value);
-        hideTips.hideTips = value;
+        hideTipsSO.hideTips = true;
     }
 
     public void SetLevelSelectIndex(int index)

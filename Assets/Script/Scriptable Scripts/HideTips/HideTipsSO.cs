@@ -6,5 +6,4 @@ using UnityEngine;
 public class HideTipsSO : ScriptableObject
 {
     public bool hideTips;
-    public bool hideDialougeAfterTips;
 }

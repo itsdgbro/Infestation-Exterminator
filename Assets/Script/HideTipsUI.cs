@@ -4,36 +4,44 @@ using UnityEngine;
 
 public class HideTipsUI : MonoBehaviour
 {
-    [SerializeField] private GameObject initialTip;
     [SerializeField] private GameObject tipsUI;
-    [SerializeField] private GameObject objectiveUI;
     [SerializeField] private HideTipsSO hideTipsSO;
 
+    private PlayerControls playerControls;
 
     // show initial when collided
     // hide tips when true
 
     private void Awake()
     {
-        initialTip.SetActive(false);
+        playerControls = new PlayerControls();
         tipsUI.SetActive(!hideTipsSO.hideTips);
-        objectiveUI.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.gameObject.CompareTag("Player")){
-            initialTip.SetActive(true);
-            Invoke(nameof(HideUiTips), 3.0f);
-            objectiveUI.SetActive(true);
+        ToggleUIShow();
+    }
+
+    private void ToggleUIShow()
+    {
+        if (playerControls.Interactive.ToggleTips.triggered)
+        {
+            hideTipsSO.hideTips= !hideTipsSO.hideTips;
+            tipsUI.SetActive(!hideTipsSO.hideTips);
         }
     }
 
-    public void HideUiTips()
-    {
 
-        initialTip.SetActive(false);
-        tipsUI.SetActive(false);
-        hideTipsSO.hideTips = false;
+    #region player controls
+    private void OnEnable()
+    {
+        playerControls.Enable();
     }
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
+    }
+    #endregion
 }

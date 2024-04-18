@@ -254,6 +254,34 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Interactive"",
+            ""id"": ""24a8f4ff-55e0-46c2-92fe-eb453f481218"",
+            ""actions"": [
+                {
+                    ""name"": ""ToggleTips"",
+                    ""type"": ""Button"",
+                    ""id"": ""1a5633b6-fe23-435d-8633-836c688ab443"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1fa836bc-7ebb-4d0d-9f64-3bc8d887ab7e"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleTips"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -269,6 +297,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Movement_Reload = m_Movement.FindAction("Reload", throwIfNotFound: true);
         m_Movement_Aim = m_Movement.FindAction("Aim", throwIfNotFound: true);
         m_Movement_Heal = m_Movement.FindAction("Heal", throwIfNotFound: true);
+        // Interactive
+        m_Interactive = asset.FindActionMap("Interactive", throwIfNotFound: true);
+        m_Interactive_ToggleTips = m_Interactive.FindAction("ToggleTips", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -436,6 +467,52 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public MovementActions @Movement => new MovementActions(this);
+
+    // Interactive
+    private readonly InputActionMap m_Interactive;
+    private List<IInteractiveActions> m_InteractiveActionsCallbackInterfaces = new List<IInteractiveActions>();
+    private readonly InputAction m_Interactive_ToggleTips;
+    public struct InteractiveActions
+    {
+        private @PlayerControls m_Wrapper;
+        public InteractiveActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ToggleTips => m_Wrapper.m_Interactive_ToggleTips;
+        public InputActionMap Get() { return m_Wrapper.m_Interactive; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InteractiveActions set) { return set.Get(); }
+        public void AddCallbacks(IInteractiveActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InteractiveActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InteractiveActionsCallbackInterfaces.Add(instance);
+            @ToggleTips.started += instance.OnToggleTips;
+            @ToggleTips.performed += instance.OnToggleTips;
+            @ToggleTips.canceled += instance.OnToggleTips;
+        }
+
+        private void UnregisterCallbacks(IInteractiveActions instance)
+        {
+            @ToggleTips.started -= instance.OnToggleTips;
+            @ToggleTips.performed -= instance.OnToggleTips;
+            @ToggleTips.canceled -= instance.OnToggleTips;
+        }
+
+        public void RemoveCallbacks(IInteractiveActions instance)
+        {
+            if (m_Wrapper.m_InteractiveActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInteractiveActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InteractiveActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InteractiveActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InteractiveActions @Interactive => new InteractiveActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -447,5 +524,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnHeal(InputAction.CallbackContext context);
+    }
+    public interface IInteractiveActions
+    {
+        void OnToggleTips(InputAction.CallbackContext context);
     }
 }

@@ -251,7 +251,7 @@ MonoBehaviour:
   - Level 3
   savedDataNotFoundUI: {fileID: 691552903}
   loadGameButton: {fileID: 1464339306}
-  hideTips: {fileID: 11400000, guid: d4250f9bc3c338b4182569abcf6ede50, type: 2}
+  hideTipsSO: {fileID: 11400000, guid: d4250f9bc3c338b4182569abcf6ede50, type: 2}
 --- !u!1 &691552903 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 629291854972324039, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
@@ -865,6 +865,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 533392384}
+    - target: {fileID: 6063954676278542443, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6545355020970321877, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -873,6 +877,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1616802288}
+    - target: {fileID: 7102112460104377232, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7681879081246229733, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
       propertyPath: m_IsActive
       value: 0

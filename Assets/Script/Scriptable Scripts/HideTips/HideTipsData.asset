@@ -13,4 +13,3 @@ MonoBehaviour:
   m_Name: HideTipsData
   m_EditorClassIdentifier: 
   hideTips: 0
-  hideDialougeAfterTips: 0
