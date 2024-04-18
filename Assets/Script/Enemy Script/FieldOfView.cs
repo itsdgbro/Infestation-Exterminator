@@ -86,6 +86,7 @@ public class FieldOfView : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation((player.transform.position - transform.position).normalized);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
             agent.SetDestination(player.transform.position);
+            animator.SetBool(isTargetVisible, true);
         }
 
         foreach (var potentialTargetCollider in targetsInViewRadius)
