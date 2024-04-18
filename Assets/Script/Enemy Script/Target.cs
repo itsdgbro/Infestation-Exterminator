@@ -26,6 +26,7 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
 
     private ZombieCountManager ZombieCountManager;
     
+    public bool isZombieArgo { get; set; }
 
     private void Awake()
     {
@@ -42,10 +43,14 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
         {
             Debug.LogWarning("Zombie Count Manager not found.");
         }
+
+        isZombieArgo = false;
     }
 
     public void TakeDamage(float amount)
     {
+        Debug.Log("Dama");
+        isZombieArgo = true;
         health -= amount;
         if (health <= 0)
         {   

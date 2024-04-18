@@ -39,8 +39,9 @@ public class FieldOfView : MonoBehaviour
         zombieHealth = GetComponent<Target>();
         enemyAttack = referenceForEnemyAttack.GetComponent<EnemyAttack>();
 
-        GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
-        foreach (GameObject target in targets)
+        // to ignore collision between enemies
+        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Target");
+        foreach (GameObject target in zombies)
         {
             // Get the colliders of the target GameObject
             CapsuleCollider[] targetColliders = target.GetComponents<CapsuleCollider>();
@@ -72,14 +73,24 @@ public class FieldOfView : MonoBehaviour
     {
         // Radius of the game object
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, zombieData.viewRadius, zombieData.targetMask);
+        GameObject player = GameObject.FindWithTag("Player");
 
         target = null; // Reset the target
 
         // default target is not visible
         animator.SetBool(isTargetVisible, false);
 
+        if (zombieHealth.isZombieArgo && player!=null && !zombieHealth.GetIsDead())
+        {
+            float rotationSpeed = agent.angularSpeed;
+            Quaternion targetRotation = Quaternion.LookRotation((player.transform.position - transform.position).normalized);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            agent.SetDestination(player.transform.position);
+        }
+
         foreach (var potentialTargetCollider in targetsInViewRadius)
         {
+            Debug.Log("AA");
             Transform potentialTarget = potentialTargetCollider.transform;
             Vector3 dirToTarget = (potentialTarget.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
@@ -111,6 +122,7 @@ public class FieldOfView : MonoBehaviour
                 else
                 {
                     animator.SetBool(isTargetVisible, false);
+                    zombieHealth.isZombieArgo = false;
                 }
 
             }
