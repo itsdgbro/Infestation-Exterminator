@@ -9,6 +9,7 @@ public class Interaction : MonoBehaviour
     [SerializeField] private GameObject pressEUI;
     [SerializeField] private ZombieCountManager zombieCountManager;
     [SerializeField] private GameObject loadingScreenUI;
+    [SerializeField] private GameObject killAllToExtract;
     PlayerControls playerControls;
 
     private void Awake()
@@ -16,6 +17,7 @@ public class Interaction : MonoBehaviour
         playerControls = new PlayerControls();
         pressEUI.SetActive(false);
         loadingScreenUI.SetActive(false);
+        killAllToExtract.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +25,10 @@ public class Interaction : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && zombieCountManager.GetZombieAlive() <= 0)
         {
             pressEUI.SetActive(true);
-            
+        }
+        else
+        {
+            killAllToExtract.SetActive(true);
         }
     }
 
@@ -32,6 +37,7 @@ public class Interaction : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             pressEUI.SetActive(false);
+            killAllToExtract.SetActive(false);
         }
     }
 

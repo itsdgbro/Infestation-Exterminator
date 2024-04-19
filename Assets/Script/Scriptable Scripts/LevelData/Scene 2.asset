@@ -17,4 +17,4 @@ MonoBehaviour:
   position: {x: -0.043, y: 0.071277015, z: -12.423}
   rotation: {x: 0, y: 0.0125811845, z: 0, w: 0.9999209}
   direction: {x: 0, y: 0, z: 0}
-  healingPillsLeft: 5
+  healingPillsLeft: 10

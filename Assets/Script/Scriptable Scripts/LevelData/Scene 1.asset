@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Scene 1
   m_EditorClassIdentifier: 
   sceneName: Level 1
-  health: 50
+  health: 100
   position: {x: 456.07, y: 28.71, z: 139.81}
   rotation: {x: 0, y: -0.003182456, z: 0, w: 0.999995}
   direction: {x: 0, y: 0, z: 0}

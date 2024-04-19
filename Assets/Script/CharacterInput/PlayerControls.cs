@@ -276,6 +276,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FlashLight"",
+                    ""type"": ""Button"",
+                    ""id"": ""6902ae65-afd4-47fd-bff3-94d74662bdd1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -300,6 +309,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9965fed3-398f-4e3d-a93e-64aa9d9b9cc8"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlashLight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -321,6 +341,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Interactive = asset.FindActionMap("Interactive", throwIfNotFound: true);
         m_Interactive_ToggleTips = m_Interactive.FindAction("ToggleTips", throwIfNotFound: true);
         m_Interactive_Interact = m_Interactive.FindAction("Interact", throwIfNotFound: true);
+        m_Interactive_FlashLight = m_Interactive.FindAction("FlashLight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -494,12 +515,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IInteractiveActions> m_InteractiveActionsCallbackInterfaces = new List<IInteractiveActions>();
     private readonly InputAction m_Interactive_ToggleTips;
     private readonly InputAction m_Interactive_Interact;
+    private readonly InputAction m_Interactive_FlashLight;
     public struct InteractiveActions
     {
         private @PlayerControls m_Wrapper;
         public InteractiveActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @ToggleTips => m_Wrapper.m_Interactive_ToggleTips;
         public InputAction @Interact => m_Wrapper.m_Interactive_Interact;
+        public InputAction @FlashLight => m_Wrapper.m_Interactive_FlashLight;
         public InputActionMap Get() { return m_Wrapper.m_Interactive; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -515,6 +538,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @FlashLight.started += instance.OnFlashLight;
+            @FlashLight.performed += instance.OnFlashLight;
+            @FlashLight.canceled += instance.OnFlashLight;
         }
 
         private void UnregisterCallbacks(IInteractiveActions instance)
@@ -525,6 +551,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @FlashLight.started -= instance.OnFlashLight;
+            @FlashLight.performed -= instance.OnFlashLight;
+            @FlashLight.canceled -= instance.OnFlashLight;
         }
 
         public void RemoveCallbacks(IInteractiveActions instance)
@@ -558,5 +587,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnToggleTips(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnFlashLight(InputAction.CallbackContext context);
     }
 }
