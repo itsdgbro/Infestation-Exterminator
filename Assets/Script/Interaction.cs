@@ -40,12 +40,22 @@ public class Interaction : MonoBehaviour
         Debug.Log("DDDD" + DataPersistenceManager.instance.GetAliveZombieCount());
         if (other.gameObject.CompareTag("Player") && pressEUI.activeSelf)
         {
-            if (Input.GetKeyUp(KeyCode.E))
+            if (playerControls.Interactive.Interact.triggered)
             {
                 playerControls.Disable();
                 loadingScreenUI.SetActive(true);
                 SceneManager.LoadSceneAsync("Scene Menu");
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
     }
 }
