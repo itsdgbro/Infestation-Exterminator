@@ -15,4 +15,5 @@ public class ZombieData : ScriptableObject
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
+    public LayerMask groundMask;
 }

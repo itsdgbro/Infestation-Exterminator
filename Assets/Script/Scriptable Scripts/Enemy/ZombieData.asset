@@ -15,12 +15,13 @@ MonoBehaviour:
   attackDamage: 13
   maxRange: 0.89
   attackCooldown: 1.67
-  canAttack: 0
   viewRadius: 15
-  viewAngle: 360
   targetMask:
     serializedVersion: 2
     m_Bits: 256
   obstacleMask:
     serializedVersion: 2
     m_Bits: 128
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8

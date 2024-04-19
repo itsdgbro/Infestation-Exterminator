@@ -1080,6 +1080,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1505616616448431487, guid: 9ea2c03889c15ae439ac2c230fd8076d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.30493164
+      objectReference: {fileID: 0}
     - target: {fileID: 1560290564950944883, guid: 9ea2c03889c15ae439ac2c230fd8076d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1171,6 +1175,14 @@ PrefabInstance:
     - target: {fileID: 3352910352137399964, guid: 9ea2c03889c15ae439ac2c230fd8076d, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357393779245401465, guid: 9ea2c03889c15ae439ac2c230fd8076d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 168.02539
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357393779245401465, guid: 9ea2c03889c15ae439ac2c230fd8076d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 96.506836
       objectReference: {fileID: 0}
     - target: {fileID: 3886813822656906470, guid: 9ea2c03889c15ae439ac2c230fd8076d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1481,22 +1493,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie
       objectReference: {fileID: 0}
-    - target: {fileID: 1930289505636851948, guid: 5ad7eeec435de634382bba2341c13fac, type: 3}
-      propertyPath: m_Speed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930289505636851948, guid: 5ad7eeec435de634382bba2341c13fac, type: 3}
-      propertyPath: m_Acceleration
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930289505636851948, guid: 5ad7eeec435de634382bba2341c13fac, type: 3}
-      propertyPath: m_AngularSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3650395139666662935, guid: 5ad7eeec435de634382bba2341c13fac, type: 3}
-      propertyPath: gameManager
-      value: 
-      objectReference: {fileID: 159388263}
     - target: {fileID: 4277180751254251062, guid: 5ad7eeec435de634382bba2341c13fac, type: 3}
       propertyPath: m_LocalPosition.x
       value: 94.97
@@ -1629,6 +1625,14 @@ PrefabInstance:
     - target: {fileID: 3826678521047862406, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6909735509461200976, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
+      propertyPath: gravity
+      value: -35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6909735509461200976, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
+      propertyPath: moveSpeed
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6955946077937017081, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
       propertyPath: healingUI

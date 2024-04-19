@@ -98,7 +98,7 @@ public class FieldOfView : MonoBehaviour
             {
                 float dstToTarget = Vector3.Distance(transform.position, potentialTarget.position);
                 // RayCast hits target and there is no obstacles
-                isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask));
+                isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask | zombieData.groundMask));
                 // Debug.Log(isTargetVisibleRaycast + " visile");
 
                 // Debug.Log(gameObject.name + " " + dstToTarget);
