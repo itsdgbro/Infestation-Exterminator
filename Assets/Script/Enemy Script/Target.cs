@@ -49,7 +49,6 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
 
     public void TakeDamage(float amount)
     {
-        Debug.Log("Dama");
         isZombieArgo = true;
         health -= amount;
         if (health <= 0)
