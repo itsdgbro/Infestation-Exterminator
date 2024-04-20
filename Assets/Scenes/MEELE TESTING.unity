@@ -702,7 +702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7b6e2753851dead449b3f994b9802d88, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 122.49211
+      value: 125.77
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7b6e2753851dead449b3f994b9802d88, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1908,10 +1908,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Survivor_
       objectReference: {fileID: 0}
-    - target: {fileID: 1234963423529126048, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1613709872106352569, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
       propertyPath: gameManager
       value: 
@@ -1984,18 +1980,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6909735509461200976, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
-      propertyPath: gravity
-      value: -35
-      objectReference: {fileID: 0}
-    - target: {fileID: 6909735509461200976, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
-      propertyPath: moveSpeed
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955946077937017081, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
-      propertyPath: healingUI
-      value: 
-      objectReference: {fileID: 1246312797}
     - target: {fileID: 6955946077937017081, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
       propertyPath: pillCountUI
       value: 

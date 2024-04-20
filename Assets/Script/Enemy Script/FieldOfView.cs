@@ -91,7 +91,6 @@ public class FieldOfView : MonoBehaviour
 
         foreach (var potentialTargetCollider in targetsInViewRadius)
         {
-            Debug.Log("AA");
             Transform potentialTarget = potentialTargetCollider.transform;
             Vector3 dirToTarget = (potentialTarget.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)

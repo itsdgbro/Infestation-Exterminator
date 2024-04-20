@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,6 +14,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject savedDataNotFoundUI;
     [SerializeField] private Button loadGameButton;
     [SerializeField] private HideTipsSO hideTipsSO;
+    [SerializeField] private TextMeshProUGUI loadingLevelText;
+    [SerializeField] private Slider sliderUI;
 
     string path;
     string fileName;
@@ -22,6 +25,7 @@ public class MenuManager : MonoBehaviour
         // DontDestroyOnLoad(gameObject);
         path = Application.persistentDataPath;
         fileName = DataPersistenceManager.instance.GetFileName();
+        sliderUI.value = 0f;
     }
 
     private void OnEnable()
@@ -35,6 +39,7 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         savedDataNotFoundUI.SetActive(false);
+
     }
 
     // load the selected level from UI 
@@ -55,10 +60,12 @@ public class MenuManager : MonoBehaviour
             Debug.LogError("Scene not found.");
             return;
         }
-        
+
         // unhide Tips hub
         hideTipsSO.hideTips = false;
-        SceneManager.LoadSceneAsync(levels[index]);
+        loadingLevelText.text = "Loading Level " + (index + 1) + " . . . ";
+        AsyncOperation scene = SceneManager.LoadSceneAsync(levels[index]);
+        StartCoroutine(ProgressScene(scene));
     }
 
     public void OnLevelSelectButtonClick()
@@ -90,7 +97,45 @@ public class MenuManager : MonoBehaviour
             savedDataNotFoundUI.SetActive(true);
             return;
         }
-        SceneManager.LoadSceneAsync(DataPersistenceManager.instance.SavedLevelName());
+
+        loadingLevelText.text = "Loading Saved Progress . . . ";
+        AsyncOperation scene = SceneManager.LoadSceneAsync(DataPersistenceManager.instance.SavedLevelName());
+        StartCoroutine(ProgressScene(scene));
+    }
+
+    /* private IEnumerator ProgressScene()
+     {
+         sliderUI.value = 0;
+         progressValue = 0f;
+         scene.allowSceneActivation = false;
+         while (scene.progress < 0.9f)
+         {
+             // Update the slider's value
+             progressValue = scene.progress;
+             Debug.Log(progressValue + " asd");
+             yield return null;
+         }
+         scene.allowSceneActivation = true;
+     }*/
+
+    private IEnumerator ProgressScene(AsyncOperation scene)
+    {
+        sliderUI.value = 0;
+
+        while (!scene.isDone)
+        {
+            float progress = Mathf.Clamp01(scene.progress / 0.9f);
+            sliderUI.value = progress;
+
+            yield return null;
+        }
+
+    }
+
+
+
+    private void Update()
+    {
     }
 
     public string DoFileExist()
@@ -107,7 +152,7 @@ public class MenuManager : MonoBehaviour
 
     public void SetLevelSelectIndex(int index)
     {
-        DataPersistenceManager.instance.SelectedLevelIndex = index; 
+        DataPersistenceManager.instance.SelectedLevelIndex = index;
     }
 
 }
