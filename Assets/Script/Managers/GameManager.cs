@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WeaponData arData;
     [SerializeField] private WeaponData pistolData;
 
+    [Header("Reset on UnPause")]
+    [SerializeField] private List<GameObject> pauseUIList;
+    [SerializeField] private GameObject showPauseList;
 
     #region Player Controls
     private PlayerControls inputActions;
@@ -42,6 +45,10 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
         gameOverUI.SetActive(false);
         inputActions = new PlayerControls();
+        foreach(var obj in pauseUIList)
+        {
+            obj.SetActive(false);
+        }
     }
 
 
@@ -88,6 +95,11 @@ public class GameManager : MonoBehaviour
     {
         // Debug.Log("Paused");
         pauseMenu.SetActive(true);
+        showPauseList.SetActive(true);
+        foreach (var obj in pauseUIList)
+        {
+            obj.SetActive(false);
+        }
         isGamePaused = true;
         Time.timeScale = 0.0f;
         SetCursorState();
