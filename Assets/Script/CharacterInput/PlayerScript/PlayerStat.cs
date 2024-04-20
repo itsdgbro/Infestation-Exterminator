@@ -30,6 +30,10 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     public Vector3 deathCameraPosition = new(-0.39f, -1.35f, 0f); // Ending position of the camera
     public float transitionDuration = 0.75f;
 
+    [Header("Damage Audio")]
+    private new AudioSource audio;
+    [SerializeField] private AudioClip damageAudio;
+
     [Header("Game Manager")]
     [SerializeField] private GameManager gameManager;
 
@@ -37,9 +41,14 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     public void SetHealth(float value) => this.playerData.playerHealth = value;
 
     private CharacterController characterController;
+    private PlayerControls playerControls;
+
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        playerControls = new PlayerControls();
+        audio = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -68,6 +77,15 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
         else
         {
             // receive hit
+            if(damageAudio == null)
+            {
+                Debug.LogError("NUL");
+            }
+            else
+            {
+                audio.PlayOneShot(damageAudio);
+
+            }
             StartCoroutine(BloodOverlayEffect());
         }
         lerpTimer = 0;
@@ -172,10 +190,12 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
         return playerData.stamina > 0.01;
     }
 
+    // player dead
     public void DeadUIDisplay()
     {
         if (gameManager != null && IsDead())
         {
+            playerControls.Disable();
             gameManager.ShowDeadUI();
         }
     }
@@ -213,17 +233,18 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     private void Update()
     {
         playerData.stamina = staminaBar.fillAmount;
+        this.playerData.isDead = playerData.playerHealth <= 0;
         HealthUIUpdate();
         IncreaseStamina();
     }
 
-    
+
 
     public void SaveData(GameData data)
     {
         data.player.health = this.playerData.playerHealth;
         data.sceneName = SceneManager.GetActiveScene().name;
-        
+
         data.player.position = this.transform.position;
 
         data.player.rotation = this.transform.rotation;
@@ -240,5 +261,15 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
         characterController.enabled = true;
 
         this.transform.forward = data.player.direction;
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
     }
 }

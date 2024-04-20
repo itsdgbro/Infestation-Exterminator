@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     [SerializeField] private ZombieData zombieData;
-    private PlayerStat stat;
+    [SerializeField]private PlayerStat stat;
 
     // references
     private EnemyVelocityController velocityController;
@@ -21,7 +21,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void Awake()
     {
-        GameObject playerObject = GameObject.FindWithTag("Player");
+        /*GameObject playerObject = GameObject.FindWithTag("Player");
         if (playerObject != null)
         {
             stat = playerObject.GetComponent<PlayerStat>();
@@ -33,6 +33,10 @@ public class EnemyAttack : MonoBehaviour
         else
         {
             Debug.LogError("Player GameObject not found.");
+        }*/
+        if(stat == null)
+        {
+            Debug.LogError("Not Found");
         }
         velocityController = GetComponentInParent<EnemyVelocityController>();
         fov = GetComponentInParent<FieldOfView>();

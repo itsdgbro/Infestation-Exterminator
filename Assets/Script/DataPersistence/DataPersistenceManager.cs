@@ -72,6 +72,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void NewGame()
     {
+        SelectedLevelIndex = SceneManager.GetActiveScene().buildIndex;
         Debug.Log("New game started. Resetting game data...");
         this.gameData = new GameData(levelDatas[SelectedLevelIndex]);
     }

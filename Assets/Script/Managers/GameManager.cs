@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GoTOMainMenu()
+    public void GoToMainMenu()
     {
         SceneManager.LoadScene(mainMenu);
     }
@@ -162,8 +162,12 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void LoadCurrentScene()
+    public void RestartGame()
     {
+        int index = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log(index + " aaa");
+        DataPersistenceManager.instance.SelectedLevelIndex = index;
+        DataPersistenceManager.instance.NewGame();
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
 

@@ -85,6 +85,7 @@ MonoBehaviour:
   mainCamera: {fileID: 4551005331596771273}
   deathCameraPosition: {x: -0.39, y: -1.35, z: 0}
   transitionDuration: 0.75
+  damageAudio: {fileID: 8300000, guid: dff9f72ae52f19f4297799f3c7a1c136, type: 3}
   gameManager: {fileID: 0}
 --- !u!95 &8407507928718655237
 Animator:
@@ -171,8 +172,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   sprintSpeed: 3.2
-  gravity: -20
-  jumpHeight: 1.5
+  gravity: -15
+  jumpHeight: 0.7
   groundCheck: {fileID: 3042787626549828951}
   groundLayer:
     serializedVersion: 2

@@ -55,7 +55,7 @@ public class CharacterMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         playerStat = GetComponent<PlayerStat>();
-        audio = gameObject.AddComponent<AudioSource>();
+        audio = GetComponent<AudioSource>();
     }
 
     private void Start()
