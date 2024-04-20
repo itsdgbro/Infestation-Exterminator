@@ -45,10 +45,6 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
         gameOverUI.SetActive(false);
         inputActions = new PlayerControls();
-        foreach(var obj in pauseUIList)
-        {
-            obj.SetActive(false);
-        }
     }
 
 
@@ -72,6 +68,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log("Puase");
             TogglePauseState();
         }
         // ZombieCountUI();

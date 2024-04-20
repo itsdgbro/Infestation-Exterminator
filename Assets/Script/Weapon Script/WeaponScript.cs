@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class WeaponScript : MonoBehaviour
+public class WeaponScript : MonoBehaviour, IDataPersistence
 {
     private PlayerControls playerControls;
     private Animator animator;
@@ -205,6 +205,7 @@ public class WeaponScript : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(this.gameObject.name);
 
         timeSinceLastShot += Time.deltaTime;
         //DrawRayFromMuzzle();
@@ -227,6 +228,30 @@ public class WeaponScript : MonoBehaviour
         }
     }
 
+
+    public void LoadData(GameData data)
+    {
+        if (this.gameObject.name == "AR")
+        {
+            Debug.Log("ARR");
+            weaponData.ammoLeft = data.weapon.ar.totalAmmo;
+            weaponData.currentAmmo = data.weapon.ar.currentAmmo;
+        }
+        else if (this.gameObject.name == "Pistol")
+        {
+            Debug.Log("Pist");
+            weaponData.ammoLeft = data.weapon.pistol.totalAmmo;
+            weaponData.currentAmmo = data.weapon.pistol.currentAmmo;
+        }
+
+    }
+
+
+    public void SaveData(GameData data)
+    {
+        Debug.Log("A");
+    }
+
     #region Enable/Disable
     private void OnEnable()
     {
@@ -238,5 +263,6 @@ public class WeaponScript : MonoBehaviour
         playerControls.Disable();
         weaponData.isReloading = false;
     }
+
     #endregion
 }

@@ -17,4 +17,11 @@ public class LevelData : ScriptableObject
 
     public int healingPillsLeft;
 
+    [Header("AR Data")]
+    public int aLeftAmmo;
+    public int aCurrentAmmo;
+
+    [Header("Pistol Data")]
+    public int pLeftAmmo;
+    public int pCurrentAmmo;
 }

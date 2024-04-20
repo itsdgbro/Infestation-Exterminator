@@ -117,10 +117,7 @@ public class DataPersistenceManager : MonoBehaviour
         else
         {   
             // Load Data from Scriptable Data
-
             NewGame();
-
-
         }
 
 
