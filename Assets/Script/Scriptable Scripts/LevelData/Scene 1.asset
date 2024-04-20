@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Scene 1
   m_EditorClassIdentifier: 
   sceneName: Level 1
-  health: 100
+  health: 80
   position: {x: 456.07, y: 27.025671, z: 139.81}
   rotation: {x: 0, y: -0.021754175, z: 0, w: -0.99976337}
   direction: {x: 0, y: 0, z: 1}
-  healingPillsLeft: 5
-  aLeftAmmo: 50
+  healingPillsLeft: 7
+  aLeftAmmo: 180
   aCurrentAmmo: 20
-  pLeftAmmo: 15
+  pLeftAmmo: 25
   pCurrentAmmo: 5

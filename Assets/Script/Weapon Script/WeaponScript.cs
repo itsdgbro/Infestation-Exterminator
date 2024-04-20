@@ -205,7 +205,6 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
-        Debug.Log(this.gameObject.name);
 
         timeSinceLastShot += Time.deltaTime;
         //DrawRayFromMuzzle();
@@ -233,13 +232,13 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     {
         if (this.gameObject.name == "AR")
         {
-            Debug.Log("ARR");
             weaponData.ammoLeft = data.weapon.ar.totalAmmo;
             weaponData.currentAmmo = data.weapon.ar.currentAmmo;
+
+            Debug.Log("AR " + data.weapon.ar.currentAmmo);
         }
         else if (this.gameObject.name == "Pistol")
         {
-            Debug.Log("Pist");
             weaponData.ammoLeft = data.weapon.pistol.totalAmmo;
             weaponData.currentAmmo = data.weapon.pistol.currentAmmo;
         }
@@ -249,7 +248,16 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        Debug.Log("A");
+        if (this.gameObject.name == "AR")
+        {
+            data.weapon.ar.totalAmmo = weaponData.ammoLeft;
+            data.weapon.ar.currentAmmo = weaponData.currentAmmo;
+        }
+        else if (this.gameObject.name == "Pistol")
+        {
+            data.weapon.pistol.totalAmmo = weaponData.ammoLeft ;
+            data.weapon.pistol.currentAmmo = weaponData.currentAmmo;
+        }
     }
 
     #region Enable/Disable

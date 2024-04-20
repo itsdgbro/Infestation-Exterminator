@@ -36,7 +36,7 @@ public class CharacterMovement : MonoBehaviour
     #endregion
 
     [Header("Sounds")]
-    private new AudioSource audio;
+    private AudioSource audioSource;
     [SerializeField] private AudioClip jumpSound;
 
     #region Animator
@@ -55,7 +55,7 @@ public class CharacterMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         playerStat = GetComponent<PlayerStat>();
-        audio = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -91,7 +91,7 @@ public class CharacterMovement : MonoBehaviour
             if (!wasGrounded)
             {
                 // Play landing sound
-                audio.PlayOneShot(jumpSound);
+                audioSource.PlayOneShot(jumpSound);
             }
             // constant pulling value
             velocity.y = -5f;

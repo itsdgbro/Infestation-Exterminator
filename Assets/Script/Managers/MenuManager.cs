@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,6 +22,10 @@ public class MenuManager : MonoBehaviour
     {
         // DontDestroyOnLoad(gameObject);
         path = Application.persistentDataPath;
+        if (DataPersistenceManager.instance == null)
+        {
+            Debug.LogError("NUL");
+        }
         fileName = DataPersistenceManager.instance.GetFileName();
     }
 
@@ -38,32 +40,31 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         savedDataNotFoundUI.SetActive(false);
-
     }
 
     // load (New Game) the selected level from UI 
     public void LoadNewLevel(int index)
     {
         // check if index value exceeds the number of scenes 
-        if (index >= SceneManager.sceneCountInBuildSettings - 1)
+        if (index >= SceneManager.sceneCountInBuildSettings)
         {
             Debug.LogError("Invalid index: " + index);
             return;
         }
 
-        // returns -1 if scene not found
+/*        // returns -1 if scene not found
         int buildIndex = SceneUtility.GetBuildIndexByScenePath(levels[index]);
 
         if (buildIndex < 0)
         {
             Debug.LogError("Scene not found.");
             return;
-        }
+        }*/
 
         // unhide Tips hub
         hideTipsSO.hideTips = false;
-        loadingLevelText.text = "Loading Level " + (index + 1) + " . . . ";
-        AsyncOperation scene = SceneManager.LoadSceneAsync(levels[index]);
+        loadingLevelText.text = "Loading Level " + (index) + " . . . ";
+        AsyncOperation scene = SceneManager.LoadSceneAsync(levels[index-1]);
         StartCoroutine(ProgressScene(scene));
     }
 

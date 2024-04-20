@@ -18,7 +18,7 @@ MonoBehaviour:
   rotation: {x: 0, y: 0.0125811845, z: 0, w: 0.9999209}
   direction: {x: 0, y: 0, z: 0}
   healingPillsLeft: 10
-  aLeftAmmo: 150
+  aLeftAmmo: 230
   aCurrentAmmo: 20
   pLeftAmmo: 50
   pCurrentAmmo: 5

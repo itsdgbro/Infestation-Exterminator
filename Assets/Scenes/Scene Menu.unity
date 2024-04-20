@@ -868,6 +868,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 483560374704066735, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 779328675478689683, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -900,6 +904,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1200875162285625898, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
+      propertyPath: m_text
+      value: Village
+      objectReference: {fileID: 0}
+    - target: {fileID: 1712197498221530737, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
+      propertyPath: m_text
+      value: Level 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1748045402679751364, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -915,6 +927,10 @@ PrefabInstance:
     - target: {fileID: 1748045402679751364, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004700742276757015, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
+      propertyPath: m_text
+      value: Hospital
       objectReference: {fileID: 0}
     - target: {fileID: 2315352933019608921, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -1316,6 +1332,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5876964339422038016, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6063954676278542443, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1355,6 +1375,10 @@ PrefabInstance:
     - target: {fileID: 6545355020970321877, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6545355020970321877, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7021908234024103518, guid: c846f5b53661c6045b9412c71c5bfcf5, type: 3}
       propertyPath: m_Camera
@@ -1546,5 +1570,5 @@ SceneRoots:
   - {fileID: 1283415896}
   - {fileID: 1314599731610199308}
   - {fileID: 40631167}
-  - {fileID: 8444613428663470119}
   - {fileID: 533392382}
+  - {fileID: 8444613428663470119}

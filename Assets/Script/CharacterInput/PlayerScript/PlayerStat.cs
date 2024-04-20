@@ -31,7 +31,7 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     public float transitionDuration = 0.75f;
 
     [Header("Damage Audio")]
-    private new AudioSource audio;
+    private AudioSource audioSource;
     [SerializeField] private AudioClip damageAudio;
 
     [Header("Game Manager")]
@@ -48,7 +48,7 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     {
         characterController = GetComponent<CharacterController>();
         playerControls = new PlayerControls();
-        audio = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -83,7 +83,7 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
             }
             else
             {
-                audio.PlayOneShot(damageAudio);
+                audioSource.PlayOneShot(damageAudio);
 
             }
             StartCoroutine(BloodOverlayEffect());
