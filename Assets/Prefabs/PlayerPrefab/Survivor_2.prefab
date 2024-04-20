@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 88059852981804367}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.0125811845, z: -0, w: 0.9999209}
+  m_LocalRotation: {x: 0, y: 0.012583478, z: 0, w: 0.99992085}
   m_LocalPosition: {x: -0.043, y: 0.071277015, z: -12.423}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2112,7 +2112,7 @@ MonoBehaviour:
   muzzle: {fileID: 8247767239133070437}
   particleSystem: {fileID: 5141992268413606732}
   bulletHolePrefab: {fileID: 1052032640996898258, guid: 27e0507b82029d84cb547ee50519b48a, type: 3}
-  shootSound: {fileID: 8300000, guid: 7a7e2f1cc81928344a58358f8569fd25, type: 3}
+  shootSound: {fileID: 8300000, guid: b553d0fd3781d79439e8ca7e41476fcb, type: 3}
   emptyClipSound: {fileID: 8300000, guid: 03fd1a61475f387428d43bb209022367, type: 3}
   reloadSound: {fileID: 8300000, guid: 749e6417b50b3fb4b9cd51f4dfc982fa, type: 3}
   drawSound: {fileID: 8300000, guid: 4e64c13558a47e142913a5fea027c52a, type: 3}
@@ -11961,7 +11961,7 @@ MonoBehaviour:
   muzzle: {fileID: 4010288984111916740}
   particleSystem: {fileID: 9019203453411360364}
   bulletHolePrefab: {fileID: 1052032640996898258, guid: 27e0507b82029d84cb547ee50519b48a, type: 3}
-  shootSound: {fileID: 8300000, guid: 39e1c21d33332fe4da933d69e90a100d, type: 3}
+  shootSound: {fileID: 8300000, guid: 244fdf62d027f4646b35d220d6095d8b, type: 3}
   emptyClipSound: {fileID: 8300000, guid: 03fd1a61475f387428d43bb209022367, type: 3}
   reloadSound: {fileID: 8300000, guid: 83daa2d40746d424e8551c006b9f0a94, type: 3}
   drawSound: {fileID: 8300000, guid: 65496539dcbb535449214bbb6a4ef286, type: 3}
