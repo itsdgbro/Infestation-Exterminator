@@ -25,7 +25,6 @@ public class MenuManager : MonoBehaviour
         // DontDestroyOnLoad(gameObject);
         path = Application.persistentDataPath;
         fileName = DataPersistenceManager.instance.GetFileName();
-        sliderUI.value = 0f;
     }
 
     private void OnEnable()
@@ -42,7 +41,7 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    // load the selected level from UI 
+    // load (New Game) the selected level from UI 
     public void LoadNewLevel(int index)
     {
         // check if index value exceeds the number of scenes 
@@ -88,6 +87,7 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    // Load Saved Game
     public void LoadSavedGame()
     {
         // hide Tips hub
@@ -103,21 +103,7 @@ public class MenuManager : MonoBehaviour
         StartCoroutine(ProgressScene(scene));
     }
 
-    /* private IEnumerator ProgressScene()
-     {
-         sliderUI.value = 0;
-         progressValue = 0f;
-         scene.allowSceneActivation = false;
-         while (scene.progress < 0.9f)
-         {
-             // Update the slider's value
-             progressValue = scene.progress;
-             Debug.Log(progressValue + " asd");
-             yield return null;
-         }
-         scene.allowSceneActivation = true;
-     }*/
-
+    // Level Load Progress System
     private IEnumerator ProgressScene(AsyncOperation scene)
     {
         sliderUI.value = 0;
