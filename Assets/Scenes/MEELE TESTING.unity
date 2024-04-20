@@ -294,17 +294,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1703593392}
     - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
-      propertyPath: zombieCountUI
-      value: 
-      objectReference: {fileID: 1717058831}
-    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
       propertyPath: arCurrentAmmoUI
       value: 
       objectReference: {fileID: 1276415358}
-    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
-      propertyPath: zombieCollection
-      value: 
-      objectReference: {fileID: 1943775536}
     - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
       propertyPath: arRemainingAmmoUI
       value: 
@@ -317,10 +309,6 @@ PrefabInstance:
       propertyPath: pistolRemainingAmmoUI
       value: 
       objectReference: {fileID: 1102279692}
-    - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
-      propertyPath: pauseUIList.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4818578994010684560, guid: 3904f2b53209bb04fbffa054c502029c, type: 3}
       propertyPath: pauseUIList.Array.data[0]
       value: 

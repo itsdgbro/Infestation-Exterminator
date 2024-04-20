@@ -98,8 +98,8 @@ public class WeaponScript : MonoBehaviour
         // ammo system
 
         int neededAmmo = weaponData.magazineSize - weaponData.currentAmmo;
-        weaponData.ammoLeft -= neededAmmo;
-        weaponData.currentAmmo += neededAmmo;
+        weaponData.ammoLeft -= neededAmmo;  // deduct from total ammo
+        weaponData.currentAmmo += neededAmmo;   // fill mag
 
        /* if (weaponData.ammoLeft + weaponData.currentAmmo >= weaponData.magazineSize)
             weaponData.currentAmmo = weaponData.magazineSize;

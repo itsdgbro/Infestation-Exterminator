@@ -54,3 +54,9 @@ MonoBehaviour:
   pistolRemainingAmmoUI: {fileID: 0}
   arData: {fileID: 11400000, guid: de6e75ca6a8f4b4498e25103a3998fa3, type: 2}
   pistolData: {fileID: 11400000, guid: 78ed6642c3def8440b821f9ac674209f, type: 2}
+  pauseUIList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  showPauseList: {fileID: 0}
