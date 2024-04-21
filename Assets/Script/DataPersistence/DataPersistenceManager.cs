@@ -113,6 +113,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if (isLoad)
         {
+            Debug.Log("Load");
             // load any saved data from a file using the data handler
             this.gameData = fileDataHandler.Load();
             // if no data can be loaded, don't continue

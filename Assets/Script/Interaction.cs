@@ -6,10 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class Interaction : MonoBehaviour
 {
+    [Header("UI References")]
     [SerializeField] private GameObject pressEUI;
     [SerializeField] private ZombieCountManager zombieCountManager;
     [SerializeField] private GameObject loadingScreenUI;
     [SerializeField] private GameObject killAllToExtract;
+
+    [Header("Level Unlock Dat")]
+    [SerializeField] private LevelUnlockSO levelUnlockSO;
     PlayerControls playerControls;
 
     private void Awake()
@@ -51,6 +55,9 @@ public class Interaction : MonoBehaviour
                 playerControls.Disable();
                 loadingScreenUI.SetActive(true);
                 SceneManager.LoadSceneAsync("Scene Menu");
+                levelUnlockSO.isLevel2Unlocked = true;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
         }
     }

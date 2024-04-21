@@ -27,6 +27,9 @@ public class FieldOfView : MonoBehaviour
     // Attack script ref
     private EnemyAttack enemyAttack;
 
+    // attack cooldown trigger
+    private bool canAttack = true;
+
     // zombie FOV range
     [Range(0, 360)]
     private float viewAngle;
@@ -63,7 +66,6 @@ public class FieldOfView : MonoBehaviour
 
     private void Update()
     {
-
         FindVisibleTargets();
         ToggleFOV();
         enemyAttack.canAttack =  !velocityController.IsAttackAnimationPlaying();
@@ -82,9 +84,9 @@ public class FieldOfView : MonoBehaviour
 
         if (zombieHealth.isZombieArgo && player!=null && !zombieHealth.GetIsDead())
         {
-            float rotationSpeed = agent.angularSpeed;
+            /*float rotationSpeed = agent.angularSpeed;
             Quaternion targetRotation = Quaternion.LookRotation((player.transform.position - transform.position).normalized);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);*/
             agent.SetDestination(player.transform.position);
             animator.SetBool(isTargetVisible, true);
         }
@@ -100,14 +102,14 @@ public class FieldOfView : MonoBehaviour
                 isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask | zombieData.groundMask));
                 // Debug.Log(isTargetVisibleRaycast + " visile");
 
-                // Debug.Log(gameObject.name + " " + dstToTarget);
+                Debug.Log(gameObject.name + " " + dstToTarget);
                 // target is visible
                 if (isTargetVisibleRaycast && !zombieHealth.GetIsDead())
                 {
                     // Rotation towards the target
-                    float rotationSpeed = agent.angularSpeed;
+                    /*float rotationSpeed = agent.angularSpeed;
                     Quaternion targetRotation = Quaternion.LookRotation(dirToTarget);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);*/
 
                     target = potentialTarget;
 
@@ -132,7 +134,7 @@ public class FieldOfView : MonoBehaviour
     void AttackTrigger(float distance)
     {
 
-        if (distance <= zombieData.maxRange)
+        if (distance <= zombieData.maxRange && canAttack)
         {
             // attack animation
             animator.Play(attackParameter);
@@ -142,7 +144,9 @@ public class FieldOfView : MonoBehaviour
 
     private IEnumerator ResetCooldown()
     {
+        canAttack = false;
         yield return new WaitForSeconds(zombieData.attackCooldown);
+        canAttack = true;
     }
 
     private void ToggleFOV()

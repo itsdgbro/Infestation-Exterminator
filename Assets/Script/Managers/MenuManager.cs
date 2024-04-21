@@ -91,6 +91,7 @@ public class MenuManager : MonoBehaviour
     // Load Saved Game
     public void LoadSavedGame()
     {
+        Debug.Log("HELLO");
         // hide Tips hub
         hideTipsSO.hideTips = true;
         if (!DataPersistenceManager.instance.HasGameData())
@@ -98,8 +99,13 @@ public class MenuManager : MonoBehaviour
             savedDataNotFoundUI.SetActive(true);
             return;
         }
+        Debug.Log("HELLO 2");
 
         loadingLevelText.text = "Loading Saved Progress . . . ";
+        if(DataPersistenceManager.instance == null)
+        {
+            Debug.LogError("NOTT");
+        }
         AsyncOperation scene = SceneManager.LoadSceneAsync(DataPersistenceManager.instance.SavedLevelName());
         StartCoroutine(ProgressScene(scene));
     }

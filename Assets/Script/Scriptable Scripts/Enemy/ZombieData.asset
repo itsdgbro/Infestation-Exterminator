@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ZombieData
   m_EditorClassIdentifier: 
   attackDamage: 13
-  maxRange: 0.89
-  attackCooldown: 1.67
+  maxRange: 1.15
+  attackCooldown: 1.15
   viewRadius: 15
   targetMask:
     serializedVersion: 2
