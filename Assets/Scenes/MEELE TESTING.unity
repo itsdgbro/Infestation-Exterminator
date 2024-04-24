@@ -990,6 +990,7 @@ MonoBehaviour:
   zombieCountManager: {fileID: 1943775538}
   loadingScreenUI: {fileID: 2893344291164348409}
   killAllToExtract: {fileID: 974547837}
+  levelUnlockSO: {fileID: 0}
 --- !u!65 &796402898
 BoxCollider:
   m_ObjectHideFlags: 0

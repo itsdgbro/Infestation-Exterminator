@@ -98,13 +98,33 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         // ammo system
 
         int neededAmmo = weaponData.magazineSize - weaponData.currentAmmo;
-        weaponData.ammoLeft -= neededAmmo;  // deduct from total ammo
-        weaponData.currentAmmo += neededAmmo;   // fill mag
+        Debug.Log("Amo " + neededAmmo);
 
-       /* if (weaponData.ammoLeft + weaponData.currentAmmo >= weaponData.magazineSize)
+        if(weaponData.ammoLeft + weaponData.currentAmmo > weaponData.magazineSize)
+        {
             weaponData.currentAmmo = weaponData.magazineSize;
+            weaponData.ammoLeft -= weaponData.magazineSize;
+        }
+        else if (weaponData.ammoLeft < weaponData.magazineSize)
+        {
+            weaponData.currentAmmo = weaponData.ammoLeft + weaponData.currentAmmo;
+            weaponData.ammoLeft = 0;
+        }
         else
-            weaponData.currentAmmo = weaponData.ammoLeft;*/
+        {
+            weaponData.ammoLeft -= neededAmmo;  // deduct from total ammo
+            weaponData.currentAmmo += neededAmmo;   // fill mag
+        }
+
+        /*if (weaponData.ammoLeft + weaponData.currentAmmo <= weaponData.magazineSize)
+        {
+            weaponData.currentAmmo = weaponData.ammoLeft;
+        }
+        else
+        {
+            weaponData.ammoLeft = (weaponData.currentAmmo + weaponData.ammoLeft) - weaponData.magazineSize;
+            weaponData.currentAmmo = weaponData.magazineSize;
+        }*/
         weaponData.isReloading = false;
     }
 
@@ -255,7 +275,7 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         }
         else if (this.gameObject.name == "Pistol")
         {
-            data.weapon.pistol.totalAmmo = weaponData.ammoLeft ;
+            data.weapon.pistol.totalAmmo = weaponData.ammoLeft;
             data.weapon.pistol.currentAmmo = weaponData.currentAmmo;
         }
     }
