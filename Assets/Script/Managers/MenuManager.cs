@@ -2,6 +2,7 @@ using System.Collections;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -17,6 +18,12 @@ public class MenuManager : MonoBehaviour
 
     string path;
     string fileName;
+
+    [Header("Level-SO")]
+    [SerializeField] private LevelUnlockSO levelManager;
+    [Header("Level GO")]
+    [SerializeField] private GameObject[] levelGOs;
+
 
     private void Awake()
     {
@@ -45,6 +52,7 @@ public class MenuManager : MonoBehaviour
     // load (New Game) the selected level from UI 
     public void LoadNewLevel(int index)
     {
+
         // check if index value exceeds the number of scenes 
         if (index >= SceneManager.sceneCountInBuildSettings)
         {
@@ -126,9 +134,28 @@ public class MenuManager : MonoBehaviour
     }
 
 
-
-    private void Update()
+    // check if new level is unlocked
+    public void CheckLevelUnlocked()
     {
+        for (int i = 0; i < levelGOs.Length; i++)
+        {
+            EventTrigger eventTrigger = levelGOs[i].GetComponent<EventTrigger>();
+            Button button = levelGOs[i].GetComponentInChildren<Button>();
+
+            eventTrigger.enabled = false;
+            button.enabled = false;
+
+            if (i == 0 && levelManager.isLevel2Unlocked)
+            {
+                eventTrigger.enabled = true;
+                button.enabled = true;
+            }
+            else if (i == 1 && levelManager.isLevel3Unlocked)
+            {
+                eventTrigger.enabled = true;
+                button.enabled = true;
+            }
+        }
     }
 
     public string DoFileExist()
