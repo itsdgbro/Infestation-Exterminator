@@ -19,7 +19,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public static DataPersistenceManager instance { get; private set; }
     public int GetAliveZombieCount() => gameData.enemy.zombieCount;
-
+    
     [SerializeField] private bool isLoad = false;
 
     public bool GetIsLoad() => isLoad;
