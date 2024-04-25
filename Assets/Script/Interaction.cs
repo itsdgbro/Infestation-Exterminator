@@ -46,7 +46,7 @@ public class Interaction : MonoBehaviour
     {
         Debug.Log("DDDD" + DataPersistenceManager.instance.GetAliveZombieCount());
         if (other.gameObject.CompareTag("Player") && pressEUI.activeSelf)
-        {   
+        {
 
             // Press E to evacuate 
             if (playerControls.Interactive.Interact.triggered)
