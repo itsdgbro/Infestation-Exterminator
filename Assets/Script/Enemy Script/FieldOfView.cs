@@ -102,7 +102,7 @@ public class FieldOfView : MonoBehaviour
                 isTargetVisibleRaycast = !(Physics.Raycast(eyes.position, dirToTarget, dstToTarget, zombieData.obstacleMask | zombieData.groundMask));
                 // Debug.Log(isTargetVisibleRaycast + " visile");
 
-                Debug.Log(gameObject.name + " " + dstToTarget);
+                //Debug.Log(gameObject.name + " " + dstToTarget);
                 // target is visible
                 if (isTargetVisibleRaycast && !zombieHealth.GetIsDead())
                 {

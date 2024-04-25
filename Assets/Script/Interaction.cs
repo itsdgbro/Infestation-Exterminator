@@ -46,15 +46,17 @@ public class Interaction : MonoBehaviour
     {
         Debug.Log("DDDD" + DataPersistenceManager.instance.GetAliveZombieCount());
         if (other.gameObject.CompareTag("Player") && pressEUI.activeSelf)
-        {
+        {   
+
+            // Press E to evacuate 
             if (playerControls.Interactive.Interact.triggered)
             {
-                playerControls.Disable();
                 loadingScreenUI.SetActive(true);
                 SceneManager.LoadSceneAsync("Scene Menu");
                 levelUnlockSO.isLevel2Unlocked = true;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
+                playerControls.Disable();
             }
         }
     }
