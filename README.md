@@ -7,4 +7,4 @@
 > git lfs push --all origin main\
 > git add .\
 > git commit -m "mesage"\
-> git push -u origin main\
+> git push -u origin main
