@@ -9,7 +9,7 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
     [ContextMenu("Generate guid for id")]
     private void GenerateGUID()
     {
-        id = System.Guid.NewGuid().ToString();
+        id = System.Guid.NewGuid().ToString() + gameObject.transform.GetSiblingIndex();
     }
 
     #region Target Health
@@ -19,19 +19,19 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
 
     private bool isDead = false;
 
-    public bool GetIsDead() {  return isDead; }
+    public bool GetIsDead() { return isDead; }
 
     private Animator animator;
     private NavMeshAgent navMeshAgent;
 
     private ZombieCountManager ZombieCountManager;
-    
+
     public bool isZombieArgo { get; set; }
 
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
-        if(animator == null)
+        if (animator == null)
         {
             Debug.LogWarning("animator not found");
         }
@@ -39,7 +39,7 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
 
         // search count manager in parent
         ZombieCountManager = GetComponentInParent<ZombieCountManager>();
-        if(ZombieCountManager == null)
+        if (ZombieCountManager == null)
         {
             Debug.LogWarning("Zombie Count Manager not found.");
         }
@@ -52,7 +52,7 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
         isZombieArgo = true;
         health -= amount;
         if (health <= 0)
-        {   
+        {
             // death
             navMeshAgent.enabled = false;
             GetComponent<CapsuleCollider>().enabled = false;
@@ -77,14 +77,14 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
 
         if (data.enemy.isZombieDead.ContainsKey(id))
         {
-           isDead = data.enemy.isZombieDead[id];
+            isDead = data.enemy.isZombieDead[id];
         }
         else
         {
             isDead = true && DataPersistenceManager.instance.GetIsLoad();
         }
-        if(isDead)
-        {   
+        if (isDead)
+        {
             this.gameObject.SetActive(false);
             Destroy(this.gameObject);
         }
@@ -92,7 +92,7 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        
+
         if (data.enemy.isZombieDead.ContainsKey(id))
         {
             data.enemy.isZombieDead.Remove(id);

@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     [SerializeField] private ZombieData zombieData;
-    [SerializeField]private PlayerStat stat;
+    [SerializeField] private PlayerStat stat;
 
     // references
     private EnemyVelocityController velocityController;
@@ -34,7 +34,7 @@ public class EnemyAttack : MonoBehaviour
         {
             Debug.LogError("Player GameObject not found.");
         }*/
-        if(stat == null)
+        if (stat == null)
         {
             Debug.LogError("Not Found");
         }

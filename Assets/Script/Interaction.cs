@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,14 +13,16 @@ public class Interaction : MonoBehaviour
 
     [Header("Level Unlock Dat")]
     [SerializeField] private LevelUnlockSO levelUnlockSO;
+    private String currentLevelName;
+    private readonly String[] levelList = { "Level 1", "Level 2", "Level 3" };
     PlayerControls playerControls;
-
     private void Awake()
     {
         playerControls = new PlayerControls();
         pressEUI.SetActive(false);
         loadingScreenUI.SetActive(false);
         killAllToExtract.SetActive(false);
+        currentLevelName = SceneManager.GetActiveScene().name;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +31,7 @@ public class Interaction : MonoBehaviour
         {
             pressEUI.SetActive(true);
         }
-        else
+        else if (other.gameObject.CompareTag("Player") && zombieCountManager.GetZombieAlive() > 0)
         {
             killAllToExtract.SetActive(true);
         }
@@ -42,22 +46,23 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void Update()
     {
-        Debug.Log("DDDD" + DataPersistenceManager.instance.GetAliveZombieCount());
-        if (other.gameObject.CompareTag("Player") && pressEUI.activeSelf)
+        if (pressEUI.activeSelf && playerControls.Interactive.Interact.triggered)
         {
-
-            // Press E to evacuate 
-            if (playerControls.Interactive.Interact.triggered)
+            if (currentLevelName == levelList[0])
             {
-                loadingScreenUI.SetActive(true);
-                SceneManager.LoadSceneAsync("Scene Menu");
                 levelUnlockSO.isLevel2Unlocked = true;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                playerControls.Disable();
             }
+            else if (currentLevelName == levelList[1])
+            {
+                levelUnlockSO.isLevel3Unlocked = true;
+            }
+            loadingScreenUI.SetActive(true);
+            SceneManager.LoadSceneAsync("Scene Menu");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            playerControls.Disable();
         }
     }
 

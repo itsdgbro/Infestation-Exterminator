@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb771451347b1e44d86da22075e2a9cb, type: 3}
   m_Name: LevelUnlockData
   m_EditorClassIdentifier: 
-  isLevel2Unlocked: 1
+  isLevel2Unlocked: 0
   isLevel3Unlocked: 0

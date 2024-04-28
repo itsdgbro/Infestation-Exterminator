@@ -97,8 +97,6 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         yield return new WaitForSeconds(weaponData.reloadTime);
         // ammo system
 
-        Debug.Log("c: " + weaponData.currentAmmo + " L: " + weaponData.ammoLeft);
-
         int totalAmmo = weaponData.currentAmmo + weaponData.ammoLeft;
 
         if (totalAmmo <= weaponData.magazineSize)
@@ -111,7 +109,6 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
             weaponData.currentAmmo = weaponData.magazineSize;
             weaponData.ammoLeft = totalAmmo - weaponData.magazineSize;
         }
-        Debug.Log("c: " + weaponData.currentAmmo + " L: " + weaponData.ammoLeft);
         weaponData.isReloading = false;
     }
 
