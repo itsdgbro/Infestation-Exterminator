@@ -4,14 +4,14 @@ using UnityEngine;
 public class Level3Interaction : MonoBehaviour
 {
 
-    private BoxCollider boxCollider;
     private PlayerControls playerControls;
     private bool canCollect = false;
-
+    [SerializeField] private Level3Collections level3Collections;
+    [SerializeField] private GameObject collectUI;
     private void Awake()
     {
         playerControls = new PlayerControls();
-        boxCollider = GetComponent<BoxCollider>();
+        collectUI.SetActive(false);
     }
 
 
@@ -21,9 +21,7 @@ public class Level3Interaction : MonoBehaviour
         {
             Debug.Log("Can collect");
             canCollect = true;
-        }
-        else
-        {
+            collectUI.SetActive(canCollect);
         }
     }
 
@@ -33,25 +31,9 @@ public class Level3Interaction : MonoBehaviour
         {
             Debug.Log("Can not collect");
             canCollect = false;
+            collectUI.SetActive(canCollect);
         }
     }
-
-    // private void OnTriggerStay(Collider other)
-    // {
-    //     // if (other.gameObject.CompareTag("Player"))
-    //     // {
-    //     //     Debug.Log("Collected 12");
-    //     //     // Press E to evacuate 
-    //     //     if (playerControls.Interactive.Interact.triggered)
-    //     //     {
-    //     //         Debug.Log("Collected");
-    //     //     }
-    //     // }
-    //     if (Input.GetKeyDown(KeyCode.E))
-    //     {
-    //         Debug.Log("Collected");
-    //     }
-    // }
 
     private void Update()
     {
@@ -59,6 +41,8 @@ public class Level3Interaction : MonoBehaviour
         {
             Debug.Log(gameObject.name + " Collected");
             gameObject.SetActive(false);
+            collectUI.SetActive(false);
+            level3Collections.isCollected[transform.GetSiblingIndex()] = true;
         }
     }
 
