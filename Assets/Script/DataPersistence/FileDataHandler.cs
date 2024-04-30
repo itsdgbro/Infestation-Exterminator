@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
@@ -55,7 +53,7 @@ public class FileDataHandler
 
             // serialize the C# game data object into Json
             string dataToStore = JsonUtility.ToJson(data, true);
-            
+
             // write the serialized data to the file
             using (FileStream stream = new(fullPath, FileMode.Create))
             {

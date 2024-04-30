@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace FSR
@@ -17,7 +16,7 @@ namespace FSR
         private void Awake()
         {
             character = foot.GetComponentInParent<CharacterMovement>();
-            if(character == null)
+            if (character == null)
             {
                 Debug.LogWarning("Not found");
             }
@@ -104,8 +103,8 @@ namespace FSR
             //Vector3 raycastDirection = transform.position - foot.position;
             if (Physics.Raycast(foot.position, Vector3.down, out hit, raycastSize))
             {
-                Debug.Log(hit.transform.gameObject.name);
-                if(hit.transform.gameObject.CompareTag("Ground"))
+                // Debug.Log(hit.transform.gameObject.name);
+                if (hit.transform.gameObject.CompareTag("Ground"))
                     Gizmos.color = Color.green;
             }
             else
@@ -119,7 +118,7 @@ namespace FSR
         // excluding sound at index 0
         private void playSound(FSR_Data.SurfaceType surfaceType)
         {
-            AudioClip[] soundEffects= surfaceType.soundEffects;
+            AudioClip[] soundEffects = surfaceType.soundEffects;
 
             int n = UnityEngine.Random.Range(0, soundEffects.Length);
             m_AudioSource.clip = soundEffects[n];

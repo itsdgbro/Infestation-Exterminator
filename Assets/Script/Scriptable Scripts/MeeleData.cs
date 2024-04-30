@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "Meele", menuName = "Weapon/Meele")]
 public class MeleeData : ScriptableObject

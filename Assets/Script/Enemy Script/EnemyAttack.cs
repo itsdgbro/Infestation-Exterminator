@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
@@ -17,23 +16,10 @@ public class EnemyAttack : MonoBehaviour
 
     #region Zombie Reference
     #endregion
-    public bool canAttack { get; set; }
 
     private void Awake()
     {
-        /*GameObject playerObject = GameObject.FindWithTag("Player");
-        if (playerObject != null)
-        {
-            stat = playerObject.GetComponent<PlayerStat>();
-            if (stat == null)
-            {
-                Debug.LogError("PlayerStat component not found on the Player GameObject.");
-            }
-        }
-        else
-        {
-            Debug.LogError("Player GameObject not found.");
-        }*/
+        // check references is null
         if (stat == null)
         {
             Debug.LogError("Not Found");
@@ -59,21 +45,31 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    // perform attack
+    public bool canAttack = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying() && !canAttack)
+        if (other.gameObject.CompareTag("Player") && velocityController.IsAttackAnimationPlaying())
         {
-            ApplyDamange();
+            canAttack = false;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            canAttack = true;
         }
     }
 
     // damage to player
-    void ApplyDamange()
+    public void ApplyDamage()
     {
-        if (Vector3.Distance(player.transform.position, capsuleCollider.transform.position) < 0.89f)
+        if (Vector3.Distance(player.transform.position, capsuleCollider.transform.position) < 0.89f && canAttack)
         {
             stat.ReceiveDamage(zombieData.attackDamage);
+            //canAttack = false;
         }
     }
+
+
 }

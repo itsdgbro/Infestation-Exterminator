@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerDefaultData", menuName = "Player/PlayerDefaultData")]
 public class PlayerDefaultData : ScriptableObject

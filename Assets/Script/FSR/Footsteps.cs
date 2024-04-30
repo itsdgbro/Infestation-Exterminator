@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -36,7 +34,7 @@ public class Footsteps : MonoBehaviour
             isTriggered = true;
             onFootStep.Invoke();
         }
-        else if(isTriggered = true && Sin < -0.97f)
+        else if (isTriggered = true && Sin < -0.97f)
         {
             isTriggered = false;
         }

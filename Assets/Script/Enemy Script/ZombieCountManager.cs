@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -48,7 +47,7 @@ public class ZombieCountManager : MonoBehaviour, IDataPersistence
 
     // update current alive zombie and UI
     private void ZombieCountUI()
-    { 
+    {
         zombieAlive = zombieList.Count;
         zombieCountUI.text = zombieAlive.ToString() + "/" + totalZombies.ToString();
     }

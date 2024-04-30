@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HideTipsUI : MonoBehaviour
@@ -27,7 +25,7 @@ public class HideTipsUI : MonoBehaviour
     {
         if (playerControls.Interactive.ToggleTips.triggered)
         {
-            hideTipsSO.hideTips= !hideTipsSO.hideTips;
+            hideTipsSO.hideTips = !hideTipsSO.hideTips;
             tipsUI.SetActive(!hideTipsSO.hideTips);
         }
     }

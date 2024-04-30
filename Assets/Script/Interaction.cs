@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,7 +25,7 @@ public class Interaction : MonoBehaviour
         loadingScreenUI.SetActive(false);
         killAllToExtract.SetActive(false);
         currentLevelName = SceneManager.GetActiveScene().name;
-        if (level3Collections == null)
+        if (level3Collections == null && currentLevelName == "Level 3")
         {
             Debug.LogError("Level 3 collectables not found.");
         }

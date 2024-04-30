@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponSway : MonoBehaviour
@@ -13,7 +11,7 @@ public class WeaponSway : MonoBehaviour
     private void Update()
     {
 
-        
+
         // get mouse input
         float mouseX = Input.GetAxisRaw("Mouse X") * sensitivityMultiplier;
         float mouseY = Input.GetAxisRaw("Mouse Y") * sensitivityMultiplier;

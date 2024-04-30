@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponSwitch : MonoBehaviour
@@ -24,7 +21,7 @@ public class WeaponSwitch : MonoBehaviour
     private int previousSelectedWeapon;
 
     private void Start()
-    {   
+    {
         SetWeapons();
         Select(selectedWeapon);
 
@@ -43,7 +40,7 @@ public class WeaponSwitch : MonoBehaviour
     }
 
     private void Update()
-    {   
+    {
 
 
         previousSelectedWeapon = selectedWeapon;
@@ -58,12 +55,13 @@ public class WeaponSwitch : MonoBehaviour
 
     private void Select(int weaponIndex)
     {
-        for (int i = 0; i < weapons.Length; i++) { 
+        for (int i = 0; i < weapons.Length; i++)
+        {
             weapons[i].gameObject.SetActive(i == weaponIndex);
             weaponUI[i].SetActive(i == weaponIndex);
         }
         timeSinceLastSwitch = 0f;
-        
+
         OnWeaponSelected();
     }
 

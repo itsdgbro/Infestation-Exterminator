@@ -10,7 +10,6 @@ public class FieldOfView : MonoBehaviour
 {
     [SerializeField] private ZombieData zombieData;
     [SerializeField] private Transform eyes;
-    [SerializeField]private GameObject referenceForEnemyAttack;
 
     // Player transform
     private Transform target;
@@ -23,9 +22,6 @@ public class FieldOfView : MonoBehaviour
     private bool isTargetVisibleRaycast;
 
     private Target zombieHealth;
-
-    // Attack script ref
-    private EnemyAttack enemyAttack;
 
     // attack cooldown trigger
     private bool canAttack = true;
@@ -40,7 +36,6 @@ public class FieldOfView : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         velocityController = GetComponentInChildren<EnemyVelocityController>();
         zombieHealth = GetComponent<Target>();
-        enemyAttack = referenceForEnemyAttack.GetComponent<EnemyAttack>();
 
         // to ignore collision between enemies
         GameObject[] zombies = GameObject.FindGameObjectsWithTag("Target");
@@ -68,7 +63,6 @@ public class FieldOfView : MonoBehaviour
     {
         FindVisibleTargets();
         ToggleFOV();
-        enemyAttack.canAttack =  !velocityController.IsAttackAnimationPlaying();
     }
 
     void FindVisibleTargets()
@@ -82,7 +76,7 @@ public class FieldOfView : MonoBehaviour
         // default target is not visible
         animator.SetBool(isTargetVisible, false);
 
-        if (zombieHealth.isZombieArgo && player!=null && !zombieHealth.GetIsDead())
+        if (zombieHealth.isZombieArgo && player != null && !zombieHealth.GetIsDead())
         {
             /*float rotationSpeed = agent.angularSpeed;
             Quaternion targetRotation = Quaternion.LookRotation((player.transform.position - transform.position).normalized);
@@ -116,7 +110,7 @@ public class FieldOfView : MonoBehaviour
                     // Move towards the target
                     agent.SetDestination(target.position);
                     animator.SetBool(isTargetVisible, true);
-                    if (!velocityController.IsAttackAnimationPlaying() && enemyAttack.canAttack)
+                    if (!velocityController.IsAttackAnimationPlaying())
                     {
                         AttackTrigger(dstToTarget);
                     }

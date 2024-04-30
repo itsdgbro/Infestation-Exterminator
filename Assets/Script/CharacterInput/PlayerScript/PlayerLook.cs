@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerLook : MonoBehaviour
 {
@@ -15,7 +12,7 @@ public class PlayerLook : MonoBehaviour
     private float xRoation = 0f;
     private Transform player;
     #endregion
-    
+
     private void Awake()
     {
         player = transform.parent;
@@ -29,7 +26,7 @@ public class PlayerLook : MonoBehaviour
         if (Time.timeScale > 0)
         {
             Look();
-            
+
         }
     }
 
@@ -48,7 +45,7 @@ public class PlayerLook : MonoBehaviour
         player.Rotate(Vector3.up * mouseX);
     }
 
-    
+
     private void OnEnable()
     {
         playerControls.Enable();

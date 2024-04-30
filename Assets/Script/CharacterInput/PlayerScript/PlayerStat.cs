@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -77,7 +75,7 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
         else
         {
             // receive hit
-            if(damageAudio == null)
+            if (damageAudio == null)
             {
                 Debug.LogError("NUL");
             }

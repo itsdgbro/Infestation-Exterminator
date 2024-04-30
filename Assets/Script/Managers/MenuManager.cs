@@ -60,19 +60,19 @@ public class MenuManager : MonoBehaviour
             return;
         }
 
-/*        // returns -1 if scene not found
-        int buildIndex = SceneUtility.GetBuildIndexByScenePath(levels[index]);
+        /*        // returns -1 if scene not found
+                int buildIndex = SceneUtility.GetBuildIndexByScenePath(levels[index]);
 
-        if (buildIndex < 0)
-        {
-            Debug.LogError("Scene not found.");
-            return;
-        }*/
+                if (buildIndex < 0)
+                {
+                    Debug.LogError("Scene not found.");
+                    return;
+                }*/
 
         // unhide Tips hub
         hideTipsSO.hideTips = false;
         loadingLevelText.text = "Loading Level " + (index) + " . . . ";
-        AsyncOperation scene = SceneManager.LoadSceneAsync(levels[index-1]);
+        AsyncOperation scene = SceneManager.LoadSceneAsync(levels[index - 1]);
         StartCoroutine(ProgressScene(scene));
     }
 
@@ -99,7 +99,6 @@ public class MenuManager : MonoBehaviour
     // Load Saved Game
     public void LoadSavedGame()
     {
-        Debug.Log("HELLO");
         // hide Tips hub
         hideTipsSO.hideTips = true;
         if (!DataPersistenceManager.instance.HasGameData())
@@ -107,10 +106,9 @@ public class MenuManager : MonoBehaviour
             savedDataNotFoundUI.SetActive(true);
             return;
         }
-        Debug.Log("HELLO 2");
 
         loadingLevelText.text = "Loading Saved Progress . . . ";
-        if(DataPersistenceManager.instance == null)
+        if (DataPersistenceManager.instance == null)
         {
             Debug.LogError("NOTT");
         }

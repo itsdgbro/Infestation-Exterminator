@@ -791,6 +791,7 @@ MonoBehaviour:
   loadingScreenUI: {fileID: 2893344291164348409}
   killAllToExtract: {fileID: 974547837}
   levelUnlockSO: {fileID: 0}
+  level3Collections: {fileID: 0}
 --- !u!65 &796402898
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -946,6 +947,10 @@ PrefabInstance:
     - target: {fileID: 7823611329782342417, guid: 39e0bc45895263a44a15761259250f43, type: 3}
       propertyPath: m_Name
       value: ZombieGirl
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823611329782342417, guid: 39e0bc45895263a44a15761259250f43, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2134,6 +2139,10 @@ PrefabInstance:
     - target: {fileID: 7823611329782342417, guid: 39e0bc45895263a44a15761259250f43, type: 3}
       propertyPath: m_Name
       value: ZombieGirl
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823611329782342417, guid: 39e0bc45895263a44a15761259250f43, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

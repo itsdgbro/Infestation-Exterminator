@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -19,7 +18,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public static DataPersistenceManager instance { get; private set; }
     public int GetAliveZombieCount() => gameData.enemy.zombieCount;
-    
+
     [SerializeField] private bool isLoad = false;
 
     public bool GetIsLoad() => isLoad;
@@ -72,13 +71,13 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void NewGame()
     {
-        if(SceneManager.GetActiveScene().buildIndex == 0)
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             return;
         }
         else
         {
-            SelectedLevelIndex = SceneManager.GetActiveScene().buildIndex -1;
+            SelectedLevelIndex = SceneManager.GetActiveScene().buildIndex - 1;
         }
         Debug.Log("New game started. Resetting game data... " + SelectedLevelIndex);
         this.gameData = new GameData(levelDatas[SelectedLevelIndex]);
@@ -113,7 +112,6 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if (isLoad)
         {
-            Debug.Log("Load");
             // load any saved data from a file using the data handler
             this.gameData = fileDataHandler.Load();
             // if no data can be loaded, don't continue
@@ -124,7 +122,7 @@ public class DataPersistenceManager : MonoBehaviour
             }
         }
         else
-        {   
+        {
             // Load Data from Scriptable Data
             NewGame();
         }

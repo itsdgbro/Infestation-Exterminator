@@ -1,8 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
-{   
+{
     private PlayerControls playerControls;
 
     [SerializeField]
@@ -43,14 +42,14 @@ public class PlayerMovement : MonoBehaviour
         Gravity();
         Move();
         Jump();
-       
+
     }
 
     private void Gravity()
     {
         isGrounded = Physics.CheckSphere(ground.position, distanceToGround, groundLayerMask);
 
-        if(isGrounded && velocity.y < 0)
+        if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
@@ -80,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if(playerControls.Movement.Jump.triggered && isGrounded)
+        if (playerControls.Movement.Jump.triggered && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
