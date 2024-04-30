@@ -16,6 +16,9 @@ public class Interaction : MonoBehaviour
     private String currentLevelName;
     private readonly String[] levelList = { "Level 1", "Level 2", "Level 3" };
     PlayerControls playerControls;
+
+    [Header("Level 3 collectables")]
+    [SerializeField] private Level3Collections level3Collections;
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -23,17 +26,38 @@ public class Interaction : MonoBehaviour
         loadingScreenUI.SetActive(false);
         killAllToExtract.SetActive(false);
         currentLevelName = SceneManager.GetActiveScene().name;
+        if (level3Collections == null)
+        {
+            Debug.LogError("Level 3 collectables not found.");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && zombieCountManager.GetZombieAlive() <= 0)
+        if (currentLevelName != "Level 3")
         {
-            pressEUI.SetActive(true);
+            if (other.gameObject.CompareTag("Player") && zombieCountManager.GetZombieAlive() <= 0)
+            {
+                pressEUI.SetActive(true);
+            }
+            else if (other.gameObject.CompareTag("Player") && zombieCountManager.GetZombieAlive() > 0)
+            {
+                killAllToExtract.SetActive(true);
+            }
         }
-        else if (other.gameObject.CompareTag("Player") && zombieCountManager.GetZombieAlive() > 0)
+        else
         {
-            killAllToExtract.SetActive(true);
+            if (other.gameObject.CompareTag("Player"))
+            {
+                if (zombieCountManager.GetZombieAlive() <= 0 && IsAllCollected())
+                {
+                    pressEUI.SetActive(true);
+                }
+                else if (zombieCountManager.GetZombieAlive() > 0 || !IsAllCollected())
+                {
+                    killAllToExtract.SetActive(true);
+                }
+            }
         }
     }
 
@@ -44,6 +68,20 @@ public class Interaction : MonoBehaviour
             pressEUI.SetActive(false);
             killAllToExtract.SetActive(false);
         }
+    }
+
+    private bool IsAllCollected()
+    {
+
+        foreach (var item in level3Collections.isCollected)
+        {
+            if (item == false)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void Update()

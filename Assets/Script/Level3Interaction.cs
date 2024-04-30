@@ -8,10 +8,18 @@ public class Level3Interaction : MonoBehaviour
     private bool canCollect = false;
     [SerializeField] private Level3Collections level3Collections;
     [SerializeField] private GameObject collectUI;
+
+    // referenc to parent script
+    private ItemCollectedTracker itemCollectedTracker;
     private void Awake()
     {
         playerControls = new PlayerControls();
         collectUI.SetActive(false);
+        itemCollectedTracker = GetComponentInParent<ItemCollectedTracker>();
+        if (itemCollectedTracker == null)
+        {
+            Debug.LogError("Item Collection Tracker not found");
+        }
     }
 
 
@@ -43,6 +51,8 @@ public class Level3Interaction : MonoBehaviour
             gameObject.SetActive(false);
             collectUI.SetActive(false);
             level3Collections.isCollected[transform.GetSiblingIndex()] = true;
+            itemCollectedTracker.ItemCollectedCounter();
+
         }
     }
 
