@@ -32,7 +32,7 @@ public class GameData
             public int totalAmmo;
             public int currentAmmo;
         }
-        
+
         // Pistol Data
         [System.Serializable]
         public class PistolData
@@ -55,9 +55,17 @@ public class GameData
 
     }
 
+    // level 3 item collected
+    [System.Serializable]
+    public class ItemCollected
+    {
+        public SerializableDictionary<string, bool> isItemCollected;
+    }
+
     public PlayerData player;
     public WeaponData weapon;
     public EnemyData enemy;
+    public ItemCollected itemCollected;
     public GameData(LevelData levelData)
     {
         this.sceneName = levelData.sceneName;
@@ -73,7 +81,7 @@ public class GameData
 
         this.weapon = new WeaponData
         {
-            
+
             ar = new ARData
             {
                 totalAmmo = levelData.aLeftAmmo,
@@ -91,6 +99,12 @@ public class GameData
             zombieCount = 0,
             isZombieDead = new SerializableDictionary<string, bool>()
         };
+
+        this.itemCollected = new ItemCollected
+        {
+            isItemCollected = new SerializableDictionary<string, bool>()
+        };
+
     }
 
 

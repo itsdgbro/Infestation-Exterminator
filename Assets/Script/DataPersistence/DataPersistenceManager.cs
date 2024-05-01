@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class DataPersistenceManager : MonoBehaviour
 {
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
-
     public string GetFileName() => fileName;
 
     public GameData gameData { get; set; }
@@ -86,6 +86,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
+
+        string fullPath = Path.Combine(Application.persistentDataPath, fileName);
         if (gameData == null)
         {
             Debug.LogWarning("Data not found");
@@ -97,6 +99,7 @@ public class DataPersistenceManager : MonoBehaviour
             Debug.LogWarning("DPo Not Found");
             return;
         }
+
         // pass the data to other scripts so they can update it
         foreach (IDataPersistence dataPersistence in dataPersistenceObjects)
         {

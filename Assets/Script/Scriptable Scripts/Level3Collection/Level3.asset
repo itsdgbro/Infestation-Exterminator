@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b12b73f4635834ebeb8e8d4aab4817, type: 3}
   m_Name: Level3
   m_EditorClassIdentifier: 
-  isCollected: 000000
+  isCollected: 010101

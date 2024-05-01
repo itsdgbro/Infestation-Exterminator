@@ -48,6 +48,7 @@ public class FileDataHandler
         string fullPath = Path.Combine(dataDirPath, dataFileName);
         try
         {
+
             // create the directory the file will be written to if it doesn't already exist
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 

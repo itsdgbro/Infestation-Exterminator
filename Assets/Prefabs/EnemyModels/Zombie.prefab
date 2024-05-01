@@ -196,7 +196,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zombieData: {fileID: 11400000, guid: fcb44b3a585334949a4dc569150dd5d8, type: 2}
   eyes: {fileID: 3074772358785879043}
-  referenceForEnemyAttack: {fileID: 961860632116672511}
 --- !u!195 &1930289505636851948
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -207,15 +206,15 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 3
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 4
-  m_StoppingDistance: 1.25
+  m_AngularSpeed: 200
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
-  m_Height: 1.73
+  m_Height: 1.75
   m_BaseOffset: -0.073
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -476,6 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zombieData: {fileID: 11400000, guid: fcb44b3a585334949a4dc569150dd5d8, type: 2}
   stat: {fileID: 1731757739136927708, guid: fc4eec4c96418e143a1b71d178cfb23f, type: 3}
+  canAttack: 0
 --- !u!135 &7843499190486638741
 SphereCollider:
   m_ObjectHideFlags: 0

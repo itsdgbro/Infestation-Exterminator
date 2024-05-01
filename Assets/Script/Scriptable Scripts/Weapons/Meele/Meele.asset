@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Meele
   m_EditorClassIdentifier: 
   name: CrowBar
-  damage: 8
+  damage: 55
   maxDistance: 1
   fireRate: 0.5

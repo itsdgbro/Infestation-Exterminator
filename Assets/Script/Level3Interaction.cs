@@ -1,17 +1,24 @@
 using UnityEngine;
 
-public class Level3Interaction : MonoBehaviour
+public class Level3Interaction : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] private string id;
 
     private PlayerControls playerControls;
     private bool canCollect = false;
-    [SerializeField] private Level3Collections level3Collections;
+    // [SerializeField] private Level3Collections level3Collections;
+
+    // press E to collect
     [SerializeField] private GameObject collectUI;
+
+    // flag to check if collected
+    private bool isCollected = false;
 
     // referenc to parent script
     private ItemCollectedTracker itemCollectedTracker;
     private void Awake()
     {
+        id = gameObject.name + gameObject.transform.GetSiblingIndex();
         playerControls = new PlayerControls();
         collectUI.SetActive(false);
         itemCollectedTracker = GetComponentInParent<ItemCollectedTracker>();
@@ -46,12 +53,12 @@ public class Level3Interaction : MonoBehaviour
     {
         if (canCollect && playerControls.Interactive.Interact.triggered)
         {
-            Debug.Log(gameObject.name + " Collected");
             gameObject.SetActive(false);
             collectUI.SetActive(false);
-            level3Collections.isCollected[transform.GetSiblingIndex()] = true;
-            itemCollectedTracker.ItemCollectedCounter();
-
+            // level3Collections.isCollected[transform.GetSiblingIndex()] = true;
+            isCollected = true;
+            itemCollectedTracker.SetItemCollectCount(this.gameObject);
+            Destroy(this.gameObject, 15.0f);
         }
     }
 
@@ -63,5 +70,33 @@ public class Level3Interaction : MonoBehaviour
     private void OnDisable()
     {
         playerControls.Disable();
+    }
+
+    public void LoadData(GameData data)
+    {
+        if (data.itemCollected.isItemCollected.ContainsKey(id))
+        {
+            this.isCollected = data.itemCollected.isItemCollected[id];
+        }
+        else
+        {
+            this.isCollected = true && DataPersistenceManager.instance.GetIsLoad();
+        }
+        if (isCollected)
+        {
+            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+
+        if (data.itemCollected.isItemCollected.ContainsKey(id))
+        {
+            data.itemCollected.isItemCollected.Remove(id);
+        }
+
+        data.itemCollected.isItemCollected.Add(id, isCollected);
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   attackDamage: 27
   maxRange: 1.15
   attackCooldown: 1.15
-  viewRadius: 21
+  viewRadius: 17
   targetMask:
     serializedVersion: 2
     m_Bits: 256

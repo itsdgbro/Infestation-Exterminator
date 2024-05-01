@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: M4A1
   damage: 35
-  maxDistance: 250
+  maxDistance: 100
   magazineSize: 20
-  currentAmmo: 16
-  ammoLeft: 17
+  currentAmmo: 20
+  ammoLeft: 160
   fireRate: 400
   reloadTime: 2.2
   isAutomatic: 1

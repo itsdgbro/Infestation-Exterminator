@@ -15,4 +15,4 @@ MonoBehaviour:
   playerHealth: 100
   stamina: 1
   staminaChangeRate: 2
-  isDead: 1
+  isDead: 0

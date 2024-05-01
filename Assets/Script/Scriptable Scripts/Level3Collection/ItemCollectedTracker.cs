@@ -1,33 +1,50 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class ItemCollectedTracker : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI collectTextUI;
-    private GameObject[] collectableObjects = new GameObject[3];
-    [SerializeField] private Level3Collections level3Collections;
-    private void Awake()
+    private List<GameObject> collectedList = new();
+
+    private int totalItems;
+    private int iItemCollectCount;
+
+    public int GetItemCollectCount() => iItemCollectCount;
+
+    public void SetItemCollectCount(GameObject gameObject)
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            collectableObjects[i] = transform.GetChild(i).gameObject;
-            collectableObjects[i].SetActive(!level3Collections.isCollected[i]);
-            ItemCollectedCounter();
-        }
+        collectedList.Remove(gameObject);
+        ItemCollectedUI();
     }
 
-    public void ItemCollectedCounter()
+    private void Start()
     {
-        int collected = 0;
-        foreach (var item in level3Collections.isCollected)
+        totalItems = transform.childCount;
+        AppendCollectedList();
+        ItemCollectedUI();
+    }
+
+    private void AppendCollectedList()
+    {
+        collectedList.Clear();
+        foreach (Transform child in transform)
         {
-            if (item == true)
+            if (child.gameObject.activeSelf)
             {
-                collected++;
+                collectedList.Add(child.gameObject);
             }
         }
-        collectTextUI.text = collected.ToString() + "/3";
+        if (collectedList.Count == 0)
+        {
+            iItemCollectCount = 3;
+        }
     }
 
+    private void ItemCollectedUI()
+    {
+        iItemCollectCount = totalItems - collectedList.Count;
+        collectTextUI.text = iItemCollectCount.ToString() + "/" + totalItems.ToString();
+    }
 
 }

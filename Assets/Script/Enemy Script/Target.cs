@@ -4,11 +4,11 @@ using UnityEngine.AI;
 public class Target : MonoBehaviour, ISTarget, IDataPersistence
 {
     [SerializeField] private string id;
-    [ContextMenu("Generate guid for id")]
-    private void GenerateGUID()
-    {
-        id = System.Guid.NewGuid().ToString() + gameObject.transform.GetSiblingIndex();
-    }
+    // [ContextMenu("Generate guid for id")]
+    // private void GenerateGUID()
+    // {
+    //     id = System.Guid.NewGuid().ToString() + gameObject.transform.GetSiblingIndex();
+    // }
 
     #region Target Health
     [SerializeField] private float health = 50f;
@@ -28,6 +28,9 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
 
     private void Awake()
     {
+        // set id
+        id = gameObject.name + gameObject.transform.GetSiblingIndex();
+
         animator = GetComponentInChildren<Animator>();
         if (animator == null)
         {
@@ -72,7 +75,6 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
         //if(isDead)
         //{
         //    this.gameObject.SetActive(false);
-
         if (data.enemy.isZombieDead.ContainsKey(id))
         {
             isDead = data.enemy.isZombieDead[id];

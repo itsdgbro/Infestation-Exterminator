@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: LevelUnlockData
   m_EditorClassIdentifier: 
   isLevel2Unlocked: 1
-  isLevel3Unlocked: 0
+  isLevel3Unlocked: 1

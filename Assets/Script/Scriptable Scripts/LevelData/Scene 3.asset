@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Scene 3
   m_EditorClassIdentifier: 
   sceneName: Level 3
-  playerData:
-    health: 3
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
-    direction: {x: 0, y: 0, z: 0}
-    healingPillsLeft: 0
+  health: 100
+  position: {x: 14.653592, y: -0.09184563, z: 19.624155}
+  rotation: {x: 0, y: 0.9998597, z: 0, w: -0.016750311}
+  direction: {x: -0.004451938, y: 0, z: -0.9999902}
+  healingPillsLeft: 12
+  aLeftAmmo: 200
+  aCurrentAmmo: 20
+  pLeftAmmo: 50
+  pCurrentAmmo: 8
