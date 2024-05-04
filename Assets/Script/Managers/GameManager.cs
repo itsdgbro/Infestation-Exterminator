@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    // private PlayerControls inputActions;
+    private PlayerInputHandler inputActions;
 
     private bool isGamePaused = false;
 
@@ -33,22 +35,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> pauseUIList;
     [SerializeField] private GameObject showPauseList;
 
-    #region Player Controls
-    private PlayerControls inputActions;
-    #endregion
-
 
     private void Awake()
     {
         SetCursorState();
         pauseMenu.SetActive(false);
         gameOverUI.SetActive(false);
-        inputActions = new PlayerControls();
+
+
     }
 
 
     private void Start()
     {
+        inputActions = PlayerInputHandler.Instance;
         ResumeGame();
     }
 
@@ -168,16 +168,4 @@ public class GameManager : MonoBehaviour
         DataPersistenceManager.instance.NewGame();
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
-
-    #region Enable/Disable
-    private void OnEnable()
-    {
-        inputActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
-    #endregion
 }

@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class HideTipsUI : MonoBehaviour
 {
+    // private PlayerControls playerControls;
+    private PlayerInputHandler playerControls;
+
     [SerializeField] private GameObject tipsUI;
     [SerializeField] private HideTipsSO hideTipsSO;
-
-    private PlayerControls playerControls;
 
     // show initial when collided
     // hide tips when true
 
     private void Awake()
     {
-        playerControls = new PlayerControls();
+        playerControls = PlayerInputHandler.Instance;
         tipsUI.SetActive(!hideTipsSO.hideTips);
     }
 
@@ -23,23 +24,10 @@ public class HideTipsUI : MonoBehaviour
 
     private void ToggleUIShow()
     {
-        if (playerControls.Interactive.ToggleTips.triggered)
+        if (playerControls.ToggleTips)
         {
             hideTipsSO.hideTips = !hideTipsSO.hideTips;
             tipsUI.SetActive(!hideTipsSO.hideTips);
         }
     }
-
-
-    #region player controls
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-    }
-    #endregion
 }

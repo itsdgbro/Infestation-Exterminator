@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class PlayerLook : MonoBehaviour
 {
-    private PlayerControls playerControls;
+    // private PlayerControls playerControls;
+    private PlayerInputHandler playerControls;
+
     [SerializeField] private Camera playerCamera;
 
     #region Player_look
@@ -16,13 +18,19 @@ public class PlayerLook : MonoBehaviour
     private void Awake()
     {
         player = transform.parent;
-        playerControls = new PlayerControls();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
+    }
+
+    private void Start()
+    {
+        playerControls = PlayerInputHandler.Instance;
     }
 
     private void Update()
     {
+        MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
         if (Time.timeScale > 0)
         {
             Look();
@@ -33,7 +41,7 @@ public class PlayerLook : MonoBehaviour
     // mouse look
     private void Look()
     {
-        mousePosition = playerControls.Movement.Look.ReadValue<Vector2>();
+        mousePosition = playerControls.CharacterLook;
 
         float mouseX = mousePosition.x * MouseSensitivity * Time.deltaTime;
         float mouseY = mousePosition.y * MouseSensitivity * Time.deltaTime;
@@ -45,14 +53,4 @@ public class PlayerLook : MonoBehaviour
         player.Rotate(Vector3.up * mouseX);
     }
 
-
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-    }
 }

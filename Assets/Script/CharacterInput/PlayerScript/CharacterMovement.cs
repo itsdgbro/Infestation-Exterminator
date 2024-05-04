@@ -3,7 +3,9 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
 
-    private PlayerControls playerControls;
+    // private PlayerControls playerControls;
+    private PlayerInputHandler playerControls;
+
     private bool isGrounded = false;
     private bool isSprinting = false;
     private bool isCrouching = false;
@@ -51,7 +53,6 @@ public class CharacterMovement : MonoBehaviour
 
     void Awake()
     {
-        playerControls = new PlayerControls();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         playerStat = GetComponent<PlayerStat>();
@@ -60,11 +61,14 @@ public class CharacterMovement : MonoBehaviour
 
     private void Start()
     {
+        playerControls = PlayerInputHandler.Instance;
         Gravity();
     }
 
     void Update()
     {
+        Debug.Log(playerControls.AimTriggered);
+
         Gravity();
         if (!isCrouching)
         {
@@ -105,13 +109,13 @@ public class CharacterMovement : MonoBehaviour
 
     private void Move()
     {
-        characterMove = playerControls.Movement.Move.ReadValue<Vector2>();
+        characterMove = playerControls.CharacterMove;
         Vector3 movement = (characterMove.y * transform.forward) + (characterMove.x * transform.right);
 
         float maxSpeed = moveSpeed; // Default to regular move speed
 
         // bool check if spring key is pressed
-        isSprinting = playerControls.Movement.Sprint.ReadValue<float>() > 0.1f;
+        isSprinting = playerControls.SprintValue > 0.1f;
         // Check if sprint button is being held down and the player is moving forward
         if (isSprinting && characterMove.y > 0.1f && isCrouching == false && !IsAiming())
         {
@@ -141,7 +145,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (playerControls.Movement.Jump.triggered && isGrounded)
+        if (playerControls.JumpTriggered && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             playerStat.DecreaseStamina(10f);
@@ -150,7 +154,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void Crouch()
     {
-        isCrouching = playerControls.Movement.Crouch.ReadValue<float>() > 0.1f;
+        isCrouching = playerControls.CrouchTriggered > 0.1f;
 
         // decrease the height of the character via animation
         animator.SetBool("isCrouching", isCrouching);
@@ -158,19 +162,7 @@ public class CharacterMovement : MonoBehaviour
 
     public bool IsAiming()
     {
-        return playerControls.Movement.Aim.ReadValue<float>() > 0.5f;
+        return playerControls.AimTriggered > 0.5f;
     }
 
-
-    #region Enable/Disable
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-    }
-    #endregion
 }

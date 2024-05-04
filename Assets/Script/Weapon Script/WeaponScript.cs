@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class WeaponScript : MonoBehaviour, IDataPersistence
 {
-    private PlayerControls playerControls;
+    // private PlayerControls playerControls;
+    private PlayerInputHandler playerControls;
+
     private Animator animator;
 
     [Header("References")]
@@ -18,7 +20,8 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     [SerializeField] private new ParticleSystem particleSystem;
     [SerializeField] private GameObject bulletHolePrefab;
 
-    AudioSource audioSource;
+    public AudioSource audioSource1;
+    public AudioSource audioSource2;
 
     [Header("Aduio Clips")]
     [SerializeField] private AudioClip shootSound;
@@ -36,13 +39,14 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     private void Awake()
     {
-
-        playerControls = new PlayerControls();
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+
     }
 
-
+    private void Start()
+    {
+        playerControls = PlayerInputHandler.Instance;
+    }
     // show ray from muzzle
     void ShowRayCast()
     {
@@ -55,32 +59,9 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     }
 
-    /*    
-       private void OnDrawGizmos()
-        {
-            RaycastHit hit;
-            Vector3 rayOrigin = fpsCam.transform.position;
-            Vector3 rayDirection = fpsCam.transform.forward;
-            if (Physics.Raycast(rayOrigin, rayDirection, out hit, weaponData.maxDistance))
-            {
-                // Draw the ray using Gizmos
-                Gizmos.color = Color.green;
-                Gizmos.DrawLine(rayOrigin, hit.point);
-
-                Debug.Log("Hit Object Name: " + hit.collider.gameObject.name);
-
-            }
-            else
-            {
-                // Draw the ray if it doesn't hit anything
-                Gizmos.color = Color.green;
-                Gizmos.DrawLine(rayOrigin, rayOrigin + rayDirection * 100f); // Adjust the length as needed
-            }
-        }*/
-
     private void ReloadWeapon()
     {
-        if (playerControls.Movement.Reload.triggered && weaponData.ammoLeft > 0)
+        if (playerControls.Reload && weaponData.ammoLeft > 0)
             if (!weaponData.isReloading && this.gameObject.activeSelf && weaponData.currentAmmo != weaponData.magazineSize)
                 StartCoroutine(ReloadTime());
     }
@@ -91,7 +72,7 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         weaponData.isReloading = true;
         animator.Play("reload");
         animator.SetBool("isEmpty", false);
-        audioSource.PlayOneShot(reloadSound);
+        audioSource1.PlayOneShot(reloadSound);
 
         yield return new WaitForSeconds(weaponData.reloadTime);
         // ammo system
@@ -114,24 +95,26 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     private void GunIsEmpty()
     {
         animator.SetBool("isEmpty", true);
-        audioSource.PlayOneShot(emptyClipSound);
+
+        audioSource2.Play();
     }
 
     private bool CanShoot() => !weaponData.isReloading && weaponData.currentAmmo > 0 && timeSinceLastShot > 1f / (weaponData.fireRate / 60f) && !gameManager.GetIsGamePaused();
 
+
     private void AimShoot()
     {
-        if (CanShoot() && weaponData.isAutomatic && playerControls.Movement.Fire.ReadValue<float>() > 0.1f)
+        if (CanShoot() && weaponData.isAutomatic && playerControls.FireAutoTriggered > 0.1f)
         {
             CommonFireLogic("ironshot_fire");
             PlayParticleEffect();
         }
-        else if (CanShoot() && !weaponData.isAutomatic && playerControls.Movement.Fire.triggered)
+        else if (CanShoot() && !weaponData.isAutomatic && playerControls.FireTriggered)
         {
             CommonFireLogic("ironshot_fire");
             PlayParticleEffect();
         }
-        else if (weaponData.currentAmmo == 0 && playerControls.Movement.Fire.triggered)
+        else if (weaponData.currentAmmo == 0 && playerControls.FireTriggered)
         {
             GunIsEmpty();
         }
@@ -140,18 +123,19 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     private void OnAdsFire()
     {
-        if (CanShoot() && weaponData.isAutomatic && playerControls.Movement.Fire.ReadValue<float>() > 0.1f)
+        if (CanShoot() && weaponData.isAutomatic && playerControls.FireAutoTriggered > 0.1f)
         {
             CommonFireLogic("fire");
             PlayParticleEffect();
         }
-        else if (CanShoot() && !weaponData.isAutomatic && playerControls.Movement.Fire.triggered)
+        else if (CanShoot() && !weaponData.isAutomatic && playerControls.FireTriggered)
         {
             CommonFireLogic("fire");
             PlayParticleEffect();
         }
-        else if (weaponData.currentAmmo == 0 && playerControls.Movement.Fire.triggered)
+        else if (weaponData.currentAmmo == 0 && playerControls.FireTriggered)
         {
+
             GunIsEmpty();
         }
     }
@@ -160,7 +144,7 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     {
         animator.Play(animation);
         animator.SetBool("isEmpty", false);
-        audioSource.PlayOneShot(shootSound);
+        audioSource1.PlayOneShot(shootSound);
 
         // shooting from camera to crosshair for accuracy
         Vector3 rayOrigin = fpsCam.transform.position;
@@ -203,18 +187,17 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     public void PlayDrawSound()
     {
-        audioSource.PlayOneShot(drawSound);
+        audioSource1.PlayOneShot(drawSound);
     }
 
     private void Update()
     {
-
         timeSinceLastShot += Time.deltaTime;
         //DrawRayFromMuzzle();
         ShowRayCast();
 
 
-        isAiming = playerControls.Movement.Aim.ReadValue<float>() > 0.1f;
+        isAiming = playerControls.AimTriggered > 0.1f;
         animator.SetBool("isAiming", isAiming);
         if (Time.timeScale > 0)
         {
@@ -262,18 +245,4 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
             data.weapon.pistol.currentAmmo = weaponData.currentAmmo;
         }
     }
-
-    #region Enable/Disable
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-        weaponData.isReloading = false;
-    }
-
-    #endregion
 }

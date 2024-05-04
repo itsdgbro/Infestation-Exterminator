@@ -3,30 +3,22 @@ using UnityEngine;
 public class Torch : MonoBehaviour
 {
 
-    private PlayerControls playerControls;
+    // private PlayerControls playerControls;
+    private PlayerInputHandler playerControls;
+
     private Light torch;
 
     private void Awake()
     {
-        playerControls = new PlayerControls();
+        playerControls = PlayerInputHandler.Instance;
         torch = GetComponent<Light>();
     }
 
     private void Update()
     {
-        if (playerControls.Interactive.FlashLight.triggered)
+        if (playerControls.FlashLight)
         {
             torch.enabled = !torch.enabled;
         }
-    }
-
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
     }
 }

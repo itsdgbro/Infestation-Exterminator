@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class Level3Interaction : MonoBehaviour, IDataPersistence
 {
+    // private PlayerControls playerControls;
+    private PlayerInputHandler playerControls;
+
     [SerializeField] private string id;
 
-    private PlayerControls playerControls;
     private bool canCollect = false;
     // [SerializeField] private Level3Collections level3Collections;
 
@@ -19,7 +21,7 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
     private void Awake()
     {
         id = gameObject.name + gameObject.transform.GetSiblingIndex();
-        playerControls = new PlayerControls();
+        playerControls = PlayerInputHandler.Instance;
         collectUI.SetActive(false);
         itemCollectedTracker = GetComponentInParent<ItemCollectedTracker>();
         if (itemCollectedTracker == null)
@@ -51,7 +53,7 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
-        if (canCollect && playerControls.Interactive.Interact.triggered)
+        if (canCollect && playerControls.Interact)
         {
             gameObject.SetActive(false);
             collectUI.SetActive(false);
@@ -60,16 +62,6 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
             itemCollectedTracker.SetItemCollectCount(this.gameObject);
             Destroy(this.gameObject, 15.0f);
         }
-    }
-
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
     }
 
     public void LoadData(GameData data)

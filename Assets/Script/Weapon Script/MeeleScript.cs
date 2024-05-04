@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class MeeleScript : MonoBehaviour
 {
-    private PlayerControls playerControls;
+    // private PlayerControls playerControls;
+    private PlayerInputHandler playerControls;
+
     private Animator animator;
 
     [Header("References")]
@@ -24,7 +26,7 @@ public class MeeleScript : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     private void Awake()
     {
-        playerControls = new PlayerControls();
+        playerControls = PlayerInputHandler.Instance;
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -38,7 +40,7 @@ public class MeeleScript : MonoBehaviour
 
     private void HandleAttackInput()
     {
-        if (playerControls.Movement.Fire.ReadValue<float>() > 0.1f && canAttack && !gameManager.GetIsGamePaused())
+        if (playerControls.FireAutoTriggered > 0.1f && canAttack && !gameManager.GetIsGamePaused())
         {
             PerformAttack();
         }
@@ -104,18 +106,5 @@ public class MeeleScript : MonoBehaviour
             }
         }
     }
-
-
-    #region Enable/Disable
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-    }
-    #endregion
 
 }

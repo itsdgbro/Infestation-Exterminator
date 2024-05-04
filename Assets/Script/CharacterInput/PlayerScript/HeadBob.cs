@@ -4,10 +4,12 @@ using UnityEngine.Events;
 
 public class HeadBob : MonoBehaviour
 {
-    PlayerControls playerControls;
-    CharacterMovement characterMovement;
+    // PlayerControls playerControls;
+    private PlayerInputHandler playerControls;
 
-    
+    private CharacterMovement characterMovement;
+
+
     [Range(10f, 100f)]
     public float Smooth = 10.0f;
 
@@ -41,8 +43,7 @@ public class HeadBob : MonoBehaviour
 
     private void Awake()
     {
-        playerControls = new PlayerControls();
-        if(!TryGetComponent<CharacterMovement>(out characterMovement))
+        if (!TryGetComponent<CharacterMovement>(out characterMovement))
         {
             characterMovement = transform.parent.parent.GetComponent<CharacterMovement>();
         }
@@ -51,6 +52,7 @@ public class HeadBob : MonoBehaviour
     private void Start()
     {
         StartPos = transform.localPosition;
+        playerControls = PlayerInputHandler.Instance;
     }
 
     private void Update()
@@ -70,7 +72,7 @@ public class HeadBob : MonoBehaviour
 
     private void CheckHeadBobTrigger()
     {
-        float inputValue = playerControls.Movement.Move.ReadValue<Vector2>().magnitude;
+        float inputValue = playerControls.CharacterMove.magnitude;
         if (inputValue > 0 && characterMovement.GetIsGrounded() && !characterMovement.IsAiming())
         {
             StartHeadBob();
@@ -116,16 +118,4 @@ public class HeadBob : MonoBehaviour
         if (transform.localPosition == StartPos) return;
         transform.localPosition = Vector3.Lerp(transform.localPosition, StartPos, 1 * Time.deltaTime);
     }
-
-    #region Enable/Disable
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-    }
-    #endregion
 }

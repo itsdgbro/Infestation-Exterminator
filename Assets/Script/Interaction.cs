@@ -4,6 +4,10 @@ using UnityEngine.SceneManagement;
 
 public class Interaction : MonoBehaviour
 {
+    // private PlayerControls playerControls;
+    private PlayerInputHandler playerControls;
+
+
     [Header("UI References")]
     [SerializeField] private GameObject pressEUI;
     [SerializeField] private ZombieCountManager zombieCountManager;
@@ -14,13 +18,12 @@ public class Interaction : MonoBehaviour
     [SerializeField] private LevelUnlockSO levelUnlockSO;
     private String currentLevelName;
     private readonly String[] levelList = { "Level 1", "Level 2", "Level 3" };
-    PlayerControls playerControls;
 
     [Header("Level 3 collectables")]
     [SerializeField] private Level3Collections level3Collections;
     private void Awake()
     {
-        playerControls = new PlayerControls();
+        playerControls = PlayerInputHandler.Instance;
         pressEUI.SetActive(false);
         loadingScreenUI.SetActive(false);
         killAllToExtract.SetActive(false);
@@ -85,7 +88,7 @@ public class Interaction : MonoBehaviour
 
     private void Update()
     {
-        if (pressEUI.activeSelf && playerControls.Interactive.Interact.triggered)
+        if (pressEUI.activeSelf && playerControls.Interact)
         {
             if (currentLevelName == levelList[0])
             {
@@ -101,15 +104,5 @@ public class Interaction : MonoBehaviour
             Cursor.visible = true;
             playerControls.Disable();
         }
-    }
-
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
     }
 }

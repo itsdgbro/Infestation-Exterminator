@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class HealingScript : MonoBehaviour, IDataPersistence
 {
+    // private PlayerControls playerControls;
+    private PlayerInputHandler playerControls;
+
+
     private Animator animator;
     [Header("Reference to Healing Data")]
     [SerializeField] private HealData healingData;
@@ -10,7 +14,6 @@ public class HealingScript : MonoBehaviour, IDataPersistence
     [Header("Parent references")]
     private PlayerStat playerStat;
     [SerializeField] private GameObject fpsWeapons;
-    private PlayerControls playerControls;
 
     [Header("Healing UI")]
     [SerializeField] private TextMeshProUGUI pillCountUI;
@@ -21,16 +24,21 @@ public class HealingScript : MonoBehaviour, IDataPersistence
 
     private void Awake()
     {
-        playerControls = new PlayerControls();
-        if (playerControls == null)
-        {
-            Debug.LogWarning("PLayer controls");
-        }
+
         animator = GetComponent<Animator>();
         playerStat = GetComponentInParent<PlayerStat>();
         if (playerStat == null)
             Debug.LogWarning("PlayerStat not found");
         audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        playerControls = PlayerInputHandler.Instance;
+        if (playerControls == null)
+        {
+            Debug.LogWarning("PLayer controls");
+        }
     }
 
     // Trigger from animation event
@@ -42,7 +50,7 @@ public class HealingScript : MonoBehaviour, IDataPersistence
     private void Update()
     {
         PillCountUI();
-        if (playerControls.Movement.Heal.triggered && healingData.availablePills > 0)
+        if (playerControls.HealTriggered && healingData.availablePills > 0)
         {
             if (playerStat.GetHealth() < 100)
             {
@@ -73,17 +81,4 @@ public class HealingScript : MonoBehaviour, IDataPersistence
     {
         data.player.healingPillsLeft = healingData.availablePills;
     }
-
-    #region Enable/Disable
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-    }
-
-    #endregion
 }
