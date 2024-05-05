@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,18 +27,20 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private string flashLight = "FlashLight";
 
 
-    private InputAction moveAction;
-    private InputAction lookAction;
-    private InputAction sprintAction;
-    private InputAction jumpAction;
-    private InputAction crouchAction;
-    private InputAction fireAction;
-    private InputAction reloadAction;
-    private InputAction aimAction;
-    private InputAction healAction;
-    private InputAction toggleTipsAction;
-    private InputAction interactAction;
-    private InputAction flashLightAction;
+    public InputAction MoveAction { get; private set; }
+    public InputAction LookAction { get; private set; }
+    public InputAction SprintAction { get; private set; }
+    public InputAction JumpAction { get; private set; }
+    public InputAction CrouchAction { get; private set; }
+    public InputAction FireAction { get; private set; }
+    public InputAction ReloadAction { get; private set; }
+    public InputAction AimAction { get; private set; }
+    public InputAction HealAction { get; private set; }
+    public InputAction ToggleTipsAction { get; private set; }
+    public InputAction InteractAction { get; private set; }
+    public InputAction FlashLightAction { get; private set; }
+
+    // [SerializeField] private InputActionReference toggleTipsAction;
 
     // "Getter and Setter"
     public Vector2 CharacterMove { get; private set; }
@@ -50,7 +53,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool Reload { get; private set; }
     public float AimTriggered { get; private set; }
     public bool HealTriggered { get; private set; }
-    public bool ToggleTips { get; private set; }
+    public bool ToggleTipsValue { get; private set; }
     public bool Interact { get; private set; }
     public bool FlashLight { get; private set; }
 
@@ -73,76 +76,76 @@ public class PlayerInputHandler : MonoBehaviour
             Destroy(gameObject);
         }
 
-        moveAction = playerControls.FindActionMap(actionMovement).FindAction(move);
-        lookAction = playerControls.FindActionMap(actionMovement).FindAction(look);
-        sprintAction = playerControls.FindActionMap(actionMovement).FindAction(sprint);
-        jumpAction = playerControls.FindActionMap(actionMovement).FindAction(jump);
-        crouchAction = playerControls.FindActionMap(actionMovement).FindAction(crouch);
-        fireAction = playerControls.FindActionMap(actionMovement).FindAction(fire);
-        reloadAction = playerControls.FindActionMap(actionMovement).FindAction(reload);
-        aimAction = playerControls.FindActionMap(actionMovement).FindAction(aim);
-        healAction = playerControls.FindActionMap(actionMovement).FindAction(heal);
-        toggleTipsAction = playerControls.FindActionMap(actionInteractive).FindAction(toggleTips);
-        interactAction = playerControls.FindActionMap(actionInteractive).FindAction(interact);
-        flashLightAction = playerControls.FindActionMap(actionInteractive).FindAction(flashLight);
+        MoveAction = playerControls.FindActionMap(actionMovement).FindAction(move);
+        LookAction = playerControls.FindActionMap(actionMovement).FindAction(look);
+        SprintAction = playerControls.FindActionMap(actionMovement).FindAction(sprint);
+        JumpAction = playerControls.FindActionMap(actionMovement).FindAction(jump);
+        CrouchAction = playerControls.FindActionMap(actionMovement).FindAction(crouch);
+        FireAction = playerControls.FindActionMap(actionMovement).FindAction(fire);
+        ReloadAction = playerControls.FindActionMap(actionMovement).FindAction(reload);
+        AimAction = playerControls.FindActionMap(actionMovement).FindAction(aim);
+        HealAction = playerControls.FindActionMap(actionMovement).FindAction(heal);
+        ToggleTipsAction = playerControls.FindActionMap(actionInteractive).FindAction(toggleTips);
+        InteractAction = playerControls.FindActionMap(actionInteractive).FindAction(interact);
+        FlashLightAction = playerControls.FindActionMap(actionInteractive).FindAction(flashLight);
 
         RegisterInputActions();
     }
 
     private void RegisterInputActions()
     {
-        moveAction.performed += context => CharacterMove = context.ReadValue<Vector2>();
-        moveAction.canceled += context => CharacterMove = Vector2.zero;
+        MoveAction.performed += context => CharacterMove = context.ReadValue<Vector2>();
+        MoveAction.canceled += context => CharacterMove = Vector2.zero;
 
-        lookAction.performed += context => CharacterLook = context.ReadValue<Vector2>();
-        lookAction.canceled += context => CharacterLook = Vector2.zero;
+        LookAction.performed += context => CharacterLook = context.ReadValue<Vector2>();
+        LookAction.canceled += context => CharacterLook = Vector2.zero;
 
-        sprintAction.performed += context => SprintValue = context.ReadValue<float>();
-        sprintAction.canceled += context => SprintValue = 0f;
+        SprintAction.performed += context => SprintValue = context.ReadValue<float>();
+        SprintAction.canceled += context => SprintValue = 0f;
 
-        jumpAction.performed += context => JumpTriggered = true;
-        jumpAction.canceled += context => JumpTriggered = false;
+        JumpAction.performed += context => JumpTriggered = true;
+        JumpAction.canceled += context => JumpTriggered = false;
 
-        crouchAction.performed += context => CrouchTriggered = context.ReadValue<float>();
-        crouchAction.canceled += context => CrouchTriggered = 0f;
+        CrouchAction.performed += context => CrouchTriggered = context.ReadValue<float>();
+        CrouchAction.canceled += context => CrouchTriggered = 0f;
 
-        fireAction.performed += context =>
+        FireAction.performed += context =>
         {
             FireTriggered = true;
             FireAutoTriggered = context.ReadValue<float>();
         };
-        fireAction.canceled += context =>
+        FireAction.canceled += context =>
         {
             FireTriggered = false;
             FireAutoTriggered = 0f;
         };
 
-        reloadAction.performed += context => Reload = true;
-        reloadAction.canceled += context => Reload = false;
+        ReloadAction.performed += context => Reload = true;
+        ReloadAction.canceled += context => Reload = false;
 
-        aimAction.performed += context => AimTriggered = context.ReadValue<float>();
-        aimAction.canceled += context => AimTriggered = 0f;
+        AimAction.performed += context => AimTriggered = context.ReadValue<float>();
+        AimAction.canceled += context => AimTriggered = 0f;
 
-        healAction.performed += context => HealTriggered = true;
-        healAction.canceled += context => HealTriggered = false;
+        HealAction.performed += context => HealTriggered = true;
+        HealAction.canceled += context => HealTriggered = false;
 
-        toggleTipsAction.performed += context => ToggleTips = true;
-        toggleTipsAction.canceled += context => ToggleTips = false;
+        // toggleTipsAction.performed += context => ToggleTips = true;
+        // toggleTipsAction.canceled += context => ToggleTips = false;
 
-        interactAction.performed += context => Interact = true;
-        interactAction.canceled += context => Interact = false;
+        InteractAction.performed += context => Interact = true;
+        InteractAction.canceled += context => Interact = false;
 
-        flashLightAction.performed += context => FlashLight = true;
-        flashLightAction.canceled += context => FlashLight = false;
+        FlashLightAction.performed += context => FlashLight = true;
+        FlashLightAction.canceled += context => FlashLight = false;
 
     }
+
 
     private void OnEnable()
     {
         playerControls.Enable();
 
     }
-
 
     private void OnDisable()
     {
@@ -158,6 +161,8 @@ public class PlayerInputHandler : MonoBehaviour
     {
         OnEnable();
     }
+
+
 }
 
 

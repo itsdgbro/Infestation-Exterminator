@@ -67,7 +67,6 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(playerControls.AimTriggered);
 
         Gravity();
         if (!isCrouching)
