@@ -27,18 +27,18 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private string flashLight = "FlashLight";
 
 
-    public InputAction MoveAction { get; private set; }
-    public InputAction LookAction { get; private set; }
-    public InputAction SprintAction { get; private set; }
-    public InputAction JumpAction { get; private set; }
-    public InputAction CrouchAction { get; private set; }
-    public InputAction FireAction { get; private set; }
-    public InputAction ReloadAction { get; private set; }
-    public InputAction AimAction { get; private set; }
-    public InputAction HealAction { get; private set; }
-    public InputAction ToggleTipsAction { get; private set; }
-    public InputAction InteractAction { get; private set; }
-    public InputAction FlashLightAction { get; private set; }
+    public InputAction MoveAction { get; set; }
+    public InputAction LookAction { get; set; }
+    public InputAction SprintAction { get; set; }
+    public InputAction JumpAction { get; set; }
+    public InputAction CrouchAction { get; set; }
+    public InputAction FireAction { get; set; }
+    public InputAction ReloadAction { get; set; }
+    public InputAction AimAction { get; set; }
+    public InputAction HealAction { get; set; }
+    public InputAction ToggleTipsAction { get; set; }
+    public InputAction InteractAction { get; set; }
+    public InputAction FlashLightAction { get; set; }
 
     // [SerializeField] private InputActionReference toggleTipsAction;
 
@@ -61,11 +61,6 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Awake()
     {
-        var rebinds = PlayerPrefs.GetString("rebinds");
-        if (!string.IsNullOrEmpty(rebinds))
-            playerControls.LoadBindingOverridesFromJson(rebinds);
-
-
         if (Instance == null)
         {
             Instance = this;
@@ -75,6 +70,10 @@ public class PlayerInputHandler : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        var rebinds = PlayerPrefs.GetString("rebinds");
+        if (!string.IsNullOrEmpty(rebinds))
+            playerControls.LoadBindingOverridesFromJson(rebinds);
 
         MoveAction = playerControls.FindActionMap(actionMovement).FindAction(move);
         LookAction = playerControls.FindActionMap(actionMovement).FindAction(look);
@@ -97,17 +96,8 @@ public class PlayerInputHandler : MonoBehaviour
         MoveAction.performed += context => CharacterMove = context.ReadValue<Vector2>();
         MoveAction.canceled += context => CharacterMove = Vector2.zero;
 
-        LookAction.performed += context => CharacterLook = context.ReadValue<Vector2>();
-        LookAction.canceled += context => CharacterLook = Vector2.zero;
-
         SprintAction.performed += context => SprintValue = context.ReadValue<float>();
         SprintAction.canceled += context => SprintValue = 0f;
-
-        JumpAction.performed += context => JumpTriggered = true;
-        JumpAction.canceled += context => JumpTriggered = false;
-
-        CrouchAction.performed += context => CrouchTriggered = context.ReadValue<float>();
-        CrouchAction.canceled += context => CrouchTriggered = 0f;
 
         FireAction.performed += context =>
         {
@@ -123,23 +113,14 @@ public class PlayerInputHandler : MonoBehaviour
         ReloadAction.performed += context => Reload = true;
         ReloadAction.canceled += context => Reload = false;
 
-        AimAction.performed += context => AimTriggered = context.ReadValue<float>();
-        AimAction.canceled += context => AimTriggered = 0f;
-
         HealAction.performed += context => HealTriggered = true;
         HealAction.canceled += context => HealTriggered = false;
-
-        // toggleTipsAction.performed += context => ToggleTips = true;
-        // toggleTipsAction.canceled += context => ToggleTips = false;
 
         InteractAction.performed += context => Interact = true;
         InteractAction.canceled += context => Interact = false;
 
-        FlashLightAction.performed += context => FlashLight = true;
-        FlashLightAction.canceled += context => FlashLight = false;
 
     }
-
 
     private void OnEnable()
     {

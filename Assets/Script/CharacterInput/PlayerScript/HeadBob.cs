@@ -47,6 +47,7 @@ public class HeadBob : MonoBehaviour
         {
             characterMovement = transform.parent.parent.GetComponent<CharacterMovement>();
         }
+
     }
 
     private void Start()
@@ -58,7 +59,7 @@ public class HeadBob : MonoBehaviour
     private void Update()
     {
         CheckHeadBobTrigger();
-        if (characterMovement.IsAiming())
+        if (characterMovement.IsAiming)
         {
             transform.localPosition = StartPos;
         }
@@ -73,7 +74,7 @@ public class HeadBob : MonoBehaviour
     private void CheckHeadBobTrigger()
     {
         float inputValue = playerControls.CharacterMove.magnitude;
-        if (inputValue > 0 && characterMovement.GetIsGrounded() && !characterMovement.IsAiming())
+        if (inputValue > 0 && characterMovement.GetIsGrounded() && !characterMovement.IsAiming)
         {
             StartHeadBob();
         }

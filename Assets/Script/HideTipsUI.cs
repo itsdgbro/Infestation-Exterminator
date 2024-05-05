@@ -8,16 +8,14 @@ public class HideTipsUI : MonoBehaviour
     [SerializeField] private GameObject tipsUI;
     [SerializeField] private HideTipsSO hideTipsSO;
 
-    // // Input Action
-    private InputAction inputAction;
-
     private void Awake()
     {
         tipsUI.SetActive(!hideTipsSO.hideTips);
-        inputAction = PlayerInputHandler.Instance.ToggleTipsAction;
+    }
 
-        // Action Subscribe
-        inputAction.started += ToggleUIShow;
+    private void Start()
+    {
+        PlayerInputHandler.Instance.ToggleTipsAction.started += ToggleUIShow;
     }
 
     private void ToggleUIShow(InputAction.CallbackContext ctx)
@@ -31,9 +29,7 @@ public class HideTipsUI : MonoBehaviour
 
     private void OnDisable()
     {
-        // Action Unsubscribe
-        inputAction.started -= ToggleUIShow;
+        PlayerInputHandler.Instance.ToggleTipsAction.started += ToggleUIShow;
     }
-
 
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerLook : MonoBehaviour
 {
@@ -26,31 +27,39 @@ public class PlayerLook : MonoBehaviour
     private void Start()
     {
         playerControls = PlayerInputHandler.Instance;
+
+        // look action
+        PlayerInputHandler.Instance.LookAction.performed += Look;
     }
 
     private void Update()
     {
         MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
-        if (Time.timeScale > 0)
-        {
-            Look();
 
-        }
     }
 
     // mouse look
-    private void Look()
+    private void Look(InputAction.CallbackContext context)
     {
-        mousePosition = playerControls.CharacterLook;
+        if (context.performed)
+        {
+            mousePosition = context.ReadValue<Vector2>();
 
-        float mouseX = mousePosition.x * MouseSensitivity * Time.deltaTime;
-        float mouseY = mousePosition.y * MouseSensitivity * Time.deltaTime;
+            float mouseX = mousePosition.x * MouseSensitivity * Time.deltaTime;
+            float mouseY = mousePosition.y * MouseSensitivity * Time.deltaTime;
 
-        xRoation -= mouseY;
-        xRoation = Mathf.Clamp(xRoation, -90f, 90f);
+            xRoation -= mouseY;
+            xRoation = Mathf.Clamp(xRoation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(xRoation, 0, 0);
-        player.Rotate(Vector3.up * mouseX);
+            transform.localRotation = Quaternion.Euler(xRoation, 0, 0);
+            player.Rotate(Vector3.up * mouseX);
+        }
+    }
+
+    private void OnDisable()
+    {
+        // look action
+        PlayerInputHandler.Instance.LookAction.performed -= Look;
     }
 
 }

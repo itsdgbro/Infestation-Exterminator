@@ -1,10 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WeaponScript : MonoBehaviour, IDataPersistence
 {
     // private PlayerControls playerControls;
     private PlayerInputHandler playerControls;
+    // Input Action
+    private InputAction inputAction;
 
     private Animator animator;
 
@@ -41,6 +44,8 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     {
         animator = GetComponent<Animator>();
 
+        // Subscribe action
+        // inputAction.
     }
 
     private void Start()
