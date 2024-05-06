@@ -3,8 +3,6 @@ using UnityEngine.Events;
 
 public class Footsteps : MonoBehaviour
 {
-    // PlayerControls playerControls;
-    private PlayerInputHandler playerControls;
 
     [Range(0, 20f)]
     public float frequency = 10.0f;
@@ -12,14 +10,9 @@ public class Footsteps : MonoBehaviour
     float Sin;
     bool isTriggered = false;
 
-    private void Awake()
-    {
-        playerControls = PlayerInputHandler.Instance;
-    }
-
     void Update()
     {
-        float inputValue = playerControls.CharacterMove.magnitude;
+        float inputValue = PlayerInputHandler.Instance.CharacterMove.magnitude;
         if (inputValue > 0)
         {
             Debug.Log("123");

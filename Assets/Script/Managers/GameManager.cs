@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // private PlayerControls inputActions;
-    private PlayerInputHandler inputActions;
-
     private bool isGamePaused = false;
 
     public bool GetIsGamePaused() => isGamePaused;
@@ -48,7 +45,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        inputActions = PlayerInputHandler.Instance;
         ResumeGame();
     }
 
@@ -58,11 +54,11 @@ public class GameManager : MonoBehaviour
         WeaponAmmoTextUI();
         if (isGamePaused)
         {
-            inputActions.Disable();
+            PlayerInputHandler.Instance.Disable();
         }
         else
         {
-            inputActions.Enable();
+            PlayerInputHandler.Instance.Enable();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -113,12 +109,12 @@ public class GameManager : MonoBehaviour
     {
         if (isGamePaused)
         {
-            inputActions.Enable();
+            PlayerInputHandler.Instance.Enable();
             ResumeGame();
         }
         else
         {
-            inputActions.Disable();
+            PlayerInputHandler.Instance.Disable();
             PauseGame();
         }
     }

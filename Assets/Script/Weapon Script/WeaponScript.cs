@@ -1,11 +1,10 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class WeaponScript : MonoBehaviour, IDataPersistence
 {
-    // private PlayerControls playerControls;
-    private PlayerInputHandler playerControls;
     // Input Action
     private InputAction inputAction;
 
@@ -24,7 +23,6 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject bulletHolePrefab;
 
     public AudioSource audioSource1;
-    public AudioSource audioSource2;
 
     [Header("Aduio Clips")]
     [SerializeField] private AudioClip shootSound;
@@ -43,17 +41,24 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     private void Awake()
     {
         animator = GetComponent<Animator>();
-
-        // Subscribe action
-        // inputAction.
     }
 
     private void Start()
     {
-        playerControls = PlayerInputHandler.Instance;
+
         // reload-action subscribe 
         PlayerInputHandler.Instance.ReloadAction.started += ReloadWeapon;
+
+        // aim-action subscribe 
+        PlayerInputHandler.Instance.FireAction.started += Fire;
+        PlayerInputHandler.Instance.FireAutoAction.started += Fire;
+        PlayerInputHandler.Instance.FireAutoAction.canceled += Fire;
+
+        // aim-action subscribe 
+        PlayerInputHandler.Instance.AimAction.performed += IsAiming;
+        PlayerInputHandler.Instance.AimAction.canceled += IsAiming;
     }
+
     // show ray from muzzle
     void ShowRayCast()
     {
@@ -103,48 +108,53 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     {
         animator.SetBool("isEmpty", true);
 
-        audioSource2.Play();
+        audioSource1.PlayOneShot(emptyClipSound);
     }
 
-    private bool CanShoot() => !weaponData.isReloading && weaponData.currentAmmo > 0 && timeSinceLastShot > 1f / (weaponData.fireRate / 60f) && !gameManager.GetIsGamePaused();
+    private bool CanShoot() => !weaponData.isReloading && weaponData.currentAmmo > 0 && !gameManager.GetIsGamePaused();
 
-
-    private void AimShoot()
+    private void Fire(InputAction.CallbackContext context)
     {
-        if (CanShoot() && weaponData.isAutomatic && playerControls.FireAutoTriggered > 0.1f)
+        if (context.started && CanShoot() && !weaponData.isAutomatic)
         {
-            CommonFireLogic("ironshot_fire");
-            PlayParticleEffect();
+            FireOnce();
         }
-        else if (CanShoot() && !weaponData.isAutomatic && playerControls.FireTriggered)
+        else if (context.started && CanShoot() && weaponData.isAutomatic)
         {
-            CommonFireLogic("ironshot_fire");
-            PlayParticleEffect();
+            StartAutoFire();
         }
-        else if (weaponData.currentAmmo == 0 && playerControls.FireTriggered)
+        else if (context.canceled)
+        {
+            StopAutoFire();
+        }
+        else if (context.started && weaponData.currentAmmo == 0)
         {
             GunIsEmpty();
         }
     }
 
-
-    private void OnAdsFire()
+    private void FireOnce()
     {
-        if (CanShoot() && weaponData.isAutomatic && playerControls.FireAutoTriggered > 0.1f)
+        if (isAiming && CanShoot())
+        {
+            CommonFireLogic("ironshot_fire");
+            PlayParticleEffect();
+        }
+        else if (!isAiming && CanShoot())
         {
             CommonFireLogic("fire");
             PlayParticleEffect();
         }
-        else if (CanShoot() && !weaponData.isAutomatic && playerControls.FireTriggered)
-        {
-            CommonFireLogic("fire");
-            PlayParticleEffect();
-        }
-        else if (weaponData.currentAmmo == 0 && playerControls.FireTriggered)
-        {
+    }
 
-            GunIsEmpty();
-        }
+    private void StartAutoFire()
+    {
+        InvokeRepeating(nameof(FireOnce), 0f, 1 / (weaponData.fireRate / 60)); // Start automatic firing
+    }
+
+    private void StopAutoFire()
+    {
+        CancelInvoke(nameof(FireOnce)); // Stop automatic firing
     }
 
     private void CommonFireLogic(string animation)
@@ -166,7 +176,6 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         }
 
         weaponData.currentAmmo--;
-        timeSinceLastShot = 0;
     }
 
     // Method to be called from the animation event
@@ -190,8 +199,8 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
             Destroy(impact, 2f);
         }
 
-    }
 
+    }
     public void PlayDrawSound()
     {
         audioSource1.PlayOneShot(drawSound);
@@ -199,26 +208,23 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
-        timeSinceLastShot += Time.deltaTime;
-        //DrawRayFromMuzzle();
         ShowRayCast();
-
-
-        isAiming = playerControls.AimTriggered > 0.1f;
-        animator.SetBool("isAiming", isAiming);
-        if (Time.timeScale > 0)
-        {
-            if (isAiming)
-            {
-                AimShoot();
-            }
-            else
-            {
-                OnAdsFire();
-            }
-        }
     }
 
+    private void IsAiming(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("1");
+            isAiming = true;
+            animator.SetBool("isAiming", true);
+        }
+        else if (context.canceled)
+        {
+            isAiming = false;
+            animator.SetBool("isAiming", false);
+        }
+    }
 
     public void LoadData(GameData data)
     {
@@ -252,9 +258,21 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         }
     }
 
+
+    // must only active one weapon else script confuse 
     private void OnDisable()
     {
-        // reload-action unsubscribe 
+        // reload-action subscribe 
         PlayerInputHandler.Instance.ReloadAction.started -= ReloadWeapon;
+
+        // aim-action subscribe 
+        PlayerInputHandler.Instance.FireAction.started -= Fire;
+        PlayerInputHandler.Instance.FireAutoAction.started -= Fire;
+        PlayerInputHandler.Instance.FireAutoAction.canceled -= Fire;
+
+        // aim-action subscribe 
+        PlayerInputHandler.Instance.AimAction.performed -= IsAiming;
+        PlayerInputHandler.Instance.AimAction.canceled -= IsAiming;
     }
+
 }

@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class PlayerStat : MonoBehaviour, IDataPersistence
 {
-    // private PlayerControls playerControls;
-    private PlayerInputHandler playerControls;
 
     [Header("References")]
     [SerializeField] private PlayerData playerData;     // playerData 
@@ -47,7 +45,6 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        playerControls = PlayerInputHandler.Instance;
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -195,7 +192,7 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     {
         if (gameManager != null && IsDead())
         {
-            playerControls.Disable(); // disable input handler
+            PlayerInputHandler.Instance.Disable(); // disable input handler
             gameManager.ShowDeadUI();
         }
     }

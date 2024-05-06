@@ -4,9 +4,6 @@ using UnityEngine.InputSystem;
 public class CharacterMovement : MonoBehaviour
 {
 
-    // private PlayerControls playerControls;
-    private PlayerInputHandler playerControls;
-
     private bool isGrounded = false;
     private bool isSprinting = false;
     private bool isCrouching = false;
@@ -59,23 +56,10 @@ public class CharacterMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         playerStat = GetComponent<PlayerStat>();
         audioSource = GetComponent<AudioSource>();
-
-        // playerControls = PlayerInputHandler.Instance;
-
     }
 
     private void Start()
     {
-        playerControls = PlayerInputHandler.Instance;
-
-        // Move action (Does not work on subscription)
-        // PlayerInputHandler.Instance.MoveAction.started += Move;
-        // PlayerInputHandler.Instance.MoveAction.canceled += Move;
-
-        // Sprint action
-        // PlayerInputHandler.Instance.SprintAction.performed += Sprint;
-        // PlayerInputHandler.Instance.SprintAction.canceled += Sprint;
-
         // aim action
         PlayerInputHandler.Instance.AimAction.performed += Aiming;
         PlayerInputHandler.Instance.AimAction.canceled += Aiming;
@@ -87,7 +71,6 @@ public class CharacterMovement : MonoBehaviour
         PlayerInputHandler.Instance.CrouchAction.started += Crouch;
         PlayerInputHandler.Instance.CrouchAction.canceled += Crouch;
         Gravity();
-
     }
 
     void Update()
@@ -126,13 +109,13 @@ public class CharacterMovement : MonoBehaviour
 
     private void Move()
     {
-        characterMove = playerControls.MoveAction.ReadValue<Vector2>();
+        characterMove = PlayerInputHandler.Instance.MoveAction.ReadValue<Vector2>();
         Vector3 movement = (characterMove.y * transform.forward) + (characterMove.x * transform.right);
 
         float maxSpeed = moveSpeed; // Default to regular move speed
 
         // bool check if spring key is pressed
-        isSprinting = playerControls.SprintAction.ReadValue<float>() > 0.1f;
+        isSprinting = PlayerInputHandler.Instance.SprintAction.ReadValue<float>() > 0.1f;
         // Check if sprint button is being held down and the player is moving forward
         if (isSprinting && characterMove.y > 0.1f && isCrouching == false && !IsAiming)
         {
@@ -195,14 +178,6 @@ public class CharacterMovement : MonoBehaviour
 
     void OnDisable()
     {
-        // // Move action
-        // PlayerInputHandler.Instance.MoveAction.started += Move;
-        // PlayerInputHandler.Instance.MoveAction.canceled += Move;
-
-        // // Sprint action
-        // PlayerInputHandler.Instance.SprintAction.performed += Move;
-        // PlayerInputHandler.Instance.SprintAction.canceled += Move;
-
         // aim action
         PlayerInputHandler.Instance.AimAction.performed -= Aiming;
         PlayerInputHandler.Instance.AimAction.canceled += Aiming;

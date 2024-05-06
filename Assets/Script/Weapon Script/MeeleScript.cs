@@ -1,10 +1,8 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MeeleScript : MonoBehaviour
 {
-    // private PlayerControls playerControls;
-    private PlayerInputHandler playerControls;
-
     private Animator animator;
 
     [Header("References")]
@@ -26,24 +24,39 @@ public class MeeleScript : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     private void Awake()
     {
-        playerControls = PlayerInputHandler.Instance;
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void Update()
+    private void Start()
     {
-        HandleAttackInput();
+        // action subscribe
+        PlayerInputHandler.Instance.FireAutoAction.started += HandleAttackInput;
+        PlayerInputHandler.Instance.FireAutoAction.canceled += HandleAttackInput;
     }
 
     private bool ResetAttack() => canAttack = true && this.gameObject.activeSelf;
 
-    private void HandleAttackInput()
+    private void HandleAttackInput(InputAction.CallbackContext context)
     {
-        if (playerControls.FireAutoTriggered > 0.1f && canAttack && !gameManager.GetIsGamePaused())
+        if (context.started && canAttack && !gameManager.GetIsGamePaused())
         {
-            PerformAttack();
+            StartAutoFire();
         }
+        else if (context.canceled)
+        {
+            StopAutoFire();
+        }
+    }
+
+    private void StartAutoFire()
+    {
+        InvokeRepeating(nameof(PerformAttack), 0f, 1 / (meleeData.fireRate / 60)); // Start automatic firing
+    }
+
+    private void StopAutoFire()
+    {
+        CancelInvoke(nameof(PerformAttack)); // Stop automatic firing
     }
 
     private void PerformAttack()
@@ -107,4 +120,10 @@ public class MeeleScript : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        // action unsubscribe
+        PlayerInputHandler.Instance.FireAutoAction.started -= HandleAttackInput;
+        PlayerInputHandler.Instance.FireAutoAction.canceled -= HandleAttackInput;
+    }
 }

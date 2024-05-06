@@ -4,11 +4,7 @@ using UnityEngine.Events;
 
 public class HeadBob : MonoBehaviour
 {
-    // PlayerControls playerControls;
-    private PlayerInputHandler playerControls;
-
     private CharacterMovement characterMovement;
-
 
     [Range(10f, 100f)]
     public float Smooth = 10.0f;
@@ -53,7 +49,6 @@ public class HeadBob : MonoBehaviour
     private void Start()
     {
         StartPos = transform.localPosition;
-        playerControls = PlayerInputHandler.Instance;
     }
 
     private void Update()
@@ -73,7 +68,7 @@ public class HeadBob : MonoBehaviour
 
     private void CheckHeadBobTrigger()
     {
-        float inputValue = playerControls.CharacterMove.magnitude;
+        float inputValue = PlayerInputHandler.Instance.CharacterMove.magnitude;
         if (inputValue > 0 && characterMovement.GetIsGrounded() && !characterMovement.IsAiming)
         {
             StartHeadBob();

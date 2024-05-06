@@ -3,8 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerLook : MonoBehaviour
 {
-    // private PlayerControls playerControls;
-    private PlayerInputHandler playerControls;
 
     [SerializeField] private Camera playerCamera;
 
@@ -26,8 +24,6 @@ public class PlayerLook : MonoBehaviour
 
     private void Start()
     {
-        playerControls = PlayerInputHandler.Instance;
-
         // look action
         PlayerInputHandler.Instance.LookAction.performed += Look;
     }

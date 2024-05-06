@@ -33,6 +33,7 @@ public class PlayerInputHandler : MonoBehaviour
     public InputAction JumpAction { get; set; }
     public InputAction CrouchAction { get; set; }
     public InputAction FireAction { get; set; }
+    public InputAction FireAutoAction { get; set; }
     public InputAction ReloadAction { get; set; }
     public InputAction AimAction { get; set; }
     public InputAction HealAction { get; set; }
@@ -48,8 +49,8 @@ public class PlayerInputHandler : MonoBehaviour
     public float SprintValue { get; private set; }
     public bool JumpTriggered { get; private set; }
     public float CrouchTriggered { get; private set; }
-    public float FireAutoTriggered { get; private set; }
     public bool FireTriggered { get; private set; }
+    public float FireAutoTriggered { get; private set; }
     public bool Reload { get; private set; }
     public float AimTriggered { get; private set; }
     public bool HealTriggered { get; private set; }
@@ -81,6 +82,7 @@ public class PlayerInputHandler : MonoBehaviour
         JumpAction = playerControls.FindActionMap(actionMovement).FindAction(jump);
         CrouchAction = playerControls.FindActionMap(actionMovement).FindAction(crouch);
         FireAction = playerControls.FindActionMap(actionMovement).FindAction(fire);
+        FireAutoAction = playerControls.FindActionMap(actionMovement).FindAction(fire);
         ReloadAction = playerControls.FindActionMap(actionMovement).FindAction(reload);
         AimAction = playerControls.FindActionMap(actionMovement).FindAction(aim);
         HealAction = playerControls.FindActionMap(actionMovement).FindAction(heal);
@@ -98,20 +100,6 @@ public class PlayerInputHandler : MonoBehaviour
 
         SprintAction.performed += context => SprintValue = context.ReadValue<float>();
         SprintAction.canceled += context => SprintValue = 0f;
-
-        FireAction.performed += context =>
-        {
-            FireTriggered = true;
-            FireAutoTriggered = context.ReadValue<float>();
-        };
-        FireAction.canceled += context =>
-        {
-            FireTriggered = false;
-            FireAutoTriggered = 0f;
-        };
-
-        ReloadAction.performed += context => Reload = true;
-        ReloadAction.canceled += context => Reload = false;
 
     }
 
