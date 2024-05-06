@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Testing : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Testing : MonoBehaviour
     void Awake()
     {
         playerControls = new RebindUISampleActions();
+
     }
 
     // Update is called once per frame
@@ -18,6 +20,7 @@ public class Testing : MonoBehaviour
         {
             Debug.Log("EE");
         }
+
     }
 
     private void OnEnable()

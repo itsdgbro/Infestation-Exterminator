@@ -1,12 +1,9 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HealingScript : MonoBehaviour, IDataPersistence
 {
-    // private PlayerControls playerControls;
-    private PlayerInputHandler playerControls;
-
-
     private Animator animator;
     [Header("Reference to Healing Data")]
     [SerializeField] private HealData healingData;
@@ -30,15 +27,14 @@ public class HealingScript : MonoBehaviour, IDataPersistence
         if (playerStat == null)
             Debug.LogWarning("PlayerStat not found");
         audioSource = GetComponent<AudioSource>();
+
+        PillCountUI();
     }
 
     private void Start()
     {
-        playerControls = PlayerInputHandler.Instance;
-        if (playerControls == null)
-        {
-            Debug.LogWarning("PLayer controls");
-        }
+        // action subscribe
+        PlayerInputHandler.Instance.HealAction.started += PerfromHeal;
     }
 
     // Trigger from animation event
@@ -47,26 +43,32 @@ public class HealingScript : MonoBehaviour, IDataPersistence
         playerStat.RestoreHealth(healingData.healAmount);
     }
 
-    private void Update()
+    // Trigger for heal animation
+    private void PerfromHeal(InputAction.CallbackContext context)
     {
-        PillCountUI();
-        if (playerControls.HealTriggered && healingData.availablePills > 0)
+        if (context.started)
         {
-            if (playerStat.GetHealth() < 100)
+            if (healingData.availablePills > 0)
             {
-                audioSource.PlayOneShot(healingAudio);
-                fpsWeapons.SetActive(false);
-                animator.Play("Heal");
-                healingData.availablePills--;
+                if (playerStat.GetHealth() < 100)
+                {
+                    audioSource.PlayOneShot(healingAudio);
+                    fpsWeapons.SetActive(false);
+                    animator.Play("Heal");
+                    healingData.availablePills--;
+                    PillCountUI();
+                }
             }
         }
     }
 
+    // During healing hide the weapon
     public void ToggleWeaponHideUnHide()
     {
         fpsWeapons.SetActive(true);
     }
 
+    // Disaply no.of pills in UI 
     private void PillCountUI()
     {
         pillCountUI.text = healingData.availablePills.ToString() + "x";
@@ -80,5 +82,11 @@ public class HealingScript : MonoBehaviour, IDataPersistence
     public void SaveData(GameData data)
     {
         data.player.healingPillsLeft = healingData.availablePills;
+    }
+
+    private void OnDisable()
+    {
+        // action unsubscribe
+        PlayerInputHandler.Instance.HealAction.started -= PerfromHeal;
     }
 }

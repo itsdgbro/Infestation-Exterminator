@@ -1,10 +1,8 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Level3Interaction : MonoBehaviour, IDataPersistence
 {
-    // private PlayerControls playerControls;
-    private PlayerInputHandler playerControls;
-
     [SerializeField] private string id;
 
     private bool canCollect = false;
@@ -21,7 +19,6 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
     private void Awake()
     {
         id = gameObject.name + gameObject.transform.GetSiblingIndex();
-        playerControls = PlayerInputHandler.Instance;
         collectUI.SetActive(false);
         itemCollectedTracker = GetComponentInParent<ItemCollectedTracker>();
         if (itemCollectedTracker == null)
@@ -30,6 +27,11 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
         }
     }
 
+    private void Start()
+    {
+        // action subscribe
+        PlayerInputHandler.Instance.InteractAction.started += CollectItem;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -51,16 +53,17 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
         }
     }
 
-    private void Update()
+    private void CollectItem(InputAction.CallbackContext context)
     {
-        if (canCollect && playerControls.Interact)
+        if (context.started && canCollect)
         {
+
             gameObject.SetActive(false);
             collectUI.SetActive(false);
             // level3Collections.isCollected[transform.GetSiblingIndex()] = true;
             isCollected = true;
             itemCollectedTracker.SetItemCollectCount(this.gameObject);
-            Destroy(this.gameObject, 15.0f);
+            Destroy(this.gameObject, 2.0f); // Destroy after 2 sec of collecting
         }
     }
 
@@ -90,5 +93,11 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
         }
 
         data.itemCollected.isItemCollected.Add(id, isCollected);
+    }
+
+    private void OnDisable()
+    {
+        // action subscribe
+        PlayerInputHandler.Instance.InteractAction.started -= CollectItem;
     }
 }

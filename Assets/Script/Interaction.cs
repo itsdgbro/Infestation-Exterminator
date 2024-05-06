@@ -1,12 +1,10 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class Interaction : MonoBehaviour
 {
-    // private PlayerControls playerControls;
-    private PlayerInputHandler playerControls;
-
 
     [Header("UI References")]
     [SerializeField] private GameObject pressEUI;
@@ -23,7 +21,6 @@ public class Interaction : MonoBehaviour
     [SerializeField] private Level3Collections level3Collections;
     private void Awake()
     {
-        playerControls = PlayerInputHandler.Instance;
         pressEUI.SetActive(false);
         loadingScreenUI.SetActive(false);
         killAllToExtract.SetActive(false);
@@ -33,6 +30,13 @@ public class Interaction : MonoBehaviour
             Debug.LogError("Level 3 collectables not found.");
         }
     }
+
+    private void Start()
+    {
+        // action subscribe
+        PlayerInputHandler.Instance.InteractAction.started += InteractedSuccess;
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -72,6 +76,7 @@ public class Interaction : MonoBehaviour
         }
     }
 
+    // check if all items collected
     private bool IsAllCollected()
     {
 
@@ -86,9 +91,9 @@ public class Interaction : MonoBehaviour
         return true;
     }
 
-    private void Update()
+    private void InteractedSuccess(InputAction.CallbackContext context)
     {
-        if (pressEUI.activeSelf && playerControls.Interact)
+        if (context.started && pressEUI.activeSelf)
         {
             if (currentLevelName == levelList[0])
             {
@@ -98,11 +103,18 @@ public class Interaction : MonoBehaviour
             {
                 levelUnlockSO.isLevel3Unlocked = true;
             }
+            Debug.Log("SUccess");
             loadingScreenUI.SetActive(true);
             SceneManager.LoadSceneAsync("Scene Menu");
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            playerControls.Disable();
+            PlayerInputHandler.Instance.Disable();
         }
+    }
+
+    private void OnDisable()
+    {
+        // action unsubscribe
+        PlayerInputHandler.Instance.InteractAction.started -= InteractedSuccess;
     }
 }

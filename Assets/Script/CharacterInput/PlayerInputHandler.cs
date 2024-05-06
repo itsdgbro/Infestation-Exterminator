@@ -113,13 +113,6 @@ public class PlayerInputHandler : MonoBehaviour
         ReloadAction.performed += context => Reload = true;
         ReloadAction.canceled += context => Reload = false;
 
-        HealAction.performed += context => HealTriggered = true;
-        HealAction.canceled += context => HealTriggered = false;
-
-        InteractAction.performed += context => Interact = true;
-        InteractAction.canceled += context => Interact = false;
-
-
     }
 
     private void OnEnable()

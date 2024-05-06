@@ -51,6 +51,8 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     private void Start()
     {
         playerControls = PlayerInputHandler.Instance;
+        // reload-action subscribe 
+        PlayerInputHandler.Instance.ReloadAction.started += ReloadWeapon;
     }
     // show ray from muzzle
     void ShowRayCast()
@@ -64,9 +66,9 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     }
 
-    private void ReloadWeapon()
+    private void ReloadWeapon(InputAction.CallbackContext context)
     {
-        if (playerControls.Reload && weaponData.ammoLeft > 0)
+        if (context.started && weaponData.ammoLeft > 0)
             if (!weaponData.isReloading && this.gameObject.activeSelf && weaponData.currentAmmo != weaponData.magazineSize)
                 StartCoroutine(ReloadTime());
     }
@@ -214,7 +216,6 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
             {
                 OnAdsFire();
             }
-            ReloadWeapon();
         }
     }
 
@@ -249,5 +250,11 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
             data.weapon.pistol.totalAmmo = weaponData.ammoLeft;
             data.weapon.pistol.currentAmmo = weaponData.currentAmmo;
         }
+    }
+
+    private void OnDisable()
+    {
+        // reload-action unsubscribe 
+        PlayerInputHandler.Instance.ReloadAction.started -= ReloadWeapon;
     }
 }
