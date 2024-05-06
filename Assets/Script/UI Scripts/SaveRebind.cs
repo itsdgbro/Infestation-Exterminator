@@ -14,7 +14,6 @@ public class SaveRebind : MonoBehaviour
 
     private string rebindString = "rebinds";
     private string mouseSensiFloat = "MouseSensitivity";
-
     private float mouseSensi;
 
     public void SaveNewControls()
