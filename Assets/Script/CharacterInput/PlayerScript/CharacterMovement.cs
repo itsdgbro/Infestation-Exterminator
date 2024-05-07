@@ -130,7 +130,10 @@ public class CharacterMovement : MonoBehaviour
         }
         // if crouching decrease speed by half
         else if (characterMove.y > 0.1f && isCrouching)
+        {
+            Debug.Log("Crouch ");
             maxSpeed = moveSpeed / 2;
+        }
         // if aiming (ads)
         else if (IsAiming)
             maxSpeed = moveSpeed / 1.5f;
@@ -156,10 +159,12 @@ public class CharacterMovement : MonoBehaviour
     {
         if (context.started)
         {
+            isCrouching = true;
             animator.SetBool("isCrouching", true);
         }
         else if (context.canceled)
         {
+            isCrouching = false;
             animator.SetBool("isCrouching", false);
         }
     }

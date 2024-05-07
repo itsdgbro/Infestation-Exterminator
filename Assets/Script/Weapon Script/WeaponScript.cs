@@ -43,10 +43,9 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         animator = GetComponent<Animator>();
     }
 
-    private void Start()
+    void OnEnable()
     {
-
-        // reload-action subscribe 
+        weaponData.isReloading = false;
         PlayerInputHandler.Instance.ReloadAction.started += ReloadWeapon;
 
         // aim-action subscribe 
@@ -57,7 +56,24 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         // aim-action subscribe 
         PlayerInputHandler.Instance.AimAction.performed += IsAiming;
         PlayerInputHandler.Instance.AimAction.canceled += IsAiming;
+
     }
+
+    // private void Start()
+    // {
+    //     // Debug.Log(gameObject.name);
+    //     // reload-action subscribe 
+    //     PlayerInputHandler.Instance.ReloadAction.started += ReloadWeapon;
+
+    //     // aim-action subscribe 
+    //     PlayerInputHandler.Instance.FireAction.started += Fire;
+    //     PlayerInputHandler.Instance.FireAutoAction.started += Fire;
+    //     PlayerInputHandler.Instance.FireAutoAction.canceled += Fire;
+
+    //     // aim-action subscribe 
+    //     PlayerInputHandler.Instance.AimAction.performed += IsAiming;
+    //     PlayerInputHandler.Instance.AimAction.canceled += IsAiming;
+    // }
 
     // show ray from muzzle
     void ShowRayCast()
@@ -73,14 +89,16 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     private void ReloadWeapon(InputAction.CallbackContext context)
     {
-        if (context.started && weaponData.ammoLeft > 0)
-            if (!weaponData.isReloading && this.gameObject.activeSelf && weaponData.currentAmmo != weaponData.magazineSize)
+        if (context.started)
+        {
+            if (!weaponData.isReloading && this.gameObject.activeSelf && weaponData.currentAmmo != weaponData.magazineSize && weaponData.ammoLeft > 0)
                 StartCoroutine(ReloadTime());
+        }
     }
 
     private IEnumerator ReloadTime()
     {
-
+        Debug.Log("REload " + gameObject.name);
         weaponData.isReloading = true;
         animator.Play("reload");
         animator.SetBool("isEmpty", false);
@@ -111,7 +129,7 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         audioSource1.PlayOneShot(emptyClipSound);
     }
 
-    private bool CanShoot() => !weaponData.isReloading && weaponData.currentAmmo > 0 && !gameManager.GetIsGamePaused();
+    private bool CanShoot() => !weaponData.isReloading && weaponData.currentAmmo > 0 && timeSinceLastShot > 1f / (weaponData.fireRate / 60f) && !gameManager.GetIsGamePaused();
 
     private void Fire(InputAction.CallbackContext context)
     {
@@ -149,7 +167,7 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     private void StartAutoFire()
     {
-        InvokeRepeating(nameof(FireOnce), 0f, 1 / (weaponData.fireRate / 60)); // Start automatic firing
+        InvokeRepeating(nameof(FireOnce), 0f, 1 / (weaponData.fireRate)); // Start automatic firing
     }
 
     private void StopAutoFire()
@@ -176,6 +194,7 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         }
 
         weaponData.currentAmmo--;
+        timeSinceLastShot = 0;
     }
 
     // Method to be called from the animation event
@@ -208,6 +227,7 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
+        timeSinceLastShot += Time.deltaTime;
         ShowRayCast();
     }
 
@@ -260,19 +280,24 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
 
 
     // must only active one weapon else script confuse 
-    private void OnDisable()
-    {
-        // reload-action subscribe 
-        PlayerInputHandler.Instance.ReloadAction.started -= ReloadWeapon;
+    // private void OnDisable()
+    // {
+    //     if (!this.gameObject.activeSelf)
+    //     {
+    //         return;
+    //     }
 
-        // aim-action subscribe 
-        PlayerInputHandler.Instance.FireAction.started -= Fire;
-        PlayerInputHandler.Instance.FireAutoAction.started -= Fire;
-        PlayerInputHandler.Instance.FireAutoAction.canceled -= Fire;
+    //     // reload-action subscribe 
+    //     PlayerInputHandler.Instance.ReloadAction.started -= ReloadWeapon;
 
-        // aim-action subscribe 
-        PlayerInputHandler.Instance.AimAction.performed -= IsAiming;
-        PlayerInputHandler.Instance.AimAction.canceled -= IsAiming;
-    }
+    //     // aim-action subscribe 
+    //     PlayerInputHandler.Instance.FireAction.started -= Fire;
+    //     PlayerInputHandler.Instance.FireAutoAction.started -= Fire;
+    //     PlayerInputHandler.Instance.FireAutoAction.canceled -= Fire;
+
+    //     // aim-action subscribe 
+    //     PlayerInputHandler.Instance.AimAction.performed -= IsAiming;
+    //     PlayerInputHandler.Instance.AimAction.canceled -= IsAiming;
+    // }
 
 }

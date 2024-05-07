@@ -20,7 +20,6 @@ public class SettingManager : MonoBehaviour
     List<Resolution> selectedResolutionList = new List<Resolution>();
 
 
-
     [Header("Control Setting References")]
     public InputActionAsset actions;
     public Slider mouseSensiSlider;

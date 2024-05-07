@@ -28,8 +28,9 @@ public class MeeleScript : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
+        Debug.Log(gameObject.name);
         // action subscribe
         PlayerInputHandler.Instance.FireAutoAction.started += HandleAttackInput;
         PlayerInputHandler.Instance.FireAutoAction.canceled += HandleAttackInput;
@@ -39,7 +40,7 @@ public class MeeleScript : MonoBehaviour
 
     private void HandleAttackInput(InputAction.CallbackContext context)
     {
-        if (context.started && canAttack && !gameManager.GetIsGamePaused())
+        if (context.started)
         {
             StartAutoFire();
         }
