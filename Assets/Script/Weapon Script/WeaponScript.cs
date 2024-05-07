@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -43,26 +42,9 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         animator = GetComponent<Animator>();
     }
 
-    void OnEnable()
-    {
-        weaponData.isReloading = false;
-        PlayerInputHandler.Instance.ReloadAction.started += ReloadWeapon;
-
-        // aim-action subscribe 
-        PlayerInputHandler.Instance.FireAction.started += Fire;
-        PlayerInputHandler.Instance.FireAutoAction.started += Fire;
-        PlayerInputHandler.Instance.FireAutoAction.canceled += Fire;
-
-        // aim-action subscribe 
-        PlayerInputHandler.Instance.AimAction.performed += IsAiming;
-        PlayerInputHandler.Instance.AimAction.canceled += IsAiming;
-
-    }
-
-    // private void Start()
+    // void OnEnable()
     // {
-    //     // Debug.Log(gameObject.name);
-    //     // reload-action subscribe 
+    //     weaponData.isReloading = false;
     //     PlayerInputHandler.Instance.ReloadAction.started += ReloadWeapon;
 
     //     // aim-action subscribe 
@@ -73,7 +55,24 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     //     // aim-action subscribe 
     //     PlayerInputHandler.Instance.AimAction.performed += IsAiming;
     //     PlayerInputHandler.Instance.AimAction.canceled += IsAiming;
+
     // }
+
+    private void Start()
+    {
+        // Debug.Log(gameObject.name);
+        // reload-action subscribe 
+        PlayerInputHandler.Instance.ReloadAction.started += ReloadWeapon;
+
+        // aim-action subscribe 
+        PlayerInputHandler.Instance.FireAction.started += Fire;
+        PlayerInputHandler.Instance.FireAutoAction.started += Fire;
+        PlayerInputHandler.Instance.FireAutoAction.canceled += Fire;
+
+        // aim-action subscribe 
+        PlayerInputHandler.Instance.AimAction.performed += IsAiming;
+        PlayerInputHandler.Instance.AimAction.canceled += IsAiming;
+    }
 
     // show ray from muzzle
     void ShowRayCast()
@@ -235,7 +234,6 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     {
         if (context.performed)
         {
-            Debug.Log("1");
             isAiming = true;
             animator.SetBool("isAiming", true);
         }
@@ -252,8 +250,6 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
         {
             weaponData.ammoLeft = data.weapon.ar.totalAmmo;
             weaponData.currentAmmo = data.weapon.ar.currentAmmo;
-
-            Debug.Log("AR " + data.weapon.ar.currentAmmo);
         }
         else if (this.gameObject.name == "Pistol")
         {

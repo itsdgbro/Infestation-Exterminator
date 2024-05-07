@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour
@@ -13,12 +13,17 @@ public class SettingManager : MonoBehaviour
     public Toggle fullScreenTog;
     public Toggle vsyncTog;
     public TMP_Dropdown resDropDown;
+    public TMP_Dropdown qualityDropDown;
 
     Resolution[] allResolutions;
     int selectedResolution;
-
     List<Resolution> selectedResolutionList = new List<Resolution>();
 
+    private int selectedQuality;
+
+    [Header("Post-Processing-Brightness Header")]
+    public PostProcessProfile brightnessExposure;
+    public PostProcessLayer postLayer;
 
     [Header("Control Setting References")]
     public InputActionAsset actions;
@@ -28,12 +33,15 @@ public class SettingManager : MonoBehaviour
     // PlayerPrefs references
     private readonly string brightnessPref = "Brightness";
     private readonly string resolutionPref = "SavedResolution";
+    private readonly string graphicPref = "SavedGraphic";
     private readonly string vsyncPref = "SavedVsync";
 
     private readonly string rebindStringPref = "rebinds";
     private readonly string mouseSensiFloatPRef = "MouseSensitivity";
     private float brightnessValue;
     private float mouseSensi;
+
+    private AutoExposure exposure;
 
     private void Awake()
     {
@@ -64,44 +72,97 @@ public class SettingManager : MonoBehaviour
 
         // Check if the key exists in PlayerPrefs
         selectedResolution = PlayerPrefs.HasKey(resolutionPref) ? PlayerPrefs.GetInt(resolutionPref) : selectedResolutionList.Count - 1;
-        brightnessSlider.value = Mathf.Floor((PlayerPrefs.HasKey(brightnessPref) ? PlayerPrefs.GetFloat(brightnessPref) : 0.5f) * 100f);
-        string formattedValue = brightnessSlider.value.ToString("F0"); // Format as a string with 0 decimal places
-        brightnessSlider.value = float.Parse(formattedValue); // Parse back to float
+        selectedQuality = PlayerPrefs.HasKey(graphicPref) ? PlayerPrefs.GetInt(graphicPref) : qualityDropDown.options.Count - 2;
 
+        // get exposure
+        brightnessExposure.TryGetSettings(out exposure);
+
+        // load brightness
+        brightnessValue = PlayerPrefs.HasKey(brightnessPref) ? PlayerPrefs.GetFloat(brightnessPref) : 0.5f;
+        brightnessSlider.value = brightnessValue;   // slider
+        brightnessValueDisplay.text = (brightnessValue * 100f).ToString("F0") + "%"; // Format as a string with 0 decimal places
+
+        exposure.keyValue.value = brightnessValue * 2;
+
+        // resolution
+        Screen.SetResolution(selectedResolutionList[selectedResolution].width, selectedResolutionList[selectedResolution].height, fullScreenTog.isOn);
         resDropDown.value = selectedResolution;
+
+        // graphic
+        QualitySettings.SetQualityLevel(selectedQuality);
+        qualityDropDown.value = selectedQuality;
     }
 
+    // set brightness
+    public void ChangeBrightness(float value)
+    {
+        brightnessValue = value;
+        exposure.keyValue.value = value * 2;
+        brightnessValueDisplay.text = (brightnessValue * 100).ToString("F0") + "%";
+    }
+
+    // set resolution
     private void ChangeResolution(int value)
     {
         Screen.SetResolution(selectedResolutionList[value].width, selectedResolutionList[value].height, fullScreenTog.isOn);
         PlayerPrefs.SetInt(resolutionPref, value);
     }
 
+    // set graphic quality
+    public void ChangeGraphicQuality(int index)
+    {
+        QualitySettings.SetQualityLevel(index);
+        PlayerPrefs.SetInt(graphicPref, index);
+    }
+
+    // save graphic component
     public void SaveNewGraphics()
     {
 
+        PlayerPrefs.SetFloat(brightnessPref, brightnessValue);
+
+        // res and quality
         selectedResolution = resDropDown.value;
+        selectedQuality = qualityDropDown.value;
+
+        ChangeResolution(selectedResolution);
+        ChangeGraphicQuality(selectedQuality);
+
+        // full screen / vsync
         Screen.fullScreen = fullScreenTog.isOn;
         int isVsyncOn = vsyncTog.isOn ? 1 : 0;
         QualitySettings.vSyncCount = isVsyncOn;
         PlayerPrefs.SetInt(vsyncPref, isVsyncOn);
-        PlayerPrefs.SetFloat(vsyncPref, brightnessSlider.value);
-        brightnessSlider.value = Mathf.Floor((PlayerPrefs.HasKey(brightnessPref) ? PlayerPrefs.GetFloat(brightnessPref) : 0.5f) * 100f);
-        string formattedValue = brightnessSlider.value.ToString("F0"); // Format as a string with 0 decimal places
-        brightnessSlider.value = float.Parse(formattedValue); // Parse back to float
 
-        ChangeResolution(selectedResolution);
     }
 
+
+    // reset graphic component
     public void ResetGraphicSettings()
     {
+        brightnessValue = 0.5f;
+        ChangeBrightness(brightnessValue);
+
         selectedResolution = selectedResolutionList.Count - 1;
+        selectedQuality = qualityDropDown.options.Count - 2;    // second hightest 
+
+        resDropDown.value = selectedResolution;
+        qualityDropDown.value = selectedQuality;
+
         PlayerPrefs.SetInt(resolutionPref, selectedResolution);
+        PlayerPrefs.SetInt(graphicPref, selectedQuality);
+
+        ChangeResolution(selectedResolution);
+        ChangeGraphicQuality(selectedQuality);
+
         Screen.fullScreen = true;
+        fullScreenTog.isOn = true;
+
         QualitySettings.vSyncCount = 1;
+        vsyncTog.isOn = true;
+
         brightnessSlider.value = 0.5f;
         PlayerPrefs.SetFloat(vsyncPref, brightnessSlider.value);
-        ChangeResolution(selectedResolution);
     }
 
     // Control settings
@@ -114,8 +175,6 @@ public class SettingManager : MonoBehaviour
 
     void Update()
     {
-        brightnessValue = brightnessSlider.value;
-        brightnessValueDisplay.text = brightnessValue.ToString("F2");
 
         mouseSensi = mouseSensiSlider.value;
         mouseSensiValueDisplay.text = mouseSensi.ToString("F2");

@@ -19,7 +19,7 @@ public class PlayerLook : MonoBehaviour
         player = transform.parent;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
+        MouseSensitivity = PlayerPrefs.HasKey("MouseSensitivity") ? PlayerPrefs.GetFloat("MouseSensitivity") : 5.0f;
     }
 
     private void Start()
