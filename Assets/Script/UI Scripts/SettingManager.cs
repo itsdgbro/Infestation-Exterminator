@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
@@ -38,10 +39,25 @@ public class SettingManager : MonoBehaviour
 
     private readonly string rebindStringPref = "rebinds";
     private readonly string mouseSensiFloatPRef = "MouseSensitivity";
+
+    private readonly string masterVolumePref = "MasterVolume";
+    private readonly string musicVolumePref = "MusicVolume";
+    private readonly string sfxVolumePref = "SFXVolume";
+
     private float brightnessValue;
     private float mouseSensi;
 
-    private AutoExposure exposure;
+    private AutoExposure exposure;  // brightness
+
+    [Header("Audio Setting Preferences")]
+    public AudioMixer audioMixer;
+    public Slider masterSlider;
+    public Slider musicSlider;
+    public Slider sfxSlider;
+
+    private float masterValue;
+    private float musicValue;
+    private float sfxVolume;
 
     private void Awake()
     {
@@ -91,6 +107,15 @@ public class SettingManager : MonoBehaviour
         // graphic
         QualitySettings.SetQualityLevel(selectedQuality);
         qualityDropDown.value = selectedQuality;
+
+        // audio
+        masterValue = PlayerPrefs.HasKey(masterVolumePref) ? PlayerPrefs.GetFloat(masterVolumePref) : 0f;
+        masterSlider.value = masterValue;
+        audioMixer.SetFloat("master", masterValue);
+
+        musicValue = PlayerPrefs.HasKey(musicVolumePref) ? PlayerPrefs.GetFloat(musicVolumePref) : 0.5f;
+        musicSlider.value = musicValue;
+        audioMixer.SetFloat("audio", musicValue);
     }
 
     // set brightness
@@ -195,5 +220,29 @@ public class SettingManager : MonoBehaviour
         mouseSensi = PlayerPrefs.GetFloat(mouseSensiFloatPRef);
         mouseSensiSlider.value = mouseSensi;
         mouseSensiValueDisplay.text = mouseSensi.ToString("F2");
+    }
+
+    // audio
+    public void SetMaterVolume(float sliderValue)
+    {
+        masterValue = sliderValue;
+        audioMixer.SetFloat("master", masterValue);
+    }
+
+    public void SetMusicVolume(float sliderValue)
+    {
+        musicValue = sliderValue;
+        musicValue = musicValue == -20f ? -80 : musicValue; // mute at lowest
+        audioMixer.SetFloat("music", musicValue);
+    }
+
+
+    public void SaveVolumeSetting()
+    {
+        // master volume
+        PlayerPrefs.SetFloat(masterVolumePref, masterValue);
+
+        // music volume
+        PlayerPrefs.SetFloat(musicVolumePref, musicValue);
     }
 }
