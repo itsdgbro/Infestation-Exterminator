@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -57,7 +58,7 @@ public class SettingManager : MonoBehaviour
 
     private float masterValue;
     private float musicValue;
-    private float sfxVolume;
+    private float sfxValue;
 
     private void Awake()
     {
@@ -73,7 +74,7 @@ public class SettingManager : MonoBehaviour
         {
             // Check if the aspect ratio is 16:9 or 16:10
             float aspectRatio = (float)res.width / res.height;
-            if (Mathf.Approximately(aspectRatio, 16f / 9f) || Mathf.Approximately(aspectRatio, 16f / 10f))
+            if (Mathf.Approximately(aspectRatio, 16f / 9f)) // 16:9 display
             {
                 newRes = res.width.ToString() + " x " + res.height.ToString();
 
@@ -116,6 +117,10 @@ public class SettingManager : MonoBehaviour
         musicValue = PlayerPrefs.HasKey(musicVolumePref) ? PlayerPrefs.GetFloat(musicVolumePref) : 0.5f;
         musicSlider.value = musicValue;
         audioMixer.SetFloat("audio", musicValue);
+
+        sfxValue = PlayerPrefs.HasKey(sfxVolumePref) ? PlayerPrefs.GetFloat(sfxVolumePref) : 0f;
+        sfxSlider.value = sfxValue;
+        audioMixer.SetFloat("sfx", sfxValue);
     }
 
     // set brightness
@@ -236,13 +241,39 @@ public class SettingManager : MonoBehaviour
         audioMixer.SetFloat("music", musicValue);
     }
 
+    public void SetSFXVolume(float sliderValue)
+    {
+        sfxValue = sliderValue;
+        audioMixer.SetFloat("sfx", sfxValue);
+    }
 
-    public void SaveVolumeSetting()
+    public void SaveNewVolume()
     {
         // master volume
         PlayerPrefs.SetFloat(masterVolumePref, masterValue);
 
         // music volume
         PlayerPrefs.SetFloat(musicVolumePref, musicValue);
+
+        // sfx volume
+        PlayerPrefs.SetFloat(sfxVolumePref, sfxValue);
+
+    }
+
+    public void ResetAudioSetting()
+    {
+        masterValue = 0f;
+        musicValue = 0.5f;
+        sfxValue = 0f;
+
+        audioMixer.SetFloat("master", masterValue);
+        audioMixer.SetFloat("music", musicValue);
+        audioMixer.SetFloat("sfx", sfxValue);
+
+        masterSlider.value = masterValue;
+        musicSlider.value = musicValue;
+        sfxSlider.value = sfxValue;
+
+        SaveNewVolume();
     }
 }

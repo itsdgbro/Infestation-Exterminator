@@ -32,14 +32,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> pauseUIList;
     [SerializeField] private GameObject showPauseList;
 
+    [Header("Background Music")]
+    private AudioSource bgAudio;
 
     private void Awake()
     {
         SetCursorState();
         pauseMenu.SetActive(false);
         gameOverUI.SetActive(false);
-
-
+        bgAudio = GetComponent<AudioSource>();
     }
 
 
@@ -84,6 +85,9 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
+        bgAudio.mute = false;
+        bgAudio.Play();
+
         // Debug.Log("Paused");
         pauseMenu.SetActive(true);
         showPauseList.SetActive(true);
@@ -98,6 +102,8 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame()
     {
+        bgAudio.mute = true;
+
         // Debug.Log("Resumee");
         pauseMenu.SetActive(false);
         isGamePaused = false;

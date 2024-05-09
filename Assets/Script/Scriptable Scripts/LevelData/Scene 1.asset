@@ -20,5 +20,5 @@ MonoBehaviour:
   healingPillsLeft: 7
   aLeftAmmo: 180
   aCurrentAmmo: 20
-  pLeftAmmo: 25
+  pLeftAmmo: 32
   pCurrentAmmo: 8

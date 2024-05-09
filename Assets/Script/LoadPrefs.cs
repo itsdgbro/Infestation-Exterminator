@@ -35,5 +35,8 @@ public class LoadPrefs : MonoBehaviour
 
         float musicVolume = PlayerPrefs.HasKey(musicVolumePref) ? PlayerPrefs.GetFloat(musicVolumePref) : 0.5f;
         audioMixer.SetFloat("music", musicVolume);
+
+        float sfxVolume = PlayerPrefs.HasKey(sfxVolumePref) ? PlayerPrefs.GetFloat(sfxVolumePref) : 0f;
+        audioMixer.SetFloat("sfx", sfxVolume);
     }
 }

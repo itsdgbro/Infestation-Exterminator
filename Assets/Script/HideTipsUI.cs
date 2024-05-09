@@ -29,7 +29,7 @@ public class HideTipsUI : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerInputHandler.Instance.ToggleTipsAction.started += ToggleUIShow;
+        PlayerInputHandler.Instance.ToggleTipsAction.started -= ToggleUIShow;
     }
 
 }

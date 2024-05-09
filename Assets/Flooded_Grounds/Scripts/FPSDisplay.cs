@@ -21,6 +21,10 @@ public class FPSDisplay : MonoBehaviour
 		style.normal.textColor = new Color(1, 1, 1, 1.0f);
 		float msec = deltaTime * 1000.0f;
 		float fps = 1.0f / deltaTime;
+
+		// Cap FPS at 500
+		fps = Mathf.Min(fps, 500f);
+
 		string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
 		GUI.Label(rect, text, style);
 	}

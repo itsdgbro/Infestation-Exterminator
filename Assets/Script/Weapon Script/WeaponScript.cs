@@ -40,6 +40,8 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
+        weaponData.isReloading = false;
     }
 
     // void OnEnable()
@@ -278,10 +280,6 @@ public class WeaponScript : MonoBehaviour, IDataPersistence
     // must only active one weapon else script confuse 
     // private void OnDisable()
     // {
-    //     if (!this.gameObject.activeSelf)
-    //     {
-    //         return;
-    //     }
 
     //     // reload-action subscribe 
     //     PlayerInputHandler.Instance.ReloadAction.started -= ReloadWeapon;
