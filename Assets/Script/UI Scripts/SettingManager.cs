@@ -89,6 +89,10 @@ public class SettingManager : MonoBehaviour
 
         // Check if the key exists in PlayerPrefs
         selectedResolution = PlayerPrefs.HasKey(resolutionPref) ? PlayerPrefs.GetInt(resolutionPref) : selectedResolutionList.Count - 1;
+        if (selectedResolution > selectedResolutionList.Count)
+        {
+            selectedResolution = selectedResolutionList.Count - 1;
+        }
         selectedQuality = PlayerPrefs.HasKey(graphicPref) ? PlayerPrefs.GetInt(graphicPref) : qualityDropDown.options.Count - 2;
 
         // get exposure

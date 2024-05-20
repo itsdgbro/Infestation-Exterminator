@@ -8,7 +8,7 @@ public class PlayerLook : MonoBehaviour
 
     #region Player_look
     [Header("Mouse Controls")]
-    [SerializeField] private float MouseSensitivity = 10f;
+    [SerializeField] private float MouseSensitivity = 5f;
     Vector2 mousePosition;
     private float xRoation = 0f;
     private Transform player;
