@@ -1,32 +1,32 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Torch : MonoBehaviour
 {
 
-    private PlayerControls playerControls;
     private Light torch;
 
     private void Awake()
     {
-        playerControls = new PlayerControls();
         torch = GetComponent<Light>();
     }
 
-    private void Update()
+    void Start()
     {
-        if (playerControls.Interactive.FlashLight.triggered)
-        {
+        // Action Subscription
+        PlayerInputHandler.Instance.FlashLightAction.started += ToggleTorchLight;
+    }
+
+    private void ToggleTorchLight(InputAction.CallbackContext context)
+    {
+        if (context.started)
             torch.enabled = !torch.enabled;
-        }
     }
 
-    private void OnEnable()
+    void OnDisable()
     {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
+        // Action unsubscription
+        PlayerInputHandler.Instance.FlashLightAction.started -= ToggleTorchLight;
     }
 }

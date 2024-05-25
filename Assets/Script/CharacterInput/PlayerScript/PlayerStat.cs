@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerStat : MonoBehaviour, IDataPersistence
 {
+
     [Header("References")]
     [SerializeField] private PlayerData playerData;     // playerData 
     [SerializeField] private Image staminaBar;      // stamina UI
@@ -39,13 +40,11 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     public void SetHealth(float value) => this.playerData.playerHealth = value;
 
     private CharacterController characterController;
-    private PlayerControls playerControls;
 
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        playerControls = new PlayerControls();
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -193,7 +192,7 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
     {
         if (gameManager != null && IsDead())
         {
-            playerControls.Disable();
+            PlayerInputHandler.Instance.Disable(); // disable input handler
             gameManager.ShowDeadUI();
         }
     }
@@ -259,15 +258,5 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
         characterController.enabled = true;
 
         this.transform.forward = data.player.direction;
-    }
-
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
     }
 }

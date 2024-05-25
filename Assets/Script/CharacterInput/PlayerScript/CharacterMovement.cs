@@ -1,12 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterMovement : MonoBehaviour
 {
 
-    private PlayerControls playerControls;
     private bool isGrounded = false;
     private bool isSprinting = false;
     private bool isCrouching = false;
+    public bool IsAiming { get; set; }
 
     #region Player_Attributes
     [Header("Player Attributes")]
@@ -51,7 +52,6 @@ public class CharacterMovement : MonoBehaviour
 
     void Awake()
     {
-        playerControls = new PlayerControls();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         playerStat = GetComponent<PlayerStat>();
@@ -60,17 +60,22 @@ public class CharacterMovement : MonoBehaviour
 
     private void Start()
     {
+        // aim action
+        PlayerInputHandler.Instance.AimAction.performed += Aiming;
+        PlayerInputHandler.Instance.AimAction.canceled += Aiming;
+
+        // Jump action
+        PlayerInputHandler.Instance.JumpAction.started += Jump;
+
+        // crouch action
+        PlayerInputHandler.Instance.CrouchAction.started += Crouch;
+        PlayerInputHandler.Instance.CrouchAction.canceled += Crouch;
         Gravity();
     }
 
     void Update()
     {
         Gravity();
-        if (!isCrouching)
-        {
-            Jump();
-        }
-        Crouch();
 
         Move();
         // dead
@@ -102,18 +107,17 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-
     private void Move()
     {
-        characterMove = playerControls.Movement.Move.ReadValue<Vector2>();
+        characterMove = PlayerInputHandler.Instance.MoveAction.ReadValue<Vector2>();
         Vector3 movement = (characterMove.y * transform.forward) + (characterMove.x * transform.right);
 
         float maxSpeed = moveSpeed; // Default to regular move speed
 
         // bool check if spring key is pressed
-        isSprinting = playerControls.Movement.Sprint.ReadValue<float>() > 0.1f;
+        isSprinting = PlayerInputHandler.Instance.SprintAction.ReadValue<float>() > 0.1f;
         // Check if sprint button is being held down and the player is moving forward
-        if (isSprinting && characterMove.y > 0.1f && isCrouching == false && !IsAiming())
+        if (isSprinting && characterMove.y > 0.1f && isCrouching == false && !IsAiming)
         {
             playerStat.DecreaseStamina(); // decrease stamina on sprint
             if (playerStat.CanSprint())
@@ -126,9 +130,12 @@ public class CharacterMovement : MonoBehaviour
         }
         // if crouching decrease speed by half
         else if (characterMove.y > 0.1f && isCrouching)
+        {
+            Debug.Log("Crouch ");
             maxSpeed = moveSpeed / 2;
+        }
         // if aiming (ads)
-        else if (IsAiming())
+        else if (IsAiming)
             maxSpeed = moveSpeed / 1.5f;
 
         // Update velocity for horizontal movement
@@ -136,41 +143,56 @@ public class CharacterMovement : MonoBehaviour
         velocity.x = horizontalVelocity.x;
         velocity.z = horizontalVelocity.z;
         characterController.Move(movement * maxSpeed * Time.deltaTime);
+
     }
 
-
-    private void Jump()
+    private void Jump(InputAction.CallbackContext context)
     {
-        if (playerControls.Movement.Jump.triggered && isGrounded)
+        if (context.started && isGrounded && !isCrouching)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             playerStat.DecreaseStamina(10f);
         }
     }
 
-    private void Crouch()
+    private void Crouch(InputAction.CallbackContext context)
     {
-        isCrouching = playerControls.Movement.Crouch.ReadValue<float>() > 0.1f;
-
-        // decrease the height of the character via animation
-        animator.SetBool("isCrouching", isCrouching);
+        if (context.started)
+        {
+            isCrouching = true;
+            animator.SetBool("isCrouching", true);
+        }
+        else if (context.canceled)
+        {
+            isCrouching = false;
+            animator.SetBool("isCrouching", false);
+        }
     }
 
-    public bool IsAiming()
+    public void Aiming(InputAction.CallbackContext context)
     {
-        return playerControls.Movement.Aim.ReadValue<float>() > 0.5f;
+        if (context.performed)
+        {
+            IsAiming = true;
+        }
+        else if (context.canceled)
+        {
+            IsAiming = false;
+        }
     }
 
-
-    #region Enable/Disable
-    private void OnEnable()
+    void OnDisable()
     {
-        playerControls.Enable();
-    }
+        // aim action
+        PlayerInputHandler.Instance.AimAction.performed -= Aiming;
+        PlayerInputHandler.Instance.AimAction.canceled += Aiming;
 
-    private void OnDisable()
-    {
-        playerControls.Disable();
+        // crouch
+        PlayerInputHandler.Instance.JumpAction.started -= Jump;
+
+        // crouch
+        PlayerInputHandler.Instance.CrouchAction.started -= Crouch;
+        PlayerInputHandler.Instance.CrouchAction.canceled -= Crouch;
+
     }
-    #endregion
 }

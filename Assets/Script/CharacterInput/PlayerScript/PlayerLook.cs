@@ -1,13 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerLook : MonoBehaviour
 {
-    private PlayerControls playerControls;
+
     [SerializeField] private Camera playerCamera;
 
     #region Player_look
     [Header("Mouse Controls")]
-    [SerializeField] private float MouseSensitivity = 10f;
+    [SerializeField] private float MouseSensitivity = 5f;
     Vector2 mousePosition;
     private float xRoation = 0f;
     private Transform player;
@@ -16,43 +17,45 @@ public class PlayerLook : MonoBehaviour
     private void Awake()
     {
         player = transform.parent;
-        playerControls = new PlayerControls();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        MouseSensitivity = PlayerPrefs.HasKey("MouseSensitivity") ? PlayerPrefs.GetFloat("MouseSensitivity") : 5.0f;
+    }
+
+    private void Start()
+    {
+        // look action
+        PlayerInputHandler.Instance.LookAction.performed += Look;
     }
 
     private void Update()
     {
-        if (Time.timeScale > 0)
-        {
-            Look();
+        MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
 
-        }
     }
 
     // mouse look
-    private void Look()
+    private void Look(InputAction.CallbackContext context)
     {
-        mousePosition = playerControls.Movement.Look.ReadValue<Vector2>();
+        if (context.performed)
+        {
+            mousePosition = context.ReadValue<Vector2>();
 
-        float mouseX = mousePosition.x * MouseSensitivity * Time.deltaTime;
-        float mouseY = mousePosition.y * MouseSensitivity * Time.deltaTime;
+            float mouseX = mousePosition.x * MouseSensitivity * Time.deltaTime;
+            float mouseY = mousePosition.y * MouseSensitivity * Time.deltaTime;
 
-        xRoation -= mouseY;
-        xRoation = Mathf.Clamp(xRoation, -90f, 90f);
+            xRoation -= mouseY;
+            xRoation = Mathf.Clamp(xRoation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(xRoation, 0, 0);
-        player.Rotate(Vector3.up * mouseX);
-    }
-
-
-    private void OnEnable()
-    {
-        playerControls.Enable();
+            transform.localRotation = Quaternion.Euler(xRoation, 0, 0);
+            player.Rotate(Vector3.up * mouseX);
+        }
     }
 
     private void OnDisable()
     {
-        playerControls.Disable();
+        // look action
+        PlayerInputHandler.Instance.LookAction.performed -= Look;
     }
+
 }

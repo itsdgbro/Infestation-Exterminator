@@ -20,7 +20,7 @@ public class DataPersistenceManager : MonoBehaviour
     public int GetAliveZombieCount() => gameData.enemy.zombieCount;
 
     [SerializeField] private bool isLoad = false;
-
+    [SerializeField] private bool useEncryption;
     public bool GetIsLoad() => isLoad;
 
     public int SelectedLevelIndex { get; set; }
@@ -45,7 +45,7 @@ public class DataPersistenceManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
     }
 
     // called first

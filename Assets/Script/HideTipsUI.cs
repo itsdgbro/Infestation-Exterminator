@@ -1,45 +1,35 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HideTipsUI : MonoBehaviour
 {
+
     [SerializeField] private GameObject tipsUI;
     [SerializeField] private HideTipsSO hideTipsSO;
 
-    private PlayerControls playerControls;
-
-    // show initial when collided
-    // hide tips when true
-
     private void Awake()
     {
-        playerControls = new PlayerControls();
         tipsUI.SetActive(!hideTipsSO.hideTips);
     }
 
-    private void Update()
+    private void Start()
     {
-        ToggleUIShow();
+        PlayerInputHandler.Instance.ToggleTipsAction.started += ToggleUIShow;
     }
 
-    private void ToggleUIShow()
+    private void ToggleUIShow(InputAction.CallbackContext ctx)
     {
-        if (playerControls.Interactive.ToggleTips.triggered)
+        if (ctx.started)
         {
             hideTipsSO.hideTips = !hideTipsSO.hideTips;
             tipsUI.SetActive(!hideTipsSO.hideTips);
         }
     }
 
-
-    #region player controls
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
     private void OnDisable()
     {
-        playerControls.Disable();
+        PlayerInputHandler.Instance.ToggleTipsAction.started -= ToggleUIShow;
     }
-    #endregion
+
 }

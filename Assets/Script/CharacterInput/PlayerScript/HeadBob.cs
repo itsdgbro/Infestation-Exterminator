@@ -4,10 +4,8 @@ using UnityEngine.Events;
 
 public class HeadBob : MonoBehaviour
 {
-    PlayerControls playerControls;
-    CharacterMovement characterMovement;
+    private CharacterMovement characterMovement;
 
-    
     [Range(10f, 100f)]
     public float Smooth = 10.0f;
 
@@ -41,11 +39,11 @@ public class HeadBob : MonoBehaviour
 
     private void Awake()
     {
-        playerControls = new PlayerControls();
-        if(!TryGetComponent<CharacterMovement>(out characterMovement))
+        if (!TryGetComponent<CharacterMovement>(out characterMovement))
         {
             characterMovement = transform.parent.parent.GetComponent<CharacterMovement>();
         }
+
     }
 
     private void Start()
@@ -56,7 +54,7 @@ public class HeadBob : MonoBehaviour
     private void Update()
     {
         CheckHeadBobTrigger();
-        if (characterMovement.IsAiming())
+        if (characterMovement.IsAiming)
         {
             transform.localPosition = StartPos;
         }
@@ -70,8 +68,8 @@ public class HeadBob : MonoBehaviour
 
     private void CheckHeadBobTrigger()
     {
-        float inputValue = playerControls.Movement.Move.ReadValue<Vector2>().magnitude;
-        if (inputValue > 0 && characterMovement.GetIsGrounded() && !characterMovement.IsAiming())
+        float inputValue = PlayerInputHandler.Instance.CharacterMove.magnitude;
+        if (inputValue > 0 && characterMovement.GetIsGrounded() && !characterMovement.IsAiming)
         {
             StartHeadBob();
         }
@@ -116,16 +114,4 @@ public class HeadBob : MonoBehaviour
         if (transform.localPosition == StartPos) return;
         transform.localPosition = Vector3.Lerp(transform.localPosition, StartPos, 1 * Time.deltaTime);
     }
-
-    #region Enable/Disable
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-    }
-    #endregion
 }

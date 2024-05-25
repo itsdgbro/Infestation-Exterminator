@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
     private bool isGamePaused = false;
 
     public bool GetIsGamePaused() => isGamePaused;
@@ -33,17 +32,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> pauseUIList;
     [SerializeField] private GameObject showPauseList;
 
-    #region Player Controls
-    private PlayerControls inputActions;
-    #endregion
-
+    [Header("Background Music")]
+    private AudioSource bgAudio;
 
     private void Awake()
     {
         SetCursorState();
         pauseMenu.SetActive(false);
         gameOverUI.SetActive(false);
-        inputActions = new PlayerControls();
+        bgAudio = GetComponent<AudioSource>();
     }
 
 
@@ -58,11 +55,11 @@ public class GameManager : MonoBehaviour
         WeaponAmmoTextUI();
         if (isGamePaused)
         {
-            inputActions.Disable();
+            PlayerInputHandler.Instance.Disable();
         }
         else
         {
-            inputActions.Enable();
+            PlayerInputHandler.Instance.Enable();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -88,6 +85,9 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
+        bgAudio.mute = false;
+        bgAudio.Play();
+
         // Debug.Log("Paused");
         pauseMenu.SetActive(true);
         showPauseList.SetActive(true);
@@ -102,6 +102,8 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame()
     {
+        bgAudio.mute = true;
+
         // Debug.Log("Resumee");
         pauseMenu.SetActive(false);
         isGamePaused = false;
@@ -113,12 +115,12 @@ public class GameManager : MonoBehaviour
     {
         if (isGamePaused)
         {
-            inputActions.Enable();
+            PlayerInputHandler.Instance.Enable();
             ResumeGame();
         }
         else
         {
-            inputActions.Disable();
+            PlayerInputHandler.Instance.Disable();
             PauseGame();
         }
     }
@@ -168,16 +170,4 @@ public class GameManager : MonoBehaviour
         DataPersistenceManager.instance.NewGame();
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
-
-    #region Enable/Disable
-    private void OnEnable()
-    {
-        inputActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
-    #endregion
 }

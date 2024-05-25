@@ -1,8 +1,8 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MeeleScript : MonoBehaviour
 {
-    private PlayerControls playerControls;
     private Animator animator;
 
     [Header("References")]
@@ -24,24 +24,40 @@ public class MeeleScript : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     private void Awake()
     {
-        playerControls = new PlayerControls();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        HandleAttackInput();
+        Debug.Log(gameObject.name);
+        // action subscribe
+        PlayerInputHandler.Instance.FireAutoAction.started += HandleAttackInput;
+        PlayerInputHandler.Instance.FireAutoAction.canceled += HandleAttackInput;
     }
 
     private bool ResetAttack() => canAttack = true && this.gameObject.activeSelf;
 
-    private void HandleAttackInput()
+    private void HandleAttackInput(InputAction.CallbackContext context)
     {
-        if (playerControls.Movement.Fire.ReadValue<float>() > 0.1f && canAttack && !gameManager.GetIsGamePaused())
+        if (context.started)
         {
-            PerformAttack();
+            StartAutoFire();
         }
+        else if (context.canceled)
+        {
+            StopAutoFire();
+        }
+    }
+
+    private void StartAutoFire()
+    {
+        InvokeRepeating(nameof(PerformAttack), 0f, 1 / (meleeData.fireRate / 60)); // Start automatic firing
+    }
+
+    private void StopAutoFire()
+    {
+        CancelInvoke(nameof(PerformAttack)); // Stop automatic firing
     }
 
     private void PerformAttack()
@@ -105,17 +121,10 @@ public class MeeleScript : MonoBehaviour
         }
     }
 
-
-    #region Enable/Disable
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
     private void OnDisable()
     {
-        playerControls.Disable();
+        // action unsubscribe
+        PlayerInputHandler.Instance.FireAutoAction.started -= HandleAttackInput;
+        PlayerInputHandler.Instance.FireAutoAction.canceled -= HandleAttackInput;
     }
-    #endregion
-
 }

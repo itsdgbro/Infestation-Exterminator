@@ -1,10 +1,10 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Level3Interaction : MonoBehaviour, IDataPersistence
 {
     [SerializeField] private string id;
 
-    private PlayerControls playerControls;
     private bool canCollect = false;
     // [SerializeField] private Level3Collections level3Collections;
 
@@ -19,7 +19,6 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
     private void Awake()
     {
         id = gameObject.name + gameObject.transform.GetSiblingIndex();
-        playerControls = new PlayerControls();
         collectUI.SetActive(false);
         itemCollectedTracker = GetComponentInParent<ItemCollectedTracker>();
         if (itemCollectedTracker == null)
@@ -28,6 +27,11 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
         }
     }
 
+    private void Start()
+    {
+        // action subscribe
+        PlayerInputHandler.Instance.InteractAction.started += CollectItem;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -49,27 +53,18 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
         }
     }
 
-    private void Update()
+    private void CollectItem(InputAction.CallbackContext context)
     {
-        if (canCollect && playerControls.Interactive.Interact.triggered)
+        if (context.started && canCollect)
         {
+
             gameObject.SetActive(false);
             collectUI.SetActive(false);
             // level3Collections.isCollected[transform.GetSiblingIndex()] = true;
             isCollected = true;
             itemCollectedTracker.SetItemCollectCount(this.gameObject);
-            Destroy(this.gameObject, 15.0f);
+            Destroy(this.gameObject, 2.0f); // Destroy after 2 sec of collecting
         }
-    }
-
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
     }
 
     public void LoadData(GameData data)
@@ -98,5 +93,11 @@ public class Level3Interaction : MonoBehaviour, IDataPersistence
         }
 
         data.itemCollected.isItemCollected.Add(id, isCollected);
+    }
+
+    private void OnDisable()
+    {
+        // action subscribe
+        PlayerInputHandler.Instance.InteractAction.started -= CollectItem;
     }
 }

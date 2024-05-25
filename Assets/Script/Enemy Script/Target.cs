@@ -4,11 +4,6 @@ using UnityEngine.AI;
 public class Target : MonoBehaviour, ISTarget, IDataPersistence
 {
     [SerializeField] private string id;
-    // [ContextMenu("Generate guid for id")]
-    // private void GenerateGUID()
-    // {
-    //     id = System.Guid.NewGuid().ToString() + gameObject.transform.GetSiblingIndex();
-    // }
 
     #region Target Health
     [SerializeField] private float health = 50f;
@@ -60,7 +55,7 @@ public class Target : MonoBehaviour, ISTarget, IDataPersistence
             isDead = true;
             animator.SetTrigger("dead");
             ZombieCountManager.SetZombieAlive(this.gameObject);
-            Destroy(this.gameObject, 15.0f);
+            Destroy(this.gameObject, 3.0f);
         }
         else
         {
