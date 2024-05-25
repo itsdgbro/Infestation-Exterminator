@@ -34,7 +34,16 @@ A 3D FPS Zombie Shooter Game build on Unity Game Engine.
 
 ## 🔗 Links
 
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dipakgurung524/)
-[![facebook](https://img.shields.io/badge/facebook-0A66C2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/dipakgurung555/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A46C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dipakgurung524/)
+[![facebook](https://img.shields.io/badge/facebook-0A46C2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/dipakgurung555/)
 
 ## Credits
+
+Every assets used in this project is royaly-free and can be found in official Unity assets store.
+
+### DJMaesen
+
+DJMaesen provdies a variety of premium models in sketchfab for free and paid. \
+[![facebook](https://img.shields.io/badge/Sketchfab-0A76C2?style=for-the-badge&logo=sketchfab&logoColor=white)](https://sketchfab.com/bumstrum/models/)
+
+## Download the Game
