@@ -1,6 +1,6 @@
-# Infestation Exterminator
+# Infestation Exterminator [![Made with Unity](https://img.shields.io/badge/Made%20with-Unity-57b9d3.svg?style=flat&logo=unity)](https://unity3d.com)
 
-A 3D FPS Zombie Shooter Game build on Unity Game Engine.
+A 3D FPS Zombie Shooter Game build on Unity Game Engine. Contains a 3 difference levels, upon clearing first level unlocks the second level. Get ready to dive into heart-pounding action and face the undead horde like never before.
 
 ## Images
 
@@ -44,6 +44,16 @@ Every assets used in this project is royaly-free and can be found in official Un
 ### DJMaesen
 
 DJMaesen provdies a variety of premium models in sketchfab for free and paid. \
-[![facebook](https://img.shields.io/badge/Sketchfab-0A76C2?style=for-the-badge&logo=sketchfab&logoColor=white)](https://sketchfab.com/bumstrum/models/)
+[![sketchfab](https://img.shields.io/badge/Sketchfab-0A76C2?style=for-the-badge&logo=sketchfab&logoColor=white)](https://sketchfab.com/bumstrum/models/)
 
 ## Download the Game
+
+### How to Install
+
+- Download the zip file
+- Extract the zip
+- Open the extracted folder
+- Click Infestation Exterminator application to start the game
+
+Click the Button to navigate to download page.\
+[![Game](https://img.shields.io/badge/Infestation_Exterminator-8B0000?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEiIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIj48cGF0aCBkPSJNMTI5IDExMWMtNTUgNC05MyA2Ni05MyA3OEwwIDM5OGMtMiA3MCAzNiA5MiA2OSA5MWgxYzc5IDAgODctNTcgMTMwLTEyOGgyMDFjNDMgNzEgNTAgMTI4IDEyOSAxMjhoMWMzMyAxIDcxLTIxIDY5LTkxbC0zNi0yMDljMC0xMi00MC03OC05OC03OGgtMTBjLTYzIDAtOTIgMzUtOTIgNDJIMjM2YzAtNy0yOS00Mi05Mi00MmgtMTV6IiBmaWxsPSIjZmZmIi8+PC9zdmc+&logoColor=white)](https://drive.google.com/file/d/11J67ieo3f0xlegPYSWNHLonSHtfEBG_R/view?usp=drive_link)
