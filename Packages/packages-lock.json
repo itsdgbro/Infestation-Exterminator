@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "ca.tim-cstj.export-project-to-zip": {
+      "version": "file:ca.tim-cstj.export-project-to-zip",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.autodesk.fbx": {
       "version": "4.2.1",
       "depth": 1,

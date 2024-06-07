@@ -3854,11 +3854,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5059400604632756073, guid: 768f4e3444c1e6e45af1033c3acdeaa2, type: 3}
       propertyPath: fileName
-      value: IEv1.grg
+      value: first.level
       objectReference: {fileID: 0}
     - target: {fileID: 5059400604632756073, guid: 768f4e3444c1e6e45af1033c3acdeaa2, type: 3}
       propertyPath: useEncryption
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5059400604632756073, guid: 768f4e3444c1e6e45af1033c3acdeaa2, type: 3}
       propertyPath: testingSo.Array.size
